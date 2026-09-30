@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BranchData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="1_43203"]
+[ext_resource type="Resource" path="res://data/chunks/hospital_emergency.tres" id="2_t7fxo"]
+[ext_resource type="Resource" path="res://data/chunks/centro_shops.tres" id="3_edm6h"]
+[ext_resource type="Resource" path="res://data/chunks/centro_store.tres" id="4_s7vjt"]
+[ext_resource type="Script" path="res://scripts/data/branch_data.gd" id="5_k1a7k"]
+
+[resource]
+script = ExtResource("5_k1a7k")
+id = &"farmacia"
+display_name = "Farmácia"
+reward_text = "remédios e componentes"
+danger = 3
+color = Color(0.95, 0.95, 1, 1)
+chunks = Array[ExtResource("1_43203")]([ExtResource("2_t7fxo"), ExtResource("3_edm6h"), ExtResource("4_s7vjt")])
+loot_weights = PackedFloat32Array(0.4, 0.8, 0.5, 0.3, 1.2, 1.6, 0)
+loot_multiplier = 1.5
+zombie_multiplier = 1.5
+loot_amount_bonus = 1

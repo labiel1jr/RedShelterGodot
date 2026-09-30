@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/poi_supermarket.tscn" id="1_5ra0y"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_num8o"]
+
+[resource]
+script = ExtResource("2_num8o")
+display_name = "Supermercado"
+scene = ExtResource("1_5ra0y")
+loot_multiplier = 1.5
+zombie_multiplier = 1.2
+loot_weights = PackedFloat32Array(3, 1.5, 0.3, 0.2, 0, 0, 0)
+poi_banner = "SUPERMERCADO À FRENTE"
+poi_color = Color(1, 0.65, 0.3, 1)
+cache_loot = [[0, 10], [1, 6], [0, 6]]

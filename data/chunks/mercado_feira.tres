@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/mercado_feira.tscn" id="1_3o3m7"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_31umv"]
+
+[resource]
+script = ExtResource("2_31umv")
+display_name = "Feira livre"
+scene = ExtResource("1_3o3m7")
+weight = 1.2
+loot_multiplier = 1.5
+zombie_multiplier = 1.0
+loot_weights = PackedFloat32Array(3, 1.5, 0.4, 0.2, 0.2, 0.1, 0)

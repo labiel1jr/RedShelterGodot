@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AttributeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/attribute_data.gd" id="1_ma0wa"]
+
+[resource]
+script = ExtResource("1_ma0wa")
+id = &"precision"
+display_name = "Precisão"
+description = "Mais chance de crítico (faca e pistola)."
+effect = &"crit_chance"
+value_per_point = 0.02
+effect_format = "+%d%% de crítico"
+display_scale = 100.0

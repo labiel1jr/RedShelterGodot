@@ -1,0 +1,49 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/obstacle.gd" id="1_jac35"]
+[ext_resource type="Material" path="res://art/materials/hospital_white.tres" id="2_ky2et"]
+[ext_resource type="Material" path="res://art/materials/curtain.tres" id="3_igh7n"]
+[ext_resource type="Material" path="res://art/materials/dark_metal.tres" id="4_jddmp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jac35"]
+size = Vector3(2, 0.7, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ky2et"]
+size = Vector3(2, 0.18, 0.55)
+
+[sub_resource type="BoxMesh" id="BoxMesh_igh7n"]
+size = Vector3(1.8, 0.06, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jddmp"]
+size = Vector3(0.08, 0.5, 0.45)
+
+[sub_resource type="BoxMesh" id="BoxMesh_m37ln"]
+size = Vector3(0.08, 0.5, 0.45)
+
+[node name="StretcherLow" type="Area3D" unique_id=1587859172]
+script = ExtResource("1_jac35")
+kind = &"low"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1826921376]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+shape = SubResource("BoxShape3D_jac35")
+
+[node name="Stretcher" type="MeshInstance3D" parent="." unique_id=338418473]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+material_override = ExtResource("2_ky2et")
+mesh = SubResource("BoxMesh_ky2et")
+
+[node name="Sheet" type="MeshInstance3D" parent="." unique_id=103120262]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.66, 0)
+material_override = ExtResource("3_igh7n")
+mesh = SubResource("BoxMesh_igh7n")
+
+[node name="Leg" type="MeshInstance3D" parent="." unique_id=1602495101]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.85, 0.25, 0)
+material_override = ExtResource("4_jddmp")
+mesh = SubResource("BoxMesh_jddmp")
+
+[node name="Leg2" type="MeshInstance3D" parent="." unique_id=1267189897]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.85, 0.25, 0)
+material_override = ExtResource("4_jddmp")
+mesh = SubResource("BoxMesh_m37ln")

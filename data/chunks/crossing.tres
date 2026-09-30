@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/crossing.tscn" id="1_b6qdp"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_y4ba5"]
+
+[resource]
+script = ExtResource("2_y4ba5")
+display_name = "Cruzamento"
+scene = ExtResource("1_b6qdp")
+loot_weights = PackedFloat32Array()

@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapon_data.gd" id="1_d8pqg"]
+
+[resource]
+script = ExtResource("1_d8pqg")
+display_name = "Faca reforçada"
+level = 2
+combo_damage = PackedInt32Array(35, 42, 63)
+crit_chance = 0.12
+max_durability = 120
+upgrade_cost = {
+"energy": 3,
+"scrap": 10
+}

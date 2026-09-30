@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="ProgressionData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/attribute_data.gd" id="1_m8emy"]
+[ext_resource type="Resource" path="res://data/progression/attributes/vigor.tres" id="2_miokt"]
+[ext_resource type="Resource" path="res://data/progression/attributes/agility.tres" id="3_cckh6"]
+[ext_resource type="Resource" path="res://data/progression/attributes/precision.tres" id="4_cypo6"]
+[ext_resource type="Resource" path="res://data/progression/attributes/strength.tres" id="5_fri5c"]
+[ext_resource type="Resource" path="res://data/progression/attributes/survival.tres" id="6_6ee6c"]
+[ext_resource type="Script" path="res://scripts/data/perk_data.gd" id="7_8n5wt"]
+[ext_resource type="Resource" path="res://data/progression/perks/sharp_blade.tres" id="8_ykvij"]
+[ext_resource type="Resource" path="res://data/progression/perks/keen_eye.tres" id="9_1ngb8"]
+[ext_resource type="Resource" path="res://data/progression/perks/quick_hands.tres" id="10_0j5bb"]
+[ext_resource type="Resource" path="res://data/progression/perks/thick_skin.tres" id="11_01m7j"]
+[ext_resource type="Resource" path="res://data/progression/perks/packer.tres" id="12_e68fa"]
+[ext_resource type="Resource" path="res://data/progression/perks/scavenger_nose.tres" id="13_g82df"]
+[ext_resource type="Resource" path="res://data/progression/perks/salvager.tres" id="14_8phy2"]
+[ext_resource type="Resource" path="res://data/progression/perks/light_steps.tres" id="15_re7r5"]
+[ext_resource type="Resource" path="res://data/progression/perks/organizer.tres" id="16_xrdaa"]
+[ext_resource type="Resource" path="res://data/progression/perks/farmer.tres" id="17_d0fan"]
+[ext_resource type="Resource" path="res://data/progression/perks/handy.tres" id="18_iwoe7"]
+[ext_resource type="Resource" path="res://data/progression/perks/rationing.tres" id="19_nvdon"]
+[ext_resource type="Script" path="res://scripts/data/progression_data.gd" id="20_nh4sa"]
+
+[resource]
+script = ExtResource("20_nh4sa")
+attributes = Array[ExtResource("1_m8emy")]([ExtResource("2_miokt"), ExtResource("3_cckh6"), ExtResource("4_cypo6"), ExtResource("5_fri5c"), ExtResource("6_6ee6c")])
+perks = Array[ExtResource("7_8n5wt")]([ExtResource("8_ykvij"), ExtResource("9_1ngb8"), ExtResource("10_0j5bb"), ExtResource("11_01m7j"), ExtResource("12_e68fa"), ExtResource("13_g82df"), ExtResource("14_8phy2"), ExtResource("15_re7r5"), ExtResource("16_xrdaa"), ExtResource("17_d0fan"), ExtResource("18_iwoe7"), ExtResource("19_nvdon")])
+xp_base = 150
+xp_increment = 75

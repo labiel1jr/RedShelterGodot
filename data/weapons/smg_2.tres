@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="RangedWeaponData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ranged_weapon_data.gd" id="1_uu3t7"]
+
+[resource]
+script = ExtResource("1_uu3t7")
+display_name = "Submetralhadora ajustada"
+level = 2
+damage = 14
+fire_cooldown = 0.55
+fire_range = 26.0
+knockback = 0.25
+noise = 4.0
+burst = 5
+burst_interval = 0.075
+visual_scale = Vector3(1.2, 1.5, 1.6)
+upgrade_cost = {
+"components": 6,
+"energy": 4,
+"scrap": 28
+}
+required_workshop = 2

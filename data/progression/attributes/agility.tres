@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AttributeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/attribute_data.gd" id="1_d2x0t"]
+
+[resource]
+script = ExtResource("1_d2x0t")
+id = &"agility"
+display_name = "Agilidade"
+description = "Troca de faixa mais rápida."
+effect = &"lane_speed"
+value_per_point = 0.06
+effect_format = "+%d%% velocidade de troca de faixa"
+display_scale = 100.0

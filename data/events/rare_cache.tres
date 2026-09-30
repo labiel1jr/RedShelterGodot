@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/event_data.gd" id="1_5o55k"]
+
+[resource]
+script = ExtResource("1_5o55k")
+id = &"rare_cache"
+display_name = "Recurso raro"
+banner = "RECURSO RARO À FRENTE"
+banner_color = Color(1, 0.85, 0.3, 1)

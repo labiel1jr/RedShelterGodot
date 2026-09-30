@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="RangedWeaponData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ranged_weapon_data.gd" id="1_t6b17"]
+
+[resource]
+script = ExtResource("1_t6b17")
+display_name = "Submetralhadora improvisada"
+damage = 12
+fire_cooldown = 0.6
+fire_range = 25.0
+crit_chance = 0.04
+knockback = 0.2
+noise = 4.0
+burst = 4
+visual_scale = Vector3(1.2, 1.5, 1.6)
+upgrade_cost = {
+"components": 8,
+"scrap": 22
+}
+required_workshop = 2

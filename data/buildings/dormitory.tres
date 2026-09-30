@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/building_data.gd" id="1_r0psp"]
+
+[resource]
+script = ExtResource("1_r0psp")
+id = &"dormitory"
+display_name = "Dormitório"
+description = "Camas para moradores resgatados nas expedições."
+costs = Array[Dictionary]([{
+"scrap": 15
+}, {
+"energy": 5,
+"scrap": 30
+}])
+required_workshop = PackedInt32Array(0, 1)
+effect_values = PackedFloat32Array(0, 2, 4)
+effect_format = "+%d vagas para moradores"

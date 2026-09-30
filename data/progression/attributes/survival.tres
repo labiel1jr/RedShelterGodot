@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AttributeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/attribute_data.gd" id="1_navr8"]
+
+[resource]
+script = ExtResource("1_navr8")
+id = &"survival"
+display_name = "Sobrevivência"
+description = "Menos dano recebido."
+effect = &"damage_taken"
+value_per_point = -0.04
+effect_format = "%d%% de dano recebido"
+display_scale = 100.0

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/centro_traffic.tscn" id="1_78ind"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_5m3hd"]
+
+[resource]
+script = ExtResource("2_5m3hd")
+display_name = "Engarrafamento"
+scene = ExtResource("1_78ind")
+loot_multiplier = 1.2
+zombie_multiplier = 1.3
+loot_weights = PackedFloat32Array(0.5, 0.8, 2, 0.8, 0.35, 0.1, 0.8)

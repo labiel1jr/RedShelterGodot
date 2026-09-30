@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/parking.tscn" id="1_v862g"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_q57x5"]
+
+[resource]
+script = ExtResource("2_q57x5")
+display_name = "Estacionamento"
+scene = ExtResource("1_v862g")
+zombie_multiplier = 1.5
+loot_weights = PackedFloat32Array(0.5, 0.5, 2, 1.2, 0.5, 0.1, 0.6)

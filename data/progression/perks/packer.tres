@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PerkData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/perk_data.gd" id="1_00bkf"]
+
+[resource]
+script = ExtResource("1_00bkf")
+id = &"packer"
+display_name = "Mochila bem arrumada"
+branch = 1
+description = "+5 kg de capacidade da mochila"
+effect = &"backpack_kg"
+value_per_rank = 5.0

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="RangedWeaponData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ranged_weapon_data.gd" id="1_nex5c"]
+
+[resource]
+script = ExtResource("1_nex5c")
+display_name = "Pistola reforçada"
+level = 3
+damage = 55
+fire_cooldown = 0.24
+crit_chance = 0.1
+upgrade_cost = {
+"energy": 8,
+"scrap": 25
+}
+required_workshop = 2

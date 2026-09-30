@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ProfessionData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/profession_data.gd" id="1_7wje3"]
+
+[resource]
+script = ExtResource("1_7wje3")
+id = &"soldier"
+display_name = "Soldado"
+bonus_text = "+10% de dano com a faca (treino)"
+effect = &"melee_damage"
+value = 0.1
+color = Color(0.4, 0.45, 0.25, 1)

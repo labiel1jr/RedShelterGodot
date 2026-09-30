@@ -1,0 +1,20 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/loot_pickup.gd" id="1_tcoqx"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2djqb"]
+radius = 0.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_lvtfg"]
+size = Vector3(0.6, 0.6, 0.6)
+
+[node name="Loot" type="Area3D" unique_id=174702681]
+script = ExtResource("1_tcoqx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=946256041]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SphereShape3D_2djqb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1579223050]
+transform = Transform3D(1, 0, 0, 0, 0.8253356, -0.5646425, 0, 0.5646425, 0.8253356, 0, 1, 0)
+mesh = SubResource("BoxMesh_lvtfg")

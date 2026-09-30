@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapon_data.gd" id="1_khlxu"]
+
+[resource]
+script = ExtResource("1_khlxu")
+display_name = "Faca tática"
+level = 3
+combo_damage = PackedInt32Array(50, 60, 90)
+attack_cooldown = 0.4
+crit_chance = 0.15
+max_durability = 140
+upgrade_cost = {
+"energy": 6,
+"scrap": 20
+}
+required_workshop = 2

@@ -1,0 +1,68 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/obstacle.gd" id="1_hgn1n"]
+[ext_resource type="Material" path="res://art/materials/cart_metal.tres" id="2_mmh6r"]
+[ext_resource type="Material" path="res://art/materials/price_yellow.tres" id="3_mbmeb"]
+[ext_resource type="Material" path="res://art/materials/produce_red.tres" id="4_e6cmy"]
+[ext_resource type="Material" path="res://art/materials/produce_green.tres" id="5_h01jk"]
+[ext_resource type="Material" path="res://art/materials/produce_orange.tres" id="6_bewgx"]
+[ext_resource type="Material" path="res://art/materials/sign_blue.tres" id="7_ybd5e"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hgn1n"]
+size = Vector3(2, 0.7, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mmh6r"]
+size = Vector3(2, 0.5, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mbmeb"]
+size = Vector3(2.02, 0.12, 0.52)
+
+[sub_resource type="BoxMesh" id="BoxMesh_e6cmy"]
+size = Vector3(0.3, 0.25, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h01jk"]
+size = Vector3(0.3, 0.25, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bewgx"]
+size = Vector3(0.3, 0.25, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ybd5e"]
+size = Vector3(0.3, 0.25, 0.25)
+
+[node name="GondolaLow" type="Area3D" unique_id=581079189]
+script = ExtResource("1_hgn1n")
+kind = &"low"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2069033469]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+shape = SubResource("BoxShape3D_hgn1n")
+
+[node name="Shelf" type="MeshInstance3D" parent="." unique_id=767108096]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+material_override = ExtResource("2_mmh6r")
+mesh = SubResource("BoxMesh_mmh6r")
+
+[node name="Stripe" type="MeshInstance3D" parent="." unique_id=954797633]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+material_override = ExtResource("3_mbmeb")
+mesh = SubResource("BoxMesh_mbmeb")
+
+[node name="Product" type="MeshInstance3D" parent="." unique_id=578921937]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0.75, 0)
+material_override = ExtResource("4_e6cmy")
+mesh = SubResource("BoxMesh_e6cmy")
+
+[node name="Product2" type="MeshInstance3D" parent="." unique_id=88913300]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.25, 0.75, 0)
+material_override = ExtResource("5_h01jk")
+mesh = SubResource("BoxMesh_h01jk")
+
+[node name="Product3" type="MeshInstance3D" parent="." unique_id=1812223227]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0.75, 0)
+material_override = ExtResource("6_bewgx")
+mesh = SubResource("BoxMesh_bewgx")
+
+[node name="Product4" type="MeshInstance3D" parent="." unique_id=769769269]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.75, 0.75, 0)
+material_override = ExtResource("7_ybd5e")
+mesh = SubResource("BoxMesh_ybd5e")

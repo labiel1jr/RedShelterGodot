@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/centro_start.tscn" id="1_1xsxj"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_k4e82"]
+
+[resource]
+script = ExtResource("2_k4e82")
+display_name = "Entrada do Centro"
+scene = ExtResource("1_1xsxj")
+length = 30.0
+loot_weights = PackedFloat32Array()

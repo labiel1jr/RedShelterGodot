@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="BranchData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="1_25xj7"]
+[ext_resource type="Script" path="res://scripts/data/branch_data.gd" id="2_ocb6e"]
+
+[resource]
+script = ExtResource("2_ocb6e")
+id = &"saida"
+display_name = "Saída antecipada"
+reward_text = "voltar agora (menos XP)"
+danger = 1
+color = Color(0.4, 1, 0.5, 1)
+weight = 1.2
+min_chunks = 1
+max_chunks = 1
+loot_weights = PackedFloat32Array()
+early_extraction = true

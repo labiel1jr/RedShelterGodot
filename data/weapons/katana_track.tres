@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponTrack" format=3]
+
+[ext_resource type="Resource" path="res://data/weapons/katana.tres" id="1_6gda4"]
+[ext_resource type="Script" path="res://scripts/data/weapon_track.gd" id="2_nuvmv"]
+
+[resource]
+script = ExtResource("2_nuvmv")
+id = &"katana"
+display_name = "Katana"
+levels = Array[Resource]([ExtResource("1_6gda4")])

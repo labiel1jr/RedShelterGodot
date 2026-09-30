@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wreck"]
+size = Vector3(2.2, 0.9, 1.6)
+
+[sub_resource type="StandardMaterial3D" id="Material_wreck"]
+albedo_color = Color(0.12, 0.1, 0.09, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_scorch"]
+top_radius = 1.6
+bottom_radius = 1.6
+height = 0.02
+radial_segments = 16
+
+[sub_resource type="StandardMaterial3D" id="Material_scorch"]
+albedo_color = Color(0.05, 0.05, 0.05, 1)
+
+[sub_resource type="StandardMaterial3D" id="Material_flame"]
+shading_mode = 0
+albedo_color = Color(1, 0.55, 0.12, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_flame"]
+material = SubResource("Material_flame")
+size = Vector3(0.25, 0.25, 0.25)
+
+[sub_resource type="Gradient" id="Gradient_flame"]
+colors = PackedColorArray(1, 0.9, 0.3, 1, 1, 0.35, 0.05, 1, 0.2, 0.2, 0.2, 0)
+
+[node name="Fire" type="Node3D"]
+
+[node name="Scorch" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.02, 0)
+mesh = SubResource("CylinderMesh_scorch")
+surface_material_override/0 = SubResource("Material_scorch")
+
+[node name="Wreck" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.94, 0, 0.34, 0, 1, 0, -0.34, 0, 0.94, 0, 2.9, 0)
+mesh = SubResource("BoxMesh_wreck")
+surface_material_override/0 = SubResource("Material_wreck")
+
+[node name="Flames" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
+amount = 24
+lifetime = 0.8
+mesh = SubResource("BoxMesh_flame")
+emission_shape = 3
+emission_box_extents = Vector3(0.9, 0.2, 0.5)
+direction = Vector3(0, 1, 0)
+spread = 15.0
+gravity = Vector3(0, 2, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 2.5
+scale_amount_min = 0.6
+scale_amount_max = 1.4
+color_ramp = SubResource("Gradient_flame")
+
+[node name="Light" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, 0)
+light_color = Color(1, 0.55, 0.2, 1)
+light_energy = 2.0
+omni_range = 6.0

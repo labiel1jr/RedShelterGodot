@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="WorldData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/branch_data.gd" id="1_3stcx"]
+[ext_resource type="Script" path="res://scripts/data/profession_data.gd" id="1_4tvtn"]
+[ext_resource type="Resource" path="res://data/branches/mercado.tres" id="2_qn6fu"]
+[ext_resource type="Resource" path="res://data/professions/medic.tres" id="2_y13gi"]
+[ext_resource type="Resource" path="res://data/professions/engineer.tres" id="3_hg0vh"]
+[ext_resource type="Resource" path="res://data/branches/farmacia.tres" id="3_sdftw"]
+[ext_resource type="Resource" path="res://data/branches/garagens.tres" id="4_41roe"]
+[ext_resource type="Resource" path="res://data/professions/farmer.tres" id="4_fh3cn"]
+[ext_resource type="Resource" path="res://data/branches/delegacia.tres" id="5_oajrs"]
+[ext_resource type="Resource" path="res://data/professions/soldier.tres" id="5_x02ki"]
+[ext_resource type="Resource" path="res://data/branches/atalho.tres" id="6_gwpnm"]
+[ext_resource type="Script" path="res://scripts/data/region_data.gd" id="6_q0t4k"]
+[ext_resource type="Resource" path="res://data/regions/bairro.tres" id="7_2i1kl"]
+[ext_resource type="Resource" path="res://data/branches/saida.tres" id="7_udnid"]
+[ext_resource type="Resource" path="res://data/regions/centro.tres" id="8_0sb08"]
+[ext_resource type="Resource" path="res://data/regions/mercado.tres" id="8_hg0vh"]
+[ext_resource type="Resource" path="res://data/chunks/fork.tres" id="8_n3je7"]
+[ext_resource type="Resource" path="res://data/regions/industrial.tres" id="9_dv0qq"]
+[ext_resource type="Resource" path="res://data/regions/hospital.tres" id="10_fh3cn"]
+[ext_resource type="Script" path="res://scripts/data/world_data.gd" id="10_taorj"]
+[ext_resource type="Resource" path="res://data/traits/optimist.tres" id="tr_optimist"]
+[ext_resource type="Resource" path="res://data/traits/pessimist.tres" id="tr_pessimist"]
+[ext_resource type="Resource" path="res://data/traits/loyal.tres" id="tr_loyal"]
+[ext_resource type="Resource" path="res://data/traits/selfish.tres" id="tr_selfish"]
+[ext_resource type="Resource" path="res://data/traits/fearful.tres" id="tr_fearful"]
+[ext_resource type="Script" path="res://scripts/data/trait_data.gd" id="tr_script"]
+
+[resource]
+script = ExtResource("10_taorj")
+regions = Array[ExtResource("6_q0t4k")]([ExtResource("7_2i1kl"), ExtResource("8_hg0vh"), ExtResource("8_0sb08"), ExtResource("10_fh3cn"), ExtResource("9_dv0qq")])
+distances = PackedFloat32Array(500, 1000, 2000, 3000)
+distance_names = PackedStringArray("Curta", "Média", "Longa", "Especial")
+distance_unlock_levels = PackedInt32Array(1, 2, 5, 9)
+distance_max_pois = PackedInt32Array(1, 1, 2, 3)
+fork_chunk = ExtResource("8_n3je7")
+branches = Array[ExtResource("1_3stcx")]([ExtResource("2_qn6fu"), ExtResource("3_sdftw"), ExtResource("4_41roe"), ExtResource("5_oajrs"), ExtResource("6_gwpnm"), ExtResource("7_udnid")])
+distance_max_forks = PackedInt32Array(1, 2, 3, 3)
+professions = Array[ExtResource("1_4tvtn")]([ExtResource("2_y13gi"), ExtResource("3_hg0vh"), ExtResource("4_fh3cn"), ExtResource("5_x02ki")])
+survivor_names = PackedStringArray("Ana", "Bruno", "Carla", "Diego", "Elisa", "Fábio", "Gabi", "Hugo", "Íris", "João", "Karina", "Lucas", "Marta", "Nico", "Olga", "Paulo", "Rita", "Sérgio", "Tânia", "Vítor")
+traits = Array[ExtResource("tr_script")]([ExtResource("tr_optimist"), ExtResource("tr_pessimist"), ExtResource("tr_loyal"), ExtResource("tr_selfish"), ExtResource("tr_fearful")])

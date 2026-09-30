@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/building_data.gd" id="1_70nkh"]
+
+[resource]
+script = ExtResource("1_70nkh")
+id = &"rain_collector"
+display_name = "Coletor de chuva"
+description = "Produz água todo dia."
+category = 1
+costs = Array[Dictionary]([{
+"scrap": 8
+}, {
+"scrap": 20
+}])
+required_workshop = PackedInt32Array(0, 1)
+effect_values = PackedFloat32Array(0, 2, 4)
+effect_format = "+%d água/dia"

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WeaponTrack" format=3]
+
+[ext_resource type="Resource" path="res://data/weapons/smg_1.tres" id="1_3s0sc"]
+[ext_resource type="Resource" path="res://data/weapons/smg_2.tres" id="2_m72dc"]
+[ext_resource type="Resource" path="res://data/weapons/smg_3.tres" id="3_cdlyh"]
+[ext_resource type="Script" path="res://scripts/data/weapon_track.gd" id="4_nt4vk"]
+
+[resource]
+script = ExtResource("4_nt4vk")
+id = &"smg"
+display_name = "SMG"
+levels = Array[Resource]([ExtResource("1_3s0sc"), ExtResource("2_m72dc"), ExtResource("3_cdlyh")])
+ranged = true

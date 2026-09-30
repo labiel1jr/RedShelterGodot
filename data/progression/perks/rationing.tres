@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PerkData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/perk_data.gd" id="1_5v01l"]
+
+[resource]
+script = ExtResource("1_5v01l")
+id = &"rationing"
+display_name = "Ração controlada"
+branch = 2
+description = "-1 comida e -1 água de consumo por dia"
+effect = &"consumption_reduction"
+value_per_rank = 1.0
+max_rank = 1
+required_tree_points = 3

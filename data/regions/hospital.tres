@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="RegionData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="1_t4e5y"]
+[ext_resource type="Resource" path="res://data/chunks/hospital_emergency.tres" id="2_wcsur"]
+[ext_resource type="Resource" path="res://data/chunks/hospital_triage.tres" id="3_2kk82"]
+[ext_resource type="Resource" path="res://data/chunks/hospital_corridor.tres" id="4_mq6wq"]
+[ext_resource type="Resource" path="res://data/chunks/hospital_garden.tres" id="5_hx15r"]
+[ext_resource type="Resource" path="res://data/chunks/avenue.tres" id="6_5vxyw"]
+[ext_resource type="Resource" path="res://data/chunks/extraction.tres" id="7_7gpey"]
+[ext_resource type="Script" path="res://scripts/data/event_data.gd" id="8_jk26q"]
+[ext_resource type="Resource" path="res://data/events/horde.tres" id="9_h24xd"]
+[ext_resource type="Resource" path="res://data/events/explosion.tres" id="10_3cxkm"]
+[ext_resource type="Resource" path="res://data/events/rare_cache.tres" id="11_kul76"]
+[ext_resource type="Resource" path="res://data/events/survivor.tres" id="12_iuwbe"]
+[ext_resource type="PackedScene" path="res://scenes/obstacles/curtain_high.tscn" id="13_ftaf3"]
+[ext_resource type="PackedScene" path="res://scenes/obstacles/stretcher_low.tscn" id="14_aqkkv"]
+[ext_resource type="Resource" path="res://data/chunks/poi_ambulance.tres" id="15_7ljsj"]
+[ext_resource type="Resource" path="res://data/chunks/poi_gas.tres" id="16_emy5d"]
+[ext_resource type="Resource" path="res://data/chunks/poi_safehouse.tres" id="17_cytkv"]
+[ext_resource type="Script" path="res://scripts/data/region_data.gd" id="18_ha8rr"]
+[ext_resource type="Resource" path="res://data/chunks/hospital_start.tres" id="19_xqch6"]
+[ext_resource type="PackedScene" path="res://scenes/obstacles/gurney_wall.tscn" id="20_y3hdl"]
+[ext_resource type="Script" path="res://scripts/data/zombie_data.gd" id="21_7ppha"]
+[ext_resource type="Resource" path="res://data/zombies/common.tres" id="22_6u7ry"]
+[ext_resource type="Resource" path="res://data/zombies/runner.tres" id="23_h0pb5"]
+[ext_resource type="Resource" path="res://data/zombies/brute.tres" id="24_6fywg"]
+[ext_resource type="Resource" path="res://data/zombies/explosive.tres" id="25_87682"]
+
+[resource]
+script = ExtResource("18_ha8rr")
+id = &"hospital"
+display_name = "Hospital"
+description = "Pronto-socorro, triagem e corredores estreitos: medicamentos raros e grande perigo. Muitos runners e explosivos."
+difficulty = 4
+unlock_level = 6
+start_chunk = ExtResource("19_xqch6")
+end_chunk = ExtResource("7_7gpey")
+chunks = Array[ExtResource("1_t4e5y")]([ExtResource("2_wcsur"), ExtResource("3_2kk82"), ExtResource("4_mq6wq"), ExtResource("5_hx15r"), ExtResource("6_5vxyw")])
+patterns = PackedStringArray("W..", ".W.", "..W", "WW.", "W.W", ".WW", "L..", ".L.", "..L", "LLL", "HHH", "H.W", "W.H", "LWH", "HWL", "$W.", "W$.", ".$W", "W.$", "$.$", "L$L", "H$H", "W$W", "$..", "..$", "Z.W", "W.Z", "ZW$", "$WZ", "Z..", "..Z", ".Z.", "Z$.", "LZ.", "L.H", "H.L", "LL.", ".HH", "L$H", "Z.L", "H.Z", "$Z.")
+loot_weights = PackedFloat32Array(0.8, 1.2, 0.8, 0.6, 0.3, 1, 0.1)
+loot_amount_bonus = 1
+zombie_types = Array[ExtResource("21_7ppha")]([ExtResource("22_6u7ry"), ExtResource("23_h0pb5"), ExtResource("24_6fywg"), ExtResource("25_87682")])
+zombie_weights = PackedFloat32Array(4, 2, 1, 1.5)
+wall_scene = ExtResource("20_y3hdl")
+low_scene = ExtResource("14_aqkkv")
+high_scene = ExtResource("13_ftaf3")
+pois = Array[ExtResource("1_t4e5y")]([ExtResource("15_7ljsj"), ExtResource("16_emy5d"), ExtResource("17_cytkv")])
+poi_chance = 0.09
+event_chance = 0.3
+events = Array[ExtResource("8_jk26q")]([ExtResource("9_h24xd"), ExtResource("10_3cxkm"), ExtResource("11_kul76"), ExtResource("12_iuwbe")])

@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BranchData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="1_m70gt"]
+[ext_resource type="Resource" path="res://data/chunks/centro_traffic.tres" id="2_1t055"]
+[ext_resource type="Resource" path="res://data/chunks/industrial_containers.tres" id="3_5qccl"]
+[ext_resource type="Resource" path="res://data/chunks/parking.tres" id="4_0mnll"]
+[ext_resource type="Script" path="res://scripts/data/branch_data.gd" id="5_p7lw4"]
+
+[resource]
+script = ExtResource("5_p7lw4")
+id = &"delegacia"
+display_name = "Delegacia"
+reward_text = "munição e componentes"
+danger = 3
+color = Color(0.5, 0.7, 1, 1)
+chunks = Array[ExtResource("1_m70gt")]([ExtResource("2_1t055"), ExtResource("3_5qccl"), ExtResource("4_0mnll")])
+loot_weights = PackedFloat32Array(0.3, 0.4, 0.8, 2.5, 1, 0.2, 0.2)
+loot_multiplier = 1.5
+zombie_multiplier = 1.5
+loot_amount_bonus = 1

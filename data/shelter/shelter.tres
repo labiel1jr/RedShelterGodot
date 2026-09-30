@@ -1,0 +1,49 @@
+[gd_resource type="Resource" script_class="ShelterData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/building_data.gd" id="1_cv5a1"]
+[ext_resource type="Resource" path="res://data/buildings/storage.tres" id="2_alogr"]
+[ext_resource type="Resource" path="res://data/buildings/workshop.tres" id="3_fd8uf"]
+[ext_resource type="Resource" path="res://data/buildings/generator.tres" id="4_e7v5w"]
+[ext_resource type="Resource" path="res://data/buildings/rain_collector.tres" id="5_utc6b"]
+[ext_resource type="Resource" path="res://data/buildings/garden.tres" id="6_ojs4m"]
+[ext_resource type="Resource" path="res://data/buildings/backpack.tres" id="7_pu3rr"]
+[ext_resource type="Resource" path="res://data/buildings/dormitory.tres" id="8_alogr"]
+[ext_resource type="Resource" path="res://data/weapons/knife_track.tres" id="8_sorax"]
+[ext_resource type="Resource" path="res://data/weapons/pistol_track.tres" id="9_c4iqy"]
+[ext_resource type="Script" path="res://scripts/data/shelter_data.gd" id="10_y32il"]
+[ext_resource type="Script" path="res://scripts/data/weapon_track.gd" id="17_nn7ob"]
+[ext_resource type="Resource" path="res://data/weapons/machete_track.tres" id="18_u5vif"]
+[ext_resource type="Resource" path="res://data/weapons/axe_track.tres" id="19_b2mvf"]
+[ext_resource type="Resource" path="res://data/weapons/katana_track.tres" id="20_yaeia"]
+[ext_resource type="Resource" path="res://data/weapons/heavy_axe_track.tres" id="21_f581s"]
+[ext_resource type="Resource" path="res://data/weapons/shotgun_track.tres" id="22_2kigi"]
+[ext_resource type="Resource" path="res://data/weapons/smg_track.tres" id="23_yb2cn"]
+[ext_resource type="Resource" path="res://data/buildings/battery.tres" id="f8_battery"]
+[ext_resource type="Resource" path="res://data/buildings/infirmary.tres" id="f8_infirmary"]
+[ext_resource type="Resource" path="res://data/buildings/kitchen.tres" id="f8_kitchen"]
+[ext_resource type="Resource" path="res://data/buildings/radio.tres" id="f8_radio"]
+[ext_resource type="Resource" path="res://data/buildings/solar.tres" id="f8_solar"]
+[ext_resource type="Resource" path="res://data/buildings/gate.tres" id="f12_gate"]
+[ext_resource type="Resource" path="res://data/buildings/barricades.tres" id="f12_barricades"]
+[ext_resource type="Resource" path="res://data/buildings/traps.tres" id="f12_traps"]
+[ext_resource type="Resource" path="res://data/buildings/towers.tres" id="f12_towers"]
+[ext_resource type="Resource" path="res://data/zombies/common.tres" id="f12_z_common"]
+[ext_resource type="Resource" path="res://data/zombies/runner.tres" id="f12_z_runner"]
+[ext_resource type="Resource" path="res://data/zombies/brute.tres" id="f12_z_brute"]
+[ext_resource type="Resource" path="res://data/zombies/explosive.tres" id="f12_z_explosive"]
+[ext_resource type="Resource" path="res://data/zombies/armored.tres" id="f12_z_armored"]
+[ext_resource type="Script" path="res://scripts/data/zombie_data.gd" id="f12_zscript"]
+
+[resource]
+script = ExtResource("10_y32il")
+buildings = Array[ExtResource("1_cv5a1")]([ExtResource("2_alogr"), ExtResource("3_fd8uf"), ExtResource("4_e7v5w"), ExtResource("5_utc6b"), ExtResource("6_ojs4m"), ExtResource("7_pu3rr"), ExtResource("8_alogr"), ExtResource("f8_kitchen"), ExtResource("f8_solar"), ExtResource("f8_battery"), ExtResource("f8_infirmary"), ExtResource("f8_radio"), ExtResource("f12_gate"), ExtResource("f12_barricades"), ExtResource("f12_traps"), ExtResource("f12_towers")])
+knife_track = ExtResource("8_sorax")
+pistol_track = ExtResource("9_c4iqy")
+weapon_tracks = Array[ExtResource("17_nn7ob")]([ExtResource("8_sorax"), ExtResource("18_u5vif"), ExtResource("19_b2mvf"), ExtResource("20_yaeia"), ExtResource("21_f581s"), ExtResource("9_c4iqy"), ExtResource("22_2kigi"), ExtResource("23_yb2cn")])
+daily_food = 3
+daily_water = 3
+morale_production = PackedFloat32Array(1, 0.85, 0.65, 0.65)
+loot_weight_kg = PackedFloat32Array(1, 1, 2, 0.1, 1, 0.5, 2)
+horde_zombies = Array[ExtResource("f12_zscript")]([ExtResource("f12_z_common"), ExtResource("f12_z_runner"), ExtResource("f12_z_brute"), ExtResource("f12_z_explosive"), ExtResource("f12_z_armored")])
+horde_zombie_min_day = PackedInt32Array(0, 8, 15, 15, 22)
+horde_zombie_weights = PackedFloat32Array(6, 2.5, 1.2, 1.2, 1.5)

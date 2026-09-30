@@ -1,0 +1,56 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/obstacle.gd" id="1_si34m"]
+[ext_resource type="Material" path="res://art/materials/hospital_white.tres" id="2_135ix"]
+[ext_resource type="Material" path="res://art/materials/red_cross.tres" id="3_jcso3"]
+[ext_resource type="Material" path="res://art/materials/curtain.tres" id="4_mwj2n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_si34m"]
+size = Vector3(2, 2.5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_135ix"]
+size = Vector3(1, 2.3, 0.8)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jcso3"]
+size = Vector3(0.14, 0.5, 0.02)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mwj2n"]
+size = Vector3(0.5, 0.14, 0.02)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cy3ch"]
+size = Vector3(0.9, 2.2, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_o4hbq"]
+size = Vector3(0.8, 2, 0.12)
+
+[node name="GurneyWall" type="Area3D" unique_id=686538643]
+script = ExtResource("1_si34m")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2071216559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("BoxShape3D_si34m")
+
+[node name="Cabinet" type="MeshInstance3D" parent="." unique_id=1050855720]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.15, 0)
+material_override = ExtResource("2_135ix")
+mesh = SubResource("BoxMesh_135ix")
+
+[node name="CrossV" type="MeshInstance3D" parent="." unique_id=1370790211]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.7, 0.41)
+material_override = ExtResource("3_jcso3")
+mesh = SubResource("BoxMesh_jcso3")
+
+[node name="CrossH" type="MeshInstance3D" parent="." unique_id=219000125]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.7, 0.41)
+material_override = ExtResource("3_jcso3")
+mesh = SubResource("BoxMesh_mwj2n")
+
+[node name="Gurney" type="MeshInstance3D" parent="." unique_id=512041474]
+transform = Transform3D(0.98560876, 0.07901733, 0.14943814, -0.07991469, 0.99680173, 0, -0.1489602, -0.011942303, 0.9887711, 0.55, 1.1, 0.1)
+material_override = ExtResource("2_135ix")
+mesh = SubResource("BoxMesh_cy3ch")
+
+[node name="Mattress" type="MeshInstance3D" parent="." unique_id=1311526570]
+transform = Transform3D(0.9887711, 0, 0.14943814, 0, 1, 0, -0.14943814, 0, 0.9887711, 0.55, 1.1, 0.4)
+material_override = ExtResource("4_mwj2n")
+mesh = SubResource("BoxMesh_o4hbq")

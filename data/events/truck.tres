@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/event_data.gd" id="1_usjlp"]
+
+[resource]
+script = ExtResource("1_usjlp")
+id = &"truck"
+display_name = "Caminhão"
+banner = "CAMINHÃO TOMBADO À FRENTE!"
+banner_color = Color(1, 0.65, 0.2, 1)

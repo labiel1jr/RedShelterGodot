@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="Resource" path="res://data/events/horde.tres" id="1_oblkc"]
+[ext_resource type="PackedScene" path="res://scenes/chunks/poi_safehouse.tscn" id="1_smjxg"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_oblkc"]
+
+[resource]
+script = ExtResource("2_oblkc")
+display_name = "Casa segura"
+scene = ExtResource("1_smjxg")
+weight = 0.8
+loot_multiplier = 1.2
+loot_weights = PackedFloat32Array()
+poi_banner = "CASA SEGURA — ALGUÉM LÁ DENTRO?"
+poi_color = Color(0.55, 0.95, 0.55, 1)
+poi_event = ExtResource("1_oblkc")

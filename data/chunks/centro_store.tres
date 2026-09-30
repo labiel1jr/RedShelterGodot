@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/centro_store.tscn" id="1_5ekf8"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_o4jxy"]
+
+[resource]
+script = ExtResource("2_o4jxy")
+display_name = "Loja de departamentos"
+scene = ExtResource("1_5ekf8")
+weight = 0.9
+loot_multiplier = 2.0
+zombie_multiplier = 1.2
+loot_weights = PackedFloat32Array(1.8, 1.6, 1, 0.5, 0.3, 0.3, 0.1)

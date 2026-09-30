@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="RegionData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="1_37eua"]
+[ext_resource type="Resource" path="res://data/chunks/centro_plaza.tres" id="2_iousb"]
+[ext_resource type="Resource" path="res://data/chunks/centro_shops.tres" id="3_psnpv"]
+[ext_resource type="Resource" path="res://data/chunks/centro_traffic.tres" id="4_82yn0"]
+[ext_resource type="Resource" path="res://data/chunks/centro_store.tres" id="5_xtnm0"]
+[ext_resource type="Resource" path="res://data/chunks/avenue.tres" id="6_evhyo"]
+[ext_resource type="Resource" path="res://data/chunks/crossing.tres" id="7_islej"]
+[ext_resource type="Resource" path="res://data/chunks/extraction.tres" id="8_s4b0b"]
+[ext_resource type="Script" path="res://scripts/data/event_data.gd" id="9_nxwv3"]
+[ext_resource type="Resource" path="res://data/events/horde.tres" id="10_y587a"]
+[ext_resource type="Resource" path="res://data/events/truck.tres" id="11_kpbfc"]
+[ext_resource type="Resource" path="res://data/events/explosion.tres" id="12_gqx0m"]
+[ext_resource type="Resource" path="res://data/events/rare_cache.tres" id="13_vw8dx"]
+[ext_resource type="Resource" path="res://data/events/survivor.tres" id="14_i6iqm"]
+[ext_resource type="Script" path="res://scripts/data/region_data.gd" id="15_6xlmw"]
+[ext_resource type="Resource" path="res://data/chunks/poi_ambulance.tres" id="15_xtnm0"]
+[ext_resource type="Resource" path="res://data/chunks/centro_start.tres" id="16_5jlb1"]
+[ext_resource type="Resource" path="res://data/chunks/poi_police.tres" id="16_evhyo"]
+[ext_resource type="Resource" path="res://data/chunks/poi_gas.tres" id="17_islej"]
+[ext_resource type="Script" path="res://scripts/data/zombie_data.gd" id="17_jbrhv"]
+[ext_resource type="Resource" path="res://data/zombies/common.tres" id="18_j57nh"]
+[ext_resource type="Resource" path="res://data/chunks/poi_safehouse.tres" id="18_s4b0b"]
+[ext_resource type="Resource" path="res://data/zombies/runner.tres" id="19_t8wyk"]
+[ext_resource type="Resource" path="res://data/zombies/brute.tres" id="20_x8t3a"]
+[ext_resource type="Resource" path="res://data/zombies/explosive.tres" id="21_20tuq"]
+
+[resource]
+script = ExtResource("15_6xlmw")
+id = &"centro"
+display_name = "Centro"
+description = "Muito loot e muitos zumbis — runners e explosivos."
+difficulty = 3
+unlock_level = 4
+start_chunk = ExtResource("16_5jlb1")
+end_chunk = ExtResource("8_s4b0b")
+chunks = Array[ExtResource("1_37eua")]([ExtResource("2_iousb"), ExtResource("3_psnpv"), ExtResource("4_82yn0"), ExtResource("5_xtnm0"), ExtResource("6_evhyo"), ExtResource("7_islej")])
+patterns = PackedStringArray("W..", ".W.", "..W", "WW.", "W.W", ".WW", "L..", ".L.", "..L", "LLL", "HHH", "H.W", "W.H", "LWH", "HWL", "$W.", "W$.", ".$W", "W.$", "$.$", "L$L", "H$H", "W$W", "$..", "..$", "Z.W", "W.Z", "ZW$", "$WZ", "Z..", "..Z", ".Z.", "Z$.", "LZ.", "Z$Z", "$Z.", "$$W", "W$$", "Z$W")
+loot_weights = PackedFloat32Array(1.2, 1.2, 1.2, 0.8, 0.3, 0.2, 0.15)
+loot_amount_bonus = 1
+zombie_types = Array[ExtResource("17_jbrhv")]([ExtResource("18_j57nh"), ExtResource("19_t8wyk"), ExtResource("20_x8t3a"), ExtResource("21_20tuq")])
+zombie_weights = PackedFloat32Array(5, 2, 1, 1.5)
+pois = Array[ExtResource("1_37eua")]([ExtResource("15_xtnm0"), ExtResource("16_evhyo"), ExtResource("17_islej"), ExtResource("18_s4b0b")])
+poi_chance = 0.07
+event_chance = 0.3
+events = Array[ExtResource("9_nxwv3")]([ExtResource("10_y587a"), ExtResource("11_kpbfc"), ExtResource("12_gqx0m"), ExtResource("13_vw8dx"), ExtResource("14_i6iqm")])

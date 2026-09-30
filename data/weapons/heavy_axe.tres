@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapon_data.gd" id="1_pciwl"]
+
+[resource]
+script = ExtResource("1_pciwl")
+display_name = "Machado pesado"
+combo_damage = PackedInt32Array(100, 130)
+combo_window = 1.6
+attack_cooldown = 1.1
+reach = 3.2
+crit_multiplier = 2.5
+max_durability = 200
+visual_scale = Vector3(2.8, 3.6, 1.6)
+blade_color = Color(0.35, 0.33, 0.32, 1)
+upgrade_cost = {
+"components": 10,
+"energy": 6,
+"scrap": 40
+}
+required_workshop = 2

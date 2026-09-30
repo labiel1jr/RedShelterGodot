@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/gas_station.tscn" id="1_tkh58"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_rwgj4"]
+
+[resource]
+script = ExtResource("2_rwgj4")
+display_name = "Posto"
+scene = ExtResource("1_tkh58")
+weight = 0.7
+loot_multiplier = 1.5
+loot_weights = PackedFloat32Array(0.3, 0.7, 2.5, 0.3, 0.3, 0.1, 1.2)

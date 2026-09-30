@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/building_data.gd" id="1_bd"]
+
+[resource]
+script = ExtResource("1_bd")
+id = &"solar"
+display_name = "Painéis solares"
+description = "Energia sem combustível, todo dia."
+category = 1
+costs = Array[Dictionary]([{
+"components": 3,
+"scrap": 15
+}, {
+"components": 6,
+"scrap": 30
+}])
+required_workshop = PackedInt32Array(0, 2)
+effect_values = PackedFloat32Array(0, 2, 4)
+effect_format = "+%d energia/dia"

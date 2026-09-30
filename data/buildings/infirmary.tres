@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/building_data.gd" id="1_bd"]
+
+[resource]
+script = ExtResource("1_bd")
+id = &"infirmary"
+display_name = "Enfermaria"
+description = "Trata ferimentos e a fraqueza por fome/sede com medicamentos (painel Sobrevivente)."
+category = 0
+costs = Array[Dictionary]([{
+"components": 2,
+"scrap": 15
+}, {
+"components": 4,
+"medicine": 2,
+"scrap": 30
+}])
+required_workshop = PackedInt32Array(0, 2)
+effect_values = PackedFloat32Array(0, 1, 2)
+effect_format = ""
+effect_texts = PackedStringArray("Sem enfermaria", "Trata com medicamentos", "Tratamentos + kit médico")

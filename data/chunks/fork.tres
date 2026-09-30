@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/fork.tscn" id="1_n43r7"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_e60g3"]
+
+[resource]
+script = ExtResource("2_e60g3")
+display_name = "Bifurcação"
+scene = ExtResource("1_n43r7")
+length = 60.0
+weight = 0.0
+loot_weights = PackedFloat32Array()

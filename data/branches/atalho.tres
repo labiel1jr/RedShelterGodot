@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="BranchData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="1_mehds"]
+[ext_resource type="Resource" path="res://data/chunks/residential.tres" id="2_5axu3"]
+[ext_resource type="Resource" path="res://data/chunks/avenue.tres" id="3_1t61r"]
+[ext_resource type="Resource" path="res://data/chunks/park.tres" id="4_oshpi"]
+[ext_resource type="Script" path="res://scripts/data/branch_data.gd" id="5_6y41i"]
+
+[resource]
+script = ExtResource("5_6y41i")
+id = &"atalho"
+display_name = "Atalho"
+reward_text = "caminho mais calmo"
+danger = 1
+color = Color(0.6, 1, 0.6, 1)
+chunks = Array[ExtResource("1_mehds")]([ExtResource("2_5axu3"), ExtResource("3_1t61r"), ExtResource("4_oshpi")])
+loot_weights = PackedFloat32Array()
+loot_multiplier = 0.6
+zombie_multiplier = 0.5

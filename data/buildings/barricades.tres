@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/building_data.gd" id="1_bd"]
+
+[resource]
+script = ExtResource("1_bd")
+id = &"barricades"
+display_name = "Barricadas"
+description = "Uma barricada em cada faixa, antes do portão: os zumbis param nela até derrubá-la."
+category = 3
+start_level = 0
+costs = Array[Dictionary]([{
+"scrap": 15
+}, {
+"components": 2,
+"scrap": 30
+}])
+required_workshop = PackedInt32Array(0, 1)
+effect_values = PackedFloat32Array(0, 80, 160)
+effect_format = "%d de HP em cada faixa"

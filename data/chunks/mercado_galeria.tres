@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/mercado_galeria.tscn" id="1_k67hr"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_bkf5d"]
+
+[resource]
+script = ExtResource("2_bkf5d")
+display_name = "Galeria"
+scene = ExtResource("1_k67hr")
+loot_multiplier = 1.3
+loot_weights = PackedFloat32Array(1.2, 1.2, 0.8, 0.5, 0.8, 0.2, 0)

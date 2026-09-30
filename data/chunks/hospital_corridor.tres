@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/hospital_corridor.tscn" id="1_hr8x1"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_15ngd"]
+
+[resource]
+script = ExtResource("2_15ngd")
+display_name = "Corredor"
+scene = ExtResource("1_hr8x1")
+zombie_multiplier = 1.1
+loot_weights = PackedFloat32Array(0.3, 0.8, 0.5, 0.3, 0.3, 1.5, 0)

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BranchData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="1_288rl"]
+[ext_resource type="Resource" path="res://data/chunks/parking.tres" id="2_q22tw"]
+[ext_resource type="Resource" path="res://data/chunks/gas_station.tres" id="3_j1gyr"]
+[ext_resource type="Resource" path="res://data/chunks/industrial_warehouses.tres" id="4_1osqo"]
+[ext_resource type="Script" path="res://scripts/data/branch_data.gd" id="5_mncht"]
+
+[resource]
+script = ExtResource("5_mncht")
+id = &"garagens"
+display_name = "Garagens"
+reward_text = "sucata e combustível"
+color = Color(0.75, 0.8, 0.85, 1)
+chunks = Array[ExtResource("1_288rl")]([ExtResource("2_q22tw"), ExtResource("3_j1gyr"), ExtResource("4_1osqo")])
+loot_weights = PackedFloat32Array(0.3, 0.5, 2.5, 0.6, 0.6, 0, 1.2)
+loot_multiplier = 1.3
+zombie_multiplier = 1.2

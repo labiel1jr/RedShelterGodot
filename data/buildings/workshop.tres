@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/building_data.gd" id="1_bxnb0"]
+
+[resource]
+script = ExtResource("1_bxnb0")
+id = &"workshop"
+display_name = "Oficina"
+description = "Repara e melhora armas, fabrica munição. Nível 2 libera upgrades avançados."
+start_level = 1
+costs = Array[Dictionary]([{
+"scrap": 0
+}, {
+"energy": 5,
+"scrap": 25
+}])
+required_workshop = PackedInt32Array(0, 0)
+effect_values = PackedFloat32Array(0, 1, 2)
+effect_format = "Ferramentas nível %d"

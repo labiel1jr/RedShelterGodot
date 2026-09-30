@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ZombieData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/data/zombie_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "Explosivo"
+max_hp = 80
+detect_distance = 28.0
+chase_speed = 5.0
+lateral_speed = 1.4
+attack = 2
+color = Color(0.85, 0.55, 0.15, 1)
+size = 1.1
+spawn_weight = 1.0
+xp_reward = 20
+explode_trigger_distance = 2.5
+explode_fuse = 0.45
+explode_radius = 2.2
+explode_damage = 22
+explode_noise = 10.0

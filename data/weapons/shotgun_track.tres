@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="WeaponTrack" format=3]
+
+[ext_resource type="Resource" path="res://data/weapons/shotgun_1.tres" id="1_i45gw"]
+[ext_resource type="Resource" path="res://data/weapons/shotgun_2.tres" id="2_2qrt5"]
+[ext_resource type="Resource" path="res://data/weapons/shotgun_3.tres" id="3_dfm3p"]
+[ext_resource type="Script" path="res://scripts/data/weapon_track.gd" id="4_frsfo"]
+
+[resource]
+script = ExtResource("4_frsfo")
+id = &"shotgun"
+display_name = "Escopeta"
+levels = Array[Resource]([ExtResource("1_i45gw"), ExtResource("2_2qrt5"), ExtResource("3_dfm3p")])
+ranged = true

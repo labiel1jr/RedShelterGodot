@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/industrial_containers.tscn" id="1_g5txs"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_wqbk1"]
+
+[resource]
+script = ExtResource("2_wqbk1")
+display_name = "Pátio de contêineres"
+scene = ExtResource("1_g5txs")
+weight = 1.2
+loot_multiplier = 1.4
+zombie_multiplier = 1.2
+loot_weights = PackedFloat32Array(0.6, 0.6, 2.5, 1.2, 1.0, 0.15, 0.3)

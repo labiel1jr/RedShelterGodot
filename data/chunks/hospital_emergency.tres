@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/hospital_emergency.tscn" id="1_jd8hm"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_gowbx"]
+
+[resource]
+script = ExtResource("2_gowbx")
+display_name = "Pronto-socorro"
+scene = ExtResource("1_jd8hm")
+weight = 1.3
+loot_multiplier = 1.3
+zombie_multiplier = 1.1
+loot_weights = PackedFloat32Array(0.4, 1.2, 0.6, 0.5, 0.3, 1.8, 0.1)

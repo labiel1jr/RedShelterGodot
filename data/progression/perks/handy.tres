@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PerkData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/perk_data.gd" id="1_128rx"]
+
+[resource]
+script = ExtResource("1_128rx")
+id = &"handy"
+display_name = "Mãos à obra"
+branch = 2
+description = "-15% de sucata em construções e na Oficina"
+effect = &"scrap_cost"
+value_per_rank = -0.15
+required_tree_points = 2

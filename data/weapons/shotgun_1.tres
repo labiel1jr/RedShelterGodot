@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="RangedWeaponData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/ranged_weapon_data.gd" id="1_ryfrs"]
+
+[resource]
+script = ExtResource("1_ryfrs")
+display_name = "Escopeta de cano serrado"
+damage = 15
+fire_cooldown = 1.1
+fire_range = 12.0
+crit_chance = 0.03
+knockback = 1.4
+noise = 6.0
+pellets = 6
+spread_lanes = 1
+range_falloff = 0.5
+visual_scale = Vector3(1.1, 1, 2.3)
+upgrade_cost = {
+"components": 6,
+"scrap": 20
+}
+required_workshop = 2

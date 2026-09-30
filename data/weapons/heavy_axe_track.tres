@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponTrack" format=3]
+
+[ext_resource type="Resource" path="res://data/weapons/heavy_axe.tres" id="1_oueac"]
+[ext_resource type="Script" path="res://scripts/data/weapon_track.gd" id="2_2q2tu"]
+
+[resource]
+script = ExtResource("2_2q2tu")
+id = &"heavy_axe"
+display_name = "Machado pesado"
+levels = Array[Resource]([ExtResource("1_oueac")])

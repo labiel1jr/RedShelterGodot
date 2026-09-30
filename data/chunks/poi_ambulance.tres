@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/poi_ambulance.tscn" id="1_d1f6f"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_oakps"]
+
+[resource]
+script = ExtResource("2_oakps")
+display_name = "Ambulância"
+scene = ExtResource("1_d1f6f")
+loot_multiplier = 1.2
+zombie_multiplier = 1.4
+loot_weights = PackedFloat32Array(0.3, 1, 0.3, 0.2, 0.2, 1.5, 0)
+poi_banner = "AMBULÂNCIA À FRENTE"
+poi_color = Color(1, 0.95, 0.95, 1)
+cache_loot = [[5, 4], [5, 2], [1, 4]]

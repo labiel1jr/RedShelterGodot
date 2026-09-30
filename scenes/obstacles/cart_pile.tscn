@@ -1,0 +1,56 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/obstacle.gd" id="1_g3cdl"]
+[ext_resource type="Material" path="res://art/materials/obstacle_wall.tres" id="2_okf33"]
+[ext_resource type="Material" path="res://art/materials/cart_metal.tres" id="3_oho8d"]
+[ext_resource type="Material" path="res://art/materials/wood.tres" id="4_dfjak"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g3cdl"]
+size = Vector3(2, 2.5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_okf33"]
+size = Vector3(2, 1.2, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_oho8d"]
+size = Vector3(0.9, 0.9, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dfjak"]
+size = Vector3(0.9, 0.9, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_noyqo"]
+size = Vector3(0.9, 0.9, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sej3m"]
+size = Vector3(0.6, 0.5, 0.5)
+
+[node name="CartPile" type="Area3D" unique_id=2094358865]
+script = ExtResource("1_g3cdl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=696151756]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("BoxShape3D_g3cdl")
+
+[node name="Backing" type="MeshInstance3D" parent="." unique_id=1501698183]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0.15)
+material_override = ExtResource("2_okf33")
+mesh = SubResource("BoxMesh_okf33")
+
+[node name="CartLeft" type="MeshInstance3D" parent="." unique_id=379931827]
+transform = Transform3D(0.9800666, 0, 0.19866933, 0, 1, 0, -0.19866933, 0, 0.9800666, -0.5, 0.55, -0.1)
+material_override = ExtResource("3_oho8d")
+mesh = SubResource("BoxMesh_oho8d")
+
+[node name="CartRight" type="MeshInstance3D" parent="." unique_id=1731157036]
+transform = Transform3D(0.9553365, 0, -0.29552022, 0, 1, 0, 0.29552022, 0, 0.9553365, 0.5, 0.55, -0.1)
+material_override = ExtResource("3_oho8d")
+mesh = SubResource("BoxMesh_dfjak")
+
+[node name="CartTop" type="MeshInstance3D" parent="." unique_id=411795766]
+transform = Transform3D(0.72430015, -0.39568698, 0.5646425, 0.47942555, 0.87758255, 0, -0.49552038, 0.27070403, 0.8253356, 0.1, 1.55, 0)
+material_override = ExtResource("3_oho8d")
+mesh = SubResource("BoxMesh_noyqo")
+
+[node name="Box" type="MeshInstance3D" parent="." unique_id=135646913]
+transform = Transform3D(0.9553365, 0, 0.29552022, 0, 1, 0, -0.29552022, 0, 0.9553365, -0.6, 2.1, 0)
+material_override = ExtResource("4_dfjak")
+mesh = SubResource("BoxMesh_sej3m")

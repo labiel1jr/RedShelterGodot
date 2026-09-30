@@ -1,0 +1,59 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/obstacle.gd" id="1_siyay"]
+[ext_resource type="Material" path="res://art/materials/price_yellow.tres" id="2_gh7je"]
+[ext_resource type="Material" path="res://art/materials/shelter_red.tres" id="3_jujmb"]
+[ext_resource type="Material" path="res://art/materials/dark_metal.tres" id="4_t4fr1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_siyay"]
+size = Vector3(2, 1, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gh7je"]
+size = Vector3(2, 0.95, 0.12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jujmb"]
+size = Vector3(2.02, 0.15, 0.14)
+
+[sub_resource type="BoxMesh" id="BoxMesh_t4fr1"]
+size = Vector3(0.05, 1.2, 0.05)
+
+[sub_resource type="BoxMesh" id="BoxMesh_63l7e"]
+size = Vector3(0.05, 1.2, 0.05)
+
+[node name="PriceSignHigh" type="Area3D" unique_id=174274107]
+script = ExtResource("1_siyay")
+kind = &"high"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1543184051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+shape = SubResource("BoxShape3D_siyay")
+
+[node name="Sign" type="MeshInstance3D" parent="." unique_id=939974562]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+material_override = ExtResource("2_gh7je")
+mesh = SubResource("BoxMesh_gh7je")
+
+[node name="Stripe" type="MeshInstance3D" parent="." unique_id=1117878896]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+material_override = ExtResource("3_jujmb")
+mesh = SubResource("BoxMesh_jujmb")
+
+[node name="Chain" type="MeshInstance3D" parent="." unique_id=1148205859]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.8, 2.85, 0)
+material_override = ExtResource("4_t4fr1")
+mesh = SubResource("BoxMesh_t4fr1")
+
+[node name="Chain2" type="MeshInstance3D" parent="." unique_id=329664479]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 2.85, 0)
+material_override = ExtResource("4_t4fr1")
+mesh = SubResource("BoxMesh_63l7e")
+
+[node name="Sign2" type="Label3D" parent="." unique_id=1060327871]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.85, 0.08)
+visibility_range_begin_margin = 2.0
+visibility_range_fade_mode = 1
+pixel_size = 0.02
+modulate = Color(0.7, 0.05, 0.05, 1)
+text = "OFERTA"
+font_size = 56
+outline_size = 16

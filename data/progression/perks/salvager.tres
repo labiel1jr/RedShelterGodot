@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PerkData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/perk_data.gd" id="1_efc1c"]
+
+[resource]
+script = ExtResource("1_efc1c")
+id = &"salvager"
+display_name = "Catadora"
+branch = 1
+description = "+15% do loot mantido ao morrer"
+effect = &"death_recovery"
+value_per_rank = 0.15
+required_tree_points = 2

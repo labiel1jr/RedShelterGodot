@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/industrial_railway.tscn" id="1_kwww5"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_hn8xo"]
+
+[resource]
+script = ExtResource("2_hn8xo")
+display_name = "Ferrovia"
+scene = ExtResource("1_kwww5")
+loot_weights = PackedFloat32Array()

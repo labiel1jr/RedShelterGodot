@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WeaponTrack" format=3]
+
+[ext_resource type="Resource" path="res://data/weapons/pistol_1.tres" id="1_kpbd8"]
+[ext_resource type="Resource" path="res://data/weapons/pistol_2.tres" id="2_4y8wg"]
+[ext_resource type="Resource" path="res://data/weapons/pistol_3.tres" id="3_hwleg"]
+[ext_resource type="Script" path="res://scripts/data/weapon_track.gd" id="4_nscye"]
+
+[resource]
+script = ExtResource("4_nscye")
+id = &"pistol"
+display_name = "Pistola"
+levels = Array[Resource]([ExtResource("1_kpbd8"), ExtResource("2_4y8wg"), ExtResource("3_hwleg")])
+ranged = true
+start_level = 1

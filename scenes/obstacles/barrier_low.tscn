@@ -1,0 +1,32 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/obstacle.gd" id="1_jue00"]
+[ext_resource type="Material" path="res://art/materials/obstacle_low.tres" id="2_jri3r"]
+[ext_resource type="Material" path="res://art/materials/hazard.tres" id="3_rkp72"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lpwyv"]
+size = Vector3(2, 0.7, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_meb74"]
+size = Vector3(2, 0.7, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xcshr"]
+size = Vector3(2.02, 0.12, 0.52)
+
+[node name="BarrierLow" type="Area3D" unique_id=1831241250]
+script = ExtResource("1_jue00")
+kind = &"low"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=441979386]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+shape = SubResource("BoxShape3D_lpwyv")
+
+[node name="Barrier" type="MeshInstance3D" parent="." unique_id=567877915]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+material_override = ExtResource("2_jri3r")
+mesh = SubResource("BoxMesh_meb74")
+
+[node name="Stripe" type="MeshInstance3D" parent="." unique_id=907058710]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+material_override = ExtResource("3_rkp72")
+mesh = SubResource("BoxMesh_xcshr")

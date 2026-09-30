@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/hospital_garden.tscn" id="1_2e7pi"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_o6oyr"]
+
+[resource]
+script = ExtResource("2_o6oyr")
+display_name = "Pátio interno"
+scene = ExtResource("1_2e7pi")
+zombie_multiplier = 1.2
+loot_weights = PackedFloat32Array()

@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="RegionData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="1_vko46"]
+[ext_resource type="Resource" path="res://data/chunks/industrial_factory.tres" id="2_muh71"]
+[ext_resource type="Resource" path="res://data/chunks/industrial_containers.tres" id="3_a27r0"]
+[ext_resource type="Resource" path="res://data/chunks/industrial_railway.tres" id="4_oqwjt"]
+[ext_resource type="Resource" path="res://data/chunks/industrial_warehouses.tres" id="5_p0tn3"]
+[ext_resource type="Resource" path="res://data/chunks/parking.tres" id="6_fwwen"]
+[ext_resource type="Resource" path="res://data/chunks/extraction.tres" id="7_6alyk"]
+[ext_resource type="Script" path="res://scripts/data/event_data.gd" id="8_48psx"]
+[ext_resource type="Resource" path="res://data/events/horde.tres" id="9_rk347"]
+[ext_resource type="Resource" path="res://data/events/truck.tres" id="10_tdoay"]
+[ext_resource type="Resource" path="res://data/events/explosion.tres" id="11_v40i6"]
+[ext_resource type="Resource" path="res://data/events/rare_cache.tres" id="12_nwsof"]
+[ext_resource type="Resource" path="res://data/events/survivor.tres" id="13_4xjog"]
+[ext_resource type="Script" path="res://scripts/data/region_data.gd" id="14_eobx1"]
+[ext_resource type="Resource" path="res://data/chunks/poi_police.tres" id="14_p0tn3"]
+[ext_resource type="Resource" path="res://data/chunks/poi_garage.tres" id="15_fwwen"]
+[ext_resource type="Resource" path="res://data/chunks/industrial_start.tres" id="15_on0du"]
+[ext_resource type="Resource" path="res://data/chunks/poi_gas.tres" id="16_6alyk"]
+[ext_resource type="Script" path="res://scripts/data/zombie_data.gd" id="16_73s85"]
+[ext_resource type="Resource" path="res://data/chunks/poi_safehouse.tres" id="17_48psx"]
+[ext_resource type="Resource" path="res://data/zombies/common.tres" id="17_ax0qp"]
+[ext_resource type="Resource" path="res://data/zombies/runner.tres" id="18_53oqt"]
+[ext_resource type="Resource" path="res://data/zombies/brute.tres" id="19_excel"]
+[ext_resource type="Resource" path="res://data/zombies/explosive.tres" id="20_v2hut"]
+[ext_resource type="Resource" path="res://data/zombies/armored.tres" id="21_o4vex"]
+
+[resource]
+script = ExtResource("14_eobx1")
+id = &"industrial"
+display_name = "Zona Industrial"
+description = "Materiais avançados (muita sucata) e zumbis mais fortes: brutos e blindados."
+difficulty = 5
+unlock_level = 7
+start_chunk = ExtResource("15_on0du")
+end_chunk = ExtResource("7_6alyk")
+chunks = Array[ExtResource("1_vko46")]([ExtResource("2_muh71"), ExtResource("3_a27r0"), ExtResource("4_oqwjt"), ExtResource("5_p0tn3"), ExtResource("6_fwwen")])
+patterns = PackedStringArray("W..", ".W.", "..W", "WW.", "W.W", ".WW", "L..", ".L.", "..L", "LLL", "HHH", "H.W", "W.H", "LWH", "HWL", "$W.", "W$.", ".$W", "W.$", "$.$", "L$L", "H$H", "W$W", "$..", "..$", "Z.W", "W.Z", "ZW$", "$WZ", "Z..", "..Z", ".Z.", "Z$.", "LZ.", "HWZ", "ZWL", "WZ.", "LZH", "Z$Z")
+loot_weights = PackedFloat32Array(0.6, 0.8, 2.5, 1, 0.9, 0.15, 0.4)
+loot_amount_bonus = 1
+zombie_types = Array[ExtResource("16_73s85")]([ExtResource("17_ax0qp"), ExtResource("18_53oqt"), ExtResource("19_excel"), ExtResource("20_v2hut"), ExtResource("21_o4vex")])
+zombie_weights = PackedFloat32Array(3, 2, 2, 1.5, 2)
+pois = Array[ExtResource("1_vko46")]([ExtResource("14_p0tn3"), ExtResource("15_fwwen"), ExtResource("16_6alyk"), ExtResource("17_48psx")])
+poi_chance = 0.07
+event_chance = 0.4
+events = Array[ExtResource("8_48psx")]([ExtResource("9_rk347"), ExtResource("10_tdoay"), ExtResource("10_tdoay"), ExtResource("11_v40i6"), ExtResource("11_v40i6"), ExtResource("12_nwsof"), ExtResource("13_4xjog")])

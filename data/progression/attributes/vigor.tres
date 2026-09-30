@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="AttributeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/attribute_data.gd" id="1_ub30t"]
+
+[resource]
+script = ExtResource("1_ub30t")
+id = &"vigor"
+display_name = "Vigor"
+description = "Mais HP máximo."
+effect = &"max_hp"
+value_per_point = 10.0
+effect_format = "+%d HP máx."

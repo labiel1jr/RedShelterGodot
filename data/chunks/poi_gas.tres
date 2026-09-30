@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/poi_gas.tscn" id="1_eimrg"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_qo23a"]
+
+[resource]
+script = ExtResource("2_qo23a")
+display_name = "Posto de combustível"
+scene = ExtResource("1_eimrg")
+loot_multiplier = 1.2
+zombie_multiplier = 1.2
+loot_weights = PackedFloat32Array(0.3, 0.6, 1.5, 0.3, 0.3, 0, 1.5)
+poi_banner = "POSTO DE COMBUSTÍVEL À FRENTE"
+poi_color = Color(1, 0.35, 0.3, 1)
+cache_loot = [[6, 6], [6, 4], [2, 6]]

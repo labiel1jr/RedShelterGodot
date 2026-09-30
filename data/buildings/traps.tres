@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/building_data.gd" id="1_bd"]
+
+[resource]
+script = ExtResource("1_bd")
+id = &"traps"
+display_name = "Armadilhas"
+description = "Explodem uma vez por ataque, ferindo os zumbis próximos em cada faixa."
+category = 3
+start_level = 0
+costs = Array[Dictionary]([{
+"components": 2,
+"scrap": 12
+}, {
+"components": 4,
+"scrap": 25
+}])
+required_workshop = PackedInt32Array(0, 1)
+effect_values = PackedFloat32Array(0, 80, 150)
+effect_format = "%d de dano em área por faixa"

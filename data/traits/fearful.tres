@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="TraitData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/trait_data.gd" id="1_tr"]
+
+[resource]
+script = ExtResource("1_tr")
+id = &"fearful"
+display_name = "Medroso(a)"
+description = "Não luta na defesa do abrigo; +1 de comida ou água por dia (cuida da casa)."
+color = Color(0.75, 0.65, 0.95, 1)
+extra_production = 1
+avoids_defense = true

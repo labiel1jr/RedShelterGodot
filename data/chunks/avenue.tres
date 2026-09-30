@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ChunkData" format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/chunks/avenue.tscn" id="1_4sqsf"]
+[ext_resource type="Script" path="res://scripts/data/chunk_data.gd" id="2_vf3cw"]
+
+[resource]
+script = ExtResource("2_vf3cw")
+display_name = "Avenida"
+scene = ExtResource("1_4sqsf")
+weight = 1.2
+loot_weights = PackedFloat32Array()

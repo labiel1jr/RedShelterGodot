@@ -1,0 +1,39 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/obstacle.gd" id="1_2jsn7"]
+[ext_resource type="Material" path="res://art/materials/obstacle_wall.tres" id="2_uor2m"]
+[ext_resource type="Material" path="res://art/materials/wood.tres" id="3_tcqw8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_k0kmb"]
+size = Vector3(2, 2.5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rg47e"]
+size = Vector3(2, 2.5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gmtom"]
+size = Vector3(2.2, 0.25, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lke8v"]
+size = Vector3(2.2, 0.25, 0.1)
+
+[node name="Wall" type="Area3D" unique_id=1572276804]
+script = ExtResource("1_2jsn7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=235413160]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("BoxShape3D_k0kmb")
+
+[node name="Barricade" type="MeshInstance3D" parent="." unique_id=1892414094]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+material_override = ExtResource("2_uor2m")
+mesh = SubResource("BoxMesh_rg47e")
+
+[node name="Plank1" type="MeshInstance3D" parent="." unique_id=279240057]
+transform = Transform3D(0.9393727, -0.3428978, 0, 0.3428978, 0.9393727, 0, 0, 0, 1, 0, 1.7, 0.55)
+material_override = ExtResource("3_tcqw8")
+mesh = SubResource("BoxMesh_gmtom")
+
+[node name="Plank2" type="MeshInstance3D" parent="." unique_id=592951299]
+transform = Transform3D(0.9553365, 0.29552022, 0, -0.29552022, 0.9553365, 0, 0, 0, 1, 0, 0.9, 0.55)
+material_override = ExtResource("3_tcqw8")
+mesh = SubResource("BoxMesh_lke8v")

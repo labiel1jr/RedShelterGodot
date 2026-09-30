@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="AttributeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/attribute_data.gd" id="1_lqin6"]
+
+[resource]
+script = ExtResource("1_lqin6")
+id = &"strength"
+display_name = "Força"
+description = "Mais dano corpo a corpo."
+effect = &"melee_damage"
+value_per_point = 0.05
+effect_format = "+%d%% de dano com a faca"
+display_scale = 100.0

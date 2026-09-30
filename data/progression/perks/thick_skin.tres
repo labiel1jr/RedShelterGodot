@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PerkData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/perk_data.gd" id="1_7fa0u"]
+
+[resource]
+script = ExtResource("1_7fa0u")
+id = &"thick_skin"
+display_name = "Couro grosso"
+description = "-10% de dano recebido"
+effect = &"damage_taken"
+value_per_rank = -0.1
+required_tree_points = 3

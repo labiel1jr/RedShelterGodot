@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="WeaponTrack" format=3]
+
+[ext_resource type="Resource" path="res://data/weapons/axe.tres" id="1_0jq7b"]
+[ext_resource type="Script" path="res://scripts/data/weapon_track.gd" id="2_bfd14"]
+
+[resource]
+script = ExtResource("2_bfd14")
+id = &"axe"
+display_name = "Machado"
+levels = Array[Resource]([ExtResource("1_0jq7b")])

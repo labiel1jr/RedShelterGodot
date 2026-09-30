@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapon_data.gd" id="1_npb4k"]
+
+[resource]
+script = ExtResource("1_npb4k")
+display_name = "Faca militar"
+level = 4
+combo_damage = PackedInt32Array(70, 84, 126)
+attack_cooldown = 0.38
+crit_chance = 0.18
+max_durability = 160
+upgrade_cost = {
+"energy": 10,
+"scrap": 35
+}
+required_workshop = 2

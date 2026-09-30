@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BuildingData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/building_data.gd" id="1_qf0fy"]
+
+[resource]
+script = ExtResource("1_qf0fy")
+id = &"garden"
+display_name = "Horta"
+description = "Produz comida todo dia."
+category = 1
+costs = Array[Dictionary]([{
+"scrap": 10,
+"water": 5
+}, {
+"scrap": 24,
+"water": 8
+}])
+required_workshop = PackedInt32Array(0, 1)
+effect_values = PackedFloat32Array(0, 2, 4)
+effect_format = "+%d comida/dia"

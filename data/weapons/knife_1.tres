@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="WeaponData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/weapon_data.gd" id="1_dogwo"]
+
+[resource]
+script = ExtResource("1_dogwo")
+display_name = "Faca improvisada"
+combo_damage = PackedInt32Array(25, 30, 45)

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PerkData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/perk_data.gd" id="1_g70ec"]
+
+[resource]
+script = ExtResource("1_g70ec")
+id = &"scavenger_nose"
+display_name = "Faro para loot"
+branch = 1
+description = "25% de chance de +1 unidade em cada loot"
+effect = &"loot_bonus_chance"
+value_per_rank = 0.25
+required_tree_points = 1

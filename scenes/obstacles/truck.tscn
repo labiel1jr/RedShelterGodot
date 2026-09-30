@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3]
+
+[sub_resource type="BoxMesh" id="BoxMesh_trailer"]
+size = Vector3(5.4, 2.8, 2.6)
+
+[sub_resource type="StandardMaterial3D" id="Material_trailer"]
+albedo_color = Color(0.55, 0.35, 0.18, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cab"]
+size = Vector3(2.4, 2.3, 1.8)
+
+[sub_resource type="StandardMaterial3D" id="Material_cab"]
+albedo_color = Color(0.2, 0.3, 0.5, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_wheel"]
+top_radius = 0.5
+bottom_radius = 0.5
+height = 0.4
+radial_segments = 12
+
+[sub_resource type="StandardMaterial3D" id="Material_wheel"]
+albedo_color = Color(0.08, 0.08, 0.08, 1)
+
+[node name="Truck" type="Node3D"]
+
+[node name="Trailer" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.996, -0.087, 0, 0.087, 0.996, 0, 0, 0, 1, 0, 1.4, 0)
+mesh = SubResource("BoxMesh_trailer")
+surface_material_override/0 = SubResource("Material_trailer")
+
+[node name="Cab" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 1.15, -2.3)
+mesh = SubResource("BoxMesh_cab")
+surface_material_override/0 = SubResource("Material_cab")
+
+[node name="Wheel1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -1.8, 0.5, 1.35)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = SubResource("Material_wheel")
+
+[node name="Wheel2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 1.8, 0.5, 1.35)
+mesh = SubResource("CylinderMesh_wheel")
+surface_material_override/0 = SubResource("Material_wheel")

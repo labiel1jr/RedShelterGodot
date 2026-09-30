@@ -1,0 +1,57 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/obstacle.gd" id="1_0ebhp"]
+[ext_resource type="Material" path="res://art/materials/curtain.tres" id="2_arykv"]
+[ext_resource type="Material" path="res://art/materials/hospital_white.tres" id="3_ps7s8"]
+[ext_resource type="Material" path="res://art/materials/dark_metal.tres" id="4_lkoap"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0ebhp"]
+size = Vector3(2, 1, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_arykv"]
+size = Vector3(2, 1, 0.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ps7s8"]
+size = Vector3(2.02, 0.12, 0.1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_lkoap"]
+size = Vector3(2.3, 0.08, 0.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_gpkrv"]
+size = Vector3(0.08, 2.35, 0.08)
+
+[sub_resource type="BoxMesh" id="BoxMesh_2hmc6"]
+size = Vector3(0.08, 2.35, 0.08)
+
+[node name="CurtainHigh" type="Area3D" unique_id=1297363020]
+script = ExtResource("1_0ebhp")
+kind = &"high"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=445310428]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+shape = SubResource("BoxShape3D_0ebhp")
+
+[node name="Curtain" type="MeshInstance3D" parent="." unique_id=1961713964]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+material_override = ExtResource("2_arykv")
+mesh = SubResource("BoxMesh_arykv")
+
+[node name="Hem" type="MeshInstance3D" parent="." unique_id=179859367]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.32, 0)
+material_override = ExtResource("3_ps7s8")
+mesh = SubResource("BoxMesh_ps7s8")
+
+[node name="Rail" type="MeshInstance3D" parent="." unique_id=308643055]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.35, 0)
+material_override = ExtResource("4_lkoap")
+mesh = SubResource("BoxMesh_lkoap")
+
+[node name="Post" type="MeshInstance3D" parent="." unique_id=1151274881]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 1.18, 0)
+material_override = ExtResource("4_lkoap")
+mesh = SubResource("BoxMesh_gpkrv")
+
+[node name="Post2" type="MeshInstance3D" parent="." unique_id=26905503]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 1.18, 0)
+material_override = ExtResource("4_lkoap")
+mesh = SubResource("BoxMesh_2hmc6")

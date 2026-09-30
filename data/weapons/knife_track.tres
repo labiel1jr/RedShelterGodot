@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="WeaponTrack" format=3]
+
+[ext_resource type="Resource" path="res://data/weapons/knife_1.tres" id="1_pp7jx"]
+[ext_resource type="Resource" path="res://data/weapons/knife_2.tres" id="2_hpx3s"]
+[ext_resource type="Resource" path="res://data/weapons/knife_3.tres" id="3_yvj3c"]
+[ext_resource type="Resource" path="res://data/weapons/knife_4.tres" id="4_qphrs"]
+[ext_resource type="Script" path="res://scripts/data/weapon_track.gd" id="5_cmidr"]
+
+[resource]
+script = ExtResource("5_cmidr")
+id = &"knife"
+display_name = "Faca"
+levels = Array[Resource]([ExtResource("1_pp7jx"), ExtResource("2_hpx3s"), ExtResource("3_yvj3c"), ExtResource("4_qphrs")])
+start_level = 1

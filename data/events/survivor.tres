@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EventData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/event_data.gd" id="1_q8wes"]
+
+[resource]
+script = ExtResource("1_q8wes")
+id = &"survivor"
+display_name = "Sobrevivente"
+banner = "ALGUÉM PEDE SOCORRO!"
+banner_color = Color(0.55, 0.85, 1, 1)
