@@ -396,6 +396,7 @@ func commit_defense(result: Dictionary) -> void:
 	morale_log.clear()
 	next_attack_day = day + SHELTER.attack_interval
 	attack_noise = 0.0
+	CampaignLog.record_defense()
 	SaveManager.save_game()
 
 
@@ -457,6 +458,7 @@ func missing_text(cost: Dictionary) -> String:
 func pay(cost: Dictionary) -> void:
 	for key in cost:
 		set(key, get(key) - cost[key])
+	CampaignLog.add_spent(cost)
 
 
 static func cost_text(cost: Dictionary) -> String:
@@ -480,6 +482,7 @@ func take_expedition_seed() -> int:
 ## knife_durability, distance, kills, kill_xp, hp, max_hp, survivors,
 ## medkit_used.
 func commit_run(result: Dictionary) -> void:
+	var run_day := day
 	var survived: bool = result.survived
 	last_run_survived = survived
 	last_run_distance = result.distance
@@ -592,6 +595,7 @@ func commit_run(result: Dictionary) -> void:
 	resident_log = Residents.after_run(survived, recovered_total, next_region, last_run_turned_away.size())
 
 	last_day_report = Production.end_of_day()
+	CampaignLog.record_run(run_day)
 	SaveManager.save_game()
 
 
