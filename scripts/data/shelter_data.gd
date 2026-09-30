@@ -30,8 +30,8 @@ extends Resource
 ## Reparo: custo a cada 10 pontos de durabilidade (arredonda para cima).
 @export var repair_cost_per_10 := {"scrap": 1}
 @export var repair_energy := 1
-@export var ammo_craft_cost := {"scrap": 3, "energy": 2}
-@export var ammo_craft_amount := 6
+@export var ammo_craft_cost := {"scrap": 2, "energy": 2}
+@export var ammo_craft_amount := 8
 ## Desmontar sucata em componentes (seção 62).
 @export var dismantle_cost := {"scrap": 5, "energy": 1}
 @export var dismantle_amount := 1
@@ -74,11 +74,11 @@ extends Resource
 @export_group("Defesa do abrigo (seção 45)")
 ## Primeiro ataque, intervalo entre ataques e dias de aviso antes.
 @export var first_attack_day := 8
-@export var attack_interval := 7
+@export var attack_interval := 9
 @export var attack_warning_days := 2
 ## Tamanho da horda: base + por dia + pelo ruído das últimas expedições.
 @export var horde_base := 6
-@export var horde_per_day := 0.5
+@export var horde_per_day := 0.3
 @export var horde_per_noise := 0.04
 @export var horde_max := 40
 ## Fração do dano normal que os zumbis causam no portão e nas barricadas.

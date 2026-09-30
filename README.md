@@ -7,7 +7,7 @@ Survival runner mobile com abrigo. A sobrevivente corre sozinha por três
 faixas, desvia, pula, desliza, luta contra zumbis que a agarram e saqueia o
 que consegue carregar. De volta ao abrigo, os recursos viram construções,
 armas e moradores, e a cada semana uma horda ataca o portão. É o protótipo
-jogável do **GDD 0.5.1** (`../Red Shelter.MD`), feito com formas primitivas.
+jogável do **GDD 0.5.2** (`../Red Shelter.MD`), feito com formas primitivas.
 Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 
 | | |
@@ -68,7 +68,7 @@ Cada expedição é um dia:
    personagem ferida. Construções, armas e XP nunca se perdem.
 4. **No fechamento do dia**, o abrigo produz, todos comem e a moral muda.
    Comida e água acabando enfraquecem a próxima corrida.
-5. **A cada 7 dias** (o primeiro no dia 8), uma horda ataca o abrigo. Nesse
+5. **A cada 9 dias** (o primeiro no dia 8), uma horda ataca o abrigo. Nesse
    dia, é preciso defender o portão antes de sair de novo.
 
 | Ação | Celular | Teclado / mouse |
@@ -419,7 +419,7 @@ e o portão reforçado).
 | Ação | Custo |
 | --- | --- |
 | Reparar a arma branca equipada | 1 sucata a cada 10 pontos + 1 energia |
-| Fabricar munição | 6 balas por 3 sucata + 2 energia |
+| Fabricar munição | 8 balas por 2 sucata + 2 energia |
 | Desmontar sucata | 1 componente por 5 sucata + 1 energia (o jeito de ter componentes antes das regiões que os têm) |
 | Fabricar e melhorar armas | ver a [tabela de armas](#armas) |
 | Melhorar a mochila (seção 32) | 25 → 35 → 50 kg |
@@ -511,11 +511,11 @@ horda desce pelas 3 faixas.
   depois no portão, e batem. Troque de faixa para mirar: a arma de fogo pega
   os que vêm, e a arma branca alcança os que chegaram ao portão. Armadilhas
   explodem uma vez; torres atiram sozinhas gastando a mesma munição sua.
-- **Agenda:** o primeiro ataque é no dia 8, depois a cada 7 dias. O
+- **Agenda:** o primeiro ataque é no dia 8, depois a cada 9 dias (8, 17, 26, 35…). O
   fechamento do dia e a barra do abrigo avisam 2 dias antes. No dia do
   ataque, o botão Expedição vira **DEFENDER O ABRIGO!** e não dá para sair
   antes de defender.
-- **Horda:** 6 + meio zumbi por dia + o ruído das últimas expedições (máximo
+- **Horda:** 6 + 0,3 zumbi por dia + o ruído das últimas expedições (máximo
   40). Runners a partir do dia 8, brutos e explosivos do 15, blindados do
   22. Os zumbis causam 75% do dano normal nas estruturas.
 - **Moradores:** cada Soldado(a) acelera as torres em 50%, e cada morador
@@ -626,15 +626,16 @@ equipamento de quem acabou de liberar a região (com bifurcações e Director):
 | Hospital (nível 6) | 5/8 |
 | Bairro, 2 km (nível 5) | 5/8 |
 
-**Defesa** — 3 ataques por linha, com um robô que troca de faixa, atira e
-usa a arma branca:
+**Campanha** — o robô joga 36 dias seguidos (expedições, abrigo e 4
+defesas) e grava o registro da campanha (veja [tests/README.md](tests/README.md)).
+Duas políticas: **cauteloso** (escolhe regiões abaixo do nível, volta ao
+Bairro quando está ferido, guarda munição para o ataque) e **ganancioso**
+(sempre a região mais difícil, atira em tudo):
 
-| Dia | Preparo | Vitórias |
+| Política | Sobrevivência nas expedições | Defesas vencidas (dias 8, 17, 26, 35) |
 | --- | --- | --- |
-| 8 | só 40 de munição | 3/3 |
-| 15 | só munição / barricada e armadilha / portão 2 + torre + 60 munição | 1/3 / 2/3 / 3/3 |
-| 22 | pistola 3 + defesas de nível 2 / SMG ou escopeta + tudo no máximo | 3/3 / 3/3 |
-| 29 | pistola 3 + defesas de nível 2 / escopeta + tudo no máximo | 2/3 / 3/3 |
+| Cauteloso (4 campanhas) | 69–77% | 14/16 |
+| Ganancioso (2 campanhas) | 33–41% | 4/8 |
 
 **Principais ajustes feitos:**
 - **Zumbis:** o Explosivo acende um pavio ao encostar (trocar de faixa
@@ -645,11 +646,18 @@ usa a arma branca:
   espiral.
 - **Defesa:** portão mais forte, zumbis causando 75% do dano nas estruturas
   e primeira horda menor.
+- **Economia da campanha:** o registro mostrou que quem limita a sucata é a
+  mochila (volta cheia em quase toda expedição) e que munição e energia
+  comiam a maior parte dela. Antes, até o robô cauteloso perdia todas as
+  defesas do dia 22 em diante. Agora: ataques a cada 9 dias (eram 7), a
+  horda cresce 0,3 por dia (era 0,5) e a munição sai 8 balas por 2 sucata
+  (eram 6 por 3).
 
 **Ainda não validado:**
-- **Economia da campanha:** nas campanhas de 30 dias, o robô chega às
-  defesas com pouca sucata e sem munição, e perde. Não dá para separar se é
-  o robô gastando mal ou a economia apertada.
+- **Economia com uma pessoa jogando:** o robô cauteloso vence quase todas as
+  defesas, mas ele luta pior e decide mais simples que um jogador. Jogue
+  algumas semanas e abra o `campaign_log.csv` (seção Save e configurações)
+  para ver se sobra ou falta sucata.
 - **Regiões avançadas:** o Centro e a Zona Industrial só foram ajustados
   com o robô.
 
@@ -755,6 +763,8 @@ RedShelterGodot/
 | --- | --- |
 | `user://save.json` | o jogo: recursos, dia, construções, armas e durabilidades, progressão, moral, moradores (traço, afinidade, pedido), mochila da morte, próximo ataque. Salvo ao fim de cada expedição e defesa, e a cada ação no abrigo. |
 | `user://settings.cfg` | volumes, tremor de câmera e dicas já vistas. Fica separado do save: um Novo Jogo não apaga as configurações. |
+| `user://campaign_log.csv` | registro da campanha para balanceamento: uma linha por expedição e por defesa (loot, gastos do dia, estoque, moral, horda prevista), separado por `;`. Começa de novo a cada Novo Jogo. |
+| `user://sandbox/` | save, configurações e registros dos robôs de `tests/` (rodam com `-- --sandbox` e não tocam no save de verdade). |
 
 - **Onde fica:** no Windows, `user://` é
   `%APPDATA%\Godot\app_userdata\Red Shelter\`.
