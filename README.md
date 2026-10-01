@@ -7,7 +7,7 @@ Survival runner mobile com abrigo. A sobrevivente corre sozinha por três
 faixas, desvia, pula, desliza, luta contra zumbis que a agarram e saqueia o
 que consegue carregar. De volta ao abrigo, os recursos viram construções,
 armas e moradores, e a cada semana uma horda ataca o portão. É o protótipo
-jogável do **GDD 0.6** (`../Red Shelter.MD`), feito com formas primitivas.
+jogável do **GDD 0.6.1** (`../Red Shelter.MD`), feito com formas primitivas.
 Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 
 | | |
@@ -783,7 +783,7 @@ As Fases 1 a 12 do roadmap estão concluídas. O que vem agora:
 | Item | GDD |
 | --- | --- |
 | **Fase 13 — Veículos**, em 4 etapas (V1 patins e skate · V2 bicicleta e moto · V3 mochila a jato · V4 furgão) | 63 |
-| **Fase 14 — Power-ups**, em 3 etapas (P1 Ímã, Tênis de mola e Escudo · P2 Telhados, Rampa e Adrenalina · P3 preparação e raros) | 64 |
+| **Fase 14 — Power-ups**, em 3 etapas (P1 Ímã, Sinalizador e Escudo · P2 Telhados, Rampa e Adrenalina · P3 preparação e raros) | 64 |
 | Jogar de verdade e ajustar os valores (economia da campanha, regiões avançadas, defesa) | — |
 | Trocar as primitivas por arte low-poly e o áudio sintetizado pelo definitivo; nada na lógica depende disso | 52 |
 | Rumor de local especial na preparação | 26 |
