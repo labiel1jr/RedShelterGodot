@@ -25,6 +25,10 @@ var _flame_timer := 0.0
 ## estava quando escolheu. Fica a mesma até trocar de faixa.
 var _magnet_side := -1
 var _magnet_from_lane := -1
+## Furgão: balas da metralhadora e a área que cobre as duas faixas.
+var turret_ammo_left := 0
+var _turret_timer := 0.0
+var _bumper: Area3D
 var _visual: Node3D
 var _flash_material: StandardMaterial3D
 
@@ -50,6 +54,19 @@ func mount(vehicle: VehicleData) -> bool:
 	heat = 0.0
 	_heat_warned = false
 	_magnet_from_lane = -1
+	turret_ammo_left = vehicle.turret_ammo
+	if vehicle.two_lanes:
+		player.set_two_lane(true)
+		_set_player_visible(false)
+		_bumper = Area3D.new()
+		var shape := CollisionShape3D.new()
+		var box := BoxShape3D.new()
+		box.size = Vector3(4.6, 2.4, 3.6)
+		shape.shape = box
+		shape.position = Vector3(0, 1.2, -0.4)
+		_bumper.add_child(shape)
+		_bumper.area_entered.connect(_on_bumper_area)
+		add_child(_bumper)
 	if vehicle.jetpack:
 		player.hold_to_fly = true
 		player.max_rise_speed = vehicle.max_rise_speed
@@ -83,6 +100,12 @@ func dismount(message: String) -> void:
 	player.lift = 0.0
 	player.gravity_scale = 1.0
 	player.ceiling = INF
+	if player.two_lane:
+		player.set_two_lane(false)
+		_set_player_visible(true)
+	if _bumper:
+		_bumper.queue_free()
+		_bumper = null
 	if _visual:
 		_visual.queue_free()
 		_visual = null
@@ -109,8 +132,100 @@ func _process(delta: float) -> void:
 		_update_jetpack(delta)
 		if not data:
 			return
+	if data.turret_ammo > 0:
+		_update_turret(delta)
 	if time_left <= 0.0:
 		dismount("%s: ACABOU" % data.display_name.to_upper())
+
+
+## Furgão: a metralhadora do teto atira sozinha no zumbi mais perto à
+## frente, em qualquer das 3 faixas.
+func _update_turret(delta: float) -> void:
+	_turret_timer -= delta
+	if _turret_timer > 0.0 or turret_ammo_left <= 0:
+		return
+	var best: Node3D = null
+	var best_ahead := data.turret_range
+	for zombie in get_tree().get_nodes_in_group("zombie"):
+		if not zombie.is_alive():
+			continue
+		var ahead: float = player.global_position.z - zombie.global_position.z
+		if ahead < 1.0 or ahead > best_ahead or absf(zombie.global_position.x) > 4.0:
+			continue
+		best = zombie
+		best_ahead = ahead
+	if not best:
+		return
+	_turret_timer = data.turret_interval
+	turret_ammo_left -= 1
+	var from := player.global_position + Vector3(0, 2.5, -1.0)
+	var world := player.get_parent()
+	Fx.tracer(world, from, best.global_position + Vector3.UP * 1.3 * best.data.size)
+	if turret_ammo_left % 3 == 0:
+		Fx.muzzle_flash(world, from)
+		AudioManager.play("shot", -10.0, 1.4, 0.05)
+	best.take_hit(data.turret_damage, false, 0.4)
+
+
+## Furgão: a área das duas faixas atropela, derruba obstáculos e pega loot.
+func _on_bumper_area(area: Area3D) -> void:
+	if not data:
+		return
+	if area.is_in_group("obstacle"):
+		hit_obstacle(area)
+	elif area.is_in_group("zombie"):
+		ram_zombie(area)
+	elif area.is_in_group("loot"):
+		area._on_body_entered(player)
+
+
+## Furgão: atravessa o obstáculo, pagando em HP. Retorna true se tratou.
+func hit_obstacle(obstacle: Node3D) -> bool:
+	if not data or not data.smashes_through:
+		return false
+	if obstacle.has_meta("smashed"):
+		return true
+	obstacle.set_meta("smashed", true)
+	var world := player.get_parent()
+	Fx.burst(world, obstacle.global_position + Vector3.UP, Color(0.5, 0.5, 0.5), 18, 6.0, 0.2)
+	AudioManager.play("crash", -2.0, 0.8)
+	obstacle.queue_free()
+	absorb(data.wall_cost if obstacle.kind == &"wall" else data.obstacle_cost)
+	return true
+
+
+## Furgão: atropela o zumbi (de qualquer tipo), pagando em HP. Retorna true
+## se tratou.
+func ram_zombie(zombie: Node3D) -> bool:
+	if not data or not data.smashes_through:
+		return false
+	if zombie.has_meta("rammed") or not zombie.is_alive():
+		return true
+	zombie.set_meta("rammed", true)
+	var vehicle := data
+	var cost := vehicle.ram_cost_weak
+	match zombie.data.attack:
+		ZombieData.Attack.EXPLODE:
+			cost = vehicle.ram_cost_explosive
+		ZombieData.Attack.SMASH:
+			cost = vehicle.ram_cost_brute
+		_:
+			if zombie.data.armor > 0:
+				cost = vehicle.ram_cost_armored
+	if zombie.data.attack == ZombieData.Attack.EXPLODE:
+		zombie.take_hit(vehicle.ram_damage, false)
+	else:
+		zombie.shove(vehicle.ram_damage)
+	absorb(cost)
+	return true
+
+
+## Dentro do furgão a personagem some (o furgão a cobre).
+func _set_player_visible(value: bool) -> void:
+	for path in ["MeshInstance3D", "KnifePivot", "GunPivot"]:
+		var node := player.get_node_or_null(path)
+		if node:
+			node.visible = value
 
 
 ## Segurar sobe e esquenta; soltar plana (gravidade menor na descida) e
@@ -342,6 +457,18 @@ static func build_visual(vehicle: VehicleData) -> Node3D:
 			_box(root, Vector3(0.46, 0.34, 1.3), Vector3(0, 0.55, 0), material)
 			_box(root, Vector3(0.36, 0.22, 0.5), Vector3(0, 0.82, -0.25), material)
 			_box(root, Vector3(0.72, 0.06, 0.06), Vector3(0, 1.0, -0.6), wheel_material)
+		&"furgao":
+			var metal := StandardMaterial3D.new()
+			metal.albedo_color = Color(0.45, 0.47, 0.5)
+			metal.metallic = 0.6
+			_box(root, Vector3(4.0, 1.9, 3.2), Vector3(0, 1.35, 0.3), material)
+			_box(root, Vector3(4.0, 1.3, 1.1), Vector3(0, 1.0, -1.85), material)
+			_box(root, Vector3(4.2, 0.8, 0.18), Vector3(0, 0.75, -2.5), metal)
+			for x in [-1.7, 1.7]:
+				for z in [-1.4, 1.2]:
+					_box(root, Vector3(0.4, 0.8, 0.8), Vector3(x, 0.4, z), wheel_material)
+			_box(root, Vector3(0.6, 0.45, 0.7), Vector3(0, 2.5, -0.6), metal)
+			_box(root, Vector3(0.14, 0.14, 1.0), Vector3(0, 2.55, -1.3), wheel_material)
 		&"jetpack":
 			_box(root, Vector3(0.5, 0.6, 0.28), Vector3(0, 1.25, 0.32), material)
 			for x in [-0.15, 0.15]:

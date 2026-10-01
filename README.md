@@ -7,15 +7,15 @@ Survival runner mobile com abrigo. A sobrevivente corre sozinha por três
 faixas, desvia, pula, desliza, luta contra zumbis que a agarram e saqueia o
 que consegue carregar. De volta ao abrigo, os recursos viram construções,
 armas e moradores, e a cada semana uma horda ataca o portão. É o protótipo
-jogável do **GDD 0.6.4** (`../Red Shelter.MD`), feito com formas primitivas.
+jogável do **GDD 0.7** (`../Red Shelter.MD`), feito com formas primitivas.
 Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 
 | | |
 | --- | --- |
 | **Engine** | Godot 4.7 · GDScript · renderer Mobile |
 | **Plataformas-alvo** | Android / iOS (testado no PC com teclado e mouse) |
-| **Estado** | Fases 1–12 concluídas · 13 e 14 planejadas |
-| **Próximo** | Fase 13 — Veículos, depois Fase 14 — Power-ups; em paralelo, jogar, balancear e trocar as primitivas por arte ([próximos passos](#próximos-passos)) |
+| **Estado** | Fases 1–13 concluídas · 14 planejada |
+| **Próximo** | Fase 14 — Power-ups; em paralelo, jogar, balancear e trocar as primitivas por arte ([próximos passos](#próximos-passos)) |
 
 ## Índice
 
@@ -86,7 +86,7 @@ desligadas ou reexibidas em **Configurações**.
 
 ## Status do roadmap
 
-Seção 58 do GDD. As Fases 1 a 12 estão concluídas; as Fases 13 e 14 estão planejadas.
+Seção 58 do GDD. As Fases 1 a 13 estão concluídas; a Fase 14 está planejada.
 
 | Fase | Conteúdo |
 | --- | --- |
@@ -102,7 +102,7 @@ Seção 58 do GDD. As Fases 1 a 12 estão concluídas; as Fases 13 e 14 estão p
 | 10 — Expedição viva | bifurcações, extração antecipada, Expedition Director, escopeta, SMG, facão, machado, katana, machado pesado |
 | 11 — Pessoas | traços de personalidade, afinidade, pedidos dos moradores |
 | 12 — Defesa | ataques ao abrigo, portão, barricadas, armadilhas, torres |
-| 13 — Veículos 🟡 V1–V3 | patins, skate, bicicleta de jornaleiro, moto, mochila a jato e furgão de destruição, cada um com HP e habilidade (seção 63) |
+| 13 — Veículos ✅ | patins, skate, bicicleta de jornaleiro, moto, mochila a jato e furgão de destruição, cada um com HP e habilidade (seção 63) |
 | 14 — Power-ups 📋 | 14 power-ups nos papéis dos de Subway Surfers: 5 na pista, 1 consumível, 2 na preparação e 6 raros (seção 64) |
 
 ## Cenas e fluxo
@@ -319,12 +319,14 @@ Alguns chunks trazem um veículo estacionado numa faixa livre, com o aviso
 | Skate | 50 | 20 s | +20% de velocidade; atravessa comuns e runners, que levam 40 e ficam para trás (8 de HP do skate cada) | não desliza; o Bruto quebra o skate | Bairro, Centro |
 | Bicicleta de jornaleiro | 60 | 25 s | +25% de velocidade; o toque (ou ATACAR) lança **dois jornais**, projéteis de 50 de dano: um na faixa dela e outro na do lado (na faixa do meio, para o lado com o zumbi mais perto); 20 lançamentos, sem gastar munição | sem armas; não desliza | Bairro, Mercado |
 | Mochila a jato | 50 | 30 s | +10% de velocidade; **segurar** o dedo (ou Espaço, ↑, W, botão do mouse) sobe até 6 m e passa por cima de tudo; soltar plana (gravidade 35% na descida); deslizar o dedo para o lado troca de faixa segurando; **ímã**: puxa o loot até 14 m à frente na faixa dela e numa faixa ao lado | **calor**: sobe 28% por segundo segurando e desce 18% soltando; em 100% explode (20 de dano direto nela e 80 nos zumbis a 4 m); sem armas; ruído de 0,5 por segundo | Zona Industrial, Hospital (nível 6+) |
+| Furgão de destruição | 300 | 30 s | +15% de velocidade; **ocupa duas faixas** (só duas posições: faixas 1 e 2 ou 2 e 3) e **não é parado**: atravessa carros (25 de HP), barreiras e placas (10) e zumbis (comum e runner 5, Blindado 15, Bruto 30, Explosivo 15 + a explosão), que levam 200; **metralhadora no teto** atira sozinha no zumbi mais perto à frente nas 3 faixas (25 de dano, 150 balas próprias); pega o loot das duas faixas | sem pular, deslizar nem as armas dela; troca de lado devagar; ruído de 2 por segundo; para antes de uma bifurcação (não cabe num ramo) | Zona Industrial, nível 7+, expedições de 1,5 km ou mais (~1 a cada 6 expedições longas); a câmera sobe e recua enquanto ela dirige |
 | Moto | 100 | 25 s (+5 s a cada combustível coletado) | +40% de velocidade, pulo 2× (passa por cima dos carros, que têm 2,5 m); derruba comuns e runners sem dano na moto | sem armas; não desliza; ruído de 1,2 por segundo; Bruto, Blindado e Explosivo ferem a moto | Centro, Zona Industrial |
 
 Na primeira vez em cada veículo, uma dica explica o que ele faz. Na faixa do
 meio, o ímã da mochila a jato escolhe o lado com o loot mais perto e fica
 com ele até ela trocar de faixa. A câmera acompanha metade da altura da
-personagem, para o pulo e o voo aparecerem na tela. O furgão vem na etapa V4.
+personagem, para o pulo e o voo aparecerem na tela. O ramo **Garagens** das bifurcações tem 35% de chance de veículo por chunk
+(5 vezes a normal) e traz moto e furgão em qualquer região.
 
 ## Combate
 
@@ -761,7 +763,7 @@ RedShelterGodot/
 │   ├── regions/              bairro, mercado, centro, hospital, industrial
 │   ├── shelter/shelter.tres  ShelterData (regras do abrigo e da defesa)
 │   ├── traits/               optimist, pessimist, loyal, selfish, fearful
-│   ├── vehicles/             patins, skate, bicicleta, moto, jetpack
+│   ├── vehicles/             patins, skate, bicicleta, moto, jetpack, furgao
 │   ├── weapons/              knife_1-4, machete, axe, katana, heavy_axe,
 │   │                         pistol_1-3, shotgun_1-3, smg_1-3, *_track
 │   ├── world.tres            WorldData
@@ -811,11 +813,10 @@ RedShelterGodot/
 
 ## Próximos passos
 
-As Fases 1 a 12 do roadmap estão concluídas. O que vem agora:
+As Fases 1 a 13 do roadmap estão concluídas. O que vem agora:
 
 | Item | GDD |
 | --- | --- |
-| **Fase 13 — Veículos**: V1 (patins e skate), V2 (bicicleta e moto) e V3 (mochila a jato) ✅; falta V4 (furgão) | 63 |
 | **Fase 14 — Power-ups**, em 3 etapas (P1 Ímã, Sinalizador e Escudo · P2 Telhados, Rampa e Adrenalina · P3 preparação e raros) | 64 |
 | Jogar de verdade e ajustar os valores (economia da campanha, regiões avançadas, defesa) | — |
 | Trocar as primitivas por arte low-poly e o áudio sintetizado pelo definitivo; nada na lógica depende disso | 52 |

@@ -43,6 +43,9 @@ var max_rise_speed := 7.0
 var gravity_scale := 1.0
 var ceiling := INF
 var _drag_moved := false
+## Furgão: ocupa duas faixas; `current_lane` vira 0 (faixas 1 e 2) ou 2
+## (faixas 2 e 3) e a personagem fica entre as duas.
+var two_lane := false
 
 var _mesh_base_y := 1.0
 var _run_cycle := 0.0
@@ -158,7 +161,22 @@ func _fly_input(event: InputEvent) -> bool:
 	return false
 
 
+## Liga ou desliga o modo de duas faixas (furgão).
+func set_two_lane(enabled: bool) -> void:
+	two_lane = enabled
+	if enabled:
+		current_lane = 0 if global_position.x <= 0.0 else 2
+		target_x = -LANE_WIDTH / 2.0 if current_lane == 0 else LANE_WIDTH / 2.0
+	else:
+		current_lane = 1
+		target_x = _lane_x(1)
+
+
 func _change_lane(direction: int) -> void:
+	if two_lane:
+		current_lane = 0 if direction < 0 else 2
+		target_x = -LANE_WIDTH / 2.0 if current_lane == 0 else LANE_WIDTH / 2.0
+		return
 	var lane := clampi(current_lane + direction, 0, 2)
 	# Seção 24: a divisória da bifurcação bloqueia a faixa do meio.
 	if lane == blocked_lane:

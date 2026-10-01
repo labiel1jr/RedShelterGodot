@@ -21,6 +21,9 @@ extends Resource
 @export var lane_speed_multiplier := 1.0
 ## Sem deslize, as placas altas obrigam a trocar de faixa.
 @export var can_slide := true
+## Somado ao afastamento da câmera montada (o furgão sobe e recua a câmera
+## para não tapar a pista).
+@export var camera_offset := Vector3.ZERO
 
 @export_group("Zumbis")
 ## Dano no veículo quando um zumbi que agarra encosta (ele é empurrado e não
@@ -69,6 +72,28 @@ extends Resource
 @export var magnet_range := 14.0
 @export var magnet_speed := 20.0
 
+@export_group("Furgão de destruição")
+## Ocupa duas faixas: só duas posições, esquerda (faixas 1 e 2) e direita
+## (faixas 2 e 3).
+@export var two_lanes := false
+## Não é parado: atravessa obstáculos e zumbis, pagando em HP.
+@export var smashes_through := false
+@export var wall_cost := 25
+@export var obstacle_cost := 10
+## Dano nos zumbis atropelados e o custo em HP de cada tipo.
+@export var ram_damage := 200
+@export var ram_cost_weak := 5
+@export var ram_cost_armored := 15
+@export var ram_cost_brute := 30
+## O Explosivo explode no contato (os 25 da explosão vêm a mais).
+@export var ram_cost_explosive := 15
+## Metralhadora no teto: atira sozinha no zumbi mais perto à frente nas 3
+## faixas, com balas próprias.
+@export var turret_ammo := 0
+@export var turret_damage := 25
+@export var turret_interval := 0.12
+@export var turret_range := 30.0
+
 @export_group("Combustível")
 ## Moto: segundos a mais para cada unidade de combustível coletada montada.
 @export var fuel_time_bonus := 0.0
@@ -85,8 +110,9 @@ extends Resource
 @export var min_expedition_distance := 0.0
 
 
-func can_spawn(region_id: StringName, level: int, expedition_distance: float) -> bool:
-	return (regions.is_empty() or region_id in regions) and level >= min_level \
+## `anywhere`: o ramo da bifurcação libera o veículo fora das regiões dele.
+func can_spawn(region_id: StringName, level: int, expedition_distance: float, anywhere := false) -> bool:
+	return (anywhere or regions.is_empty() or region_id in regions) and level >= min_level \
 		and expedition_distance >= min_expedition_distance
 
 

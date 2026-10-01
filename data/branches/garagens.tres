@@ -16,3 +16,5 @@ chunks = Array[ExtResource("1_288rl")]([ExtResource("2_q22tw"), ExtResource("3_j
 loot_weights = PackedFloat32Array(0.3, 0.5, 2.5, 0.6, 0.6, 0, 1.2)
 loot_multiplier = 1.3
 zombie_multiplier = 1.2
+vehicle_chance = 0.35
+extra_vehicles = Array[StringName]([&"moto", &"furgao"])

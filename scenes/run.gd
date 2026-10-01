@@ -215,6 +215,10 @@ func _physics_process(_delta: float) -> void:
 ## caminho; na faixa do meio ela é empurrada para o ramo de menor perigo.
 func _update_forks() -> void:
 	var distance := distance_travelled()
+	# O furgão (duas faixas) não cabe num ramo: para antes da bifurcação.
+	if vehicle and vehicle.is_mounted() and vehicle.data.two_lanes and not _pending_forks.is_empty() \
+			and distance > _pending_forks[0].decision_distance - 30.0:
+		vehicle.dismount("FURGÃO: A RUA SE DIVIDE")
 	if _divider_end > 0.0 and distance > _divider_end:
 		player.blocked_lane = -1
 		_divider_end = -1.0
@@ -319,12 +323,15 @@ func _place_vehicle(instance: Node3D, chunk: RouteGenerator.RouteChunk) -> void:
 			return
 	var rng := RandomNumberGenerator.new()
 	rng.seed = chunk.chunk_seed + 6311
-	if rng.randf() >= world.vehicle_chance:
+	# Seção 24: alguns ramos (Garagens) têm mais veículos.
+	var chance: float = chunk.mods.get("vehicle_chance", -1.0)
+	if rng.randf() >= (chance if chance >= 0.0 else world.vehicle_chance):
 		return
 	var options: Array[VehicleData] = []
 	var weights := PackedFloat32Array()
+	var extra: Array = chunk.mods.get("extra_vehicles", [])
 	for candidate in world.vehicles:
-		if candidate.can_spawn(chunk_streamer.region.id, GameManager.level, target_distance):
+		if candidate.can_spawn(chunk_streamer.region.id, GameManager.level, target_distance, candidate.id in extra):
 			options.append(candidate)
 			weights.append(candidate.spawn_weight)
 	if options.is_empty():
@@ -336,16 +343,23 @@ func _place_vehicle(instance: Node3D, chunk: RouteGenerator.RouteChunk) -> void:
 	for child in instance.get_children():
 		if child.is_in_group("obstacle") and absf(child.position.z - local_z) < 3.0:
 			blocked[roundi(child.position.x / ChunkPopulator.LANE_WIDTH) + 1] = true
-	var free_lanes: Array[int] = []
-	for lane in 3:
-		if not blocked.has(lane):
-			free_lanes.append(lane)
-	if free_lanes.is_empty():
+	# Posições possíveis em X: uma faixa livre, ou o meio de duas faixas
+	# livres para o furgão.
+	var spots: Array[float] = []
+	if chosen.two_lanes:
+		for pair in [[0, 1], [1, 2]]:
+			if not blocked.has(pair[0]) and not blocked.has(pair[1]):
+				spots.append((pair[0] + pair[1] - 2) * ChunkPopulator.LANE_WIDTH / 2.0)
+	else:
+		for lane in 3:
+			if not blocked.has(lane):
+				spots.append((lane - 1) * ChunkPopulator.LANE_WIDTH)
+	if spots.is_empty():
 		return
 	var pickup := VehiclePickup.new()
 	pickup.data = chosen
 	instance.add_child(pickup)
-	pickup.position = Vector3((free_lanes[rng.randi() % free_lanes.size()] - 1) * ChunkPopulator.LANE_WIDTH, 0.0, local_z)
+	pickup.position = Vector3(spots[rng.randi() % spots.size()], 0.0, local_z)
 	_last_vehicle_at = start - local_z
 	# O aviso aparece WARN_AHEAD antes do ponto agendado.
 	events.schedule_banner("%s À FRENTE" % chosen.display_name.to_upper(), chosen.color, _last_vehicle_at - world.vehicle_sign_distance + events.WARN_AHEAD)

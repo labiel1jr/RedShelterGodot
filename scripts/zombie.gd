@@ -251,6 +251,8 @@ func _on_body_entered(entered: Node3D) -> void:
 
 	# Seção 63: montada, o veículo decide o encontro.
 	var vehicle := entered.get_node_or_null("Vehicle")
+	if vehicle and vehicle.ram_zombie(self):
+		return
 	if data.attack == ZombieData.Attack.SMASH:
 		if vehicle and vehicle.on_smash():
 			_smash_cooldown = SMASH_COOLDOWN

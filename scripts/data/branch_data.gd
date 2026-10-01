@@ -30,6 +30,13 @@ extends Resource
 ## completa. Só nas expedições Longa e Especial.
 @export var early_extraction := false
 
+@export_group("Veículos (seção 63)")
+## Chance de veículo em cada chunk do ramo (< 0 = a do mundo).
+@export_range(-1.0, 1.0) var vehicle_chance := -1.0
+## Veículos que aparecem no ramo mesmo fora das regiões deles (ex.: moto e
+## furgão nas Garagens). Nível e distância mínima continuam valendo.
+@export var extra_vehicles: Array[StringName] = []
+
 
 ## "perigo ●●○"
 func danger_text() -> String:
@@ -42,4 +49,6 @@ func mods() -> Dictionary:
 		"loot_multiplier": loot_multiplier,
 		"zombie_multiplier": zombie_multiplier,
 		"loot_amount_bonus": loot_amount_bonus,
+		"vehicle_chance": vehicle_chance,
+		"extra_vehicles": extra_vehicles,
 	}

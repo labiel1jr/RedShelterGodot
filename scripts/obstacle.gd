@@ -16,6 +16,10 @@ func _ready() -> void:
 func _on_body_entered(body: Node3D) -> void:
 	if not body.is_in_group("player"):
 		return
+	# Seção 63: o furgão atravessa, pagando em HP.
+	var vehicle := body.get_node_or_null("Vehicle")
+	if vehicle and vehicle.hit_obstacle(self):
+		return
 
 	var health := body.get_node_or_null("Health")
 	if health:

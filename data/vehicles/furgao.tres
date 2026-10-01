@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="VehicleData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/vehicle_data.gd" id="1_vd"]
+
+[resource]
+script = ExtResource("1_vd")
+id = &"furgao"
+display_name = "Furgão de destruição"
+color = Color(0.78, 0.8, 0.5, 1)
+max_hp = 300
+duration = 30.0
+hint = "FURGÃO: ocupa duas faixas e atravessa tudo, pagando em HP. A metralhadora do teto atira sozinha. Deslize para trocar de lado."
+speed_multiplier = 1.15
+jump_multiplier = 0.0
+lane_speed_multiplier = 0.5
+camera_offset = Vector3(0, 3, 3.5)
+can_slide = false
+disables_weapons = true
+two_lanes = true
+smashes_through = true
+turret_ammo = 150
+noise_per_second = 2.0
+regions = Array[StringName]([&"industrial"])
+spawn_weight = 0.12
+min_level = 7
+min_expedition_distance = 1500.0

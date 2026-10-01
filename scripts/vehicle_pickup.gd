@@ -13,14 +13,16 @@ func _ready() -> void:
 	add_to_group("vehicle_pickup")
 	var shape := CollisionShape3D.new()
 	var box := BoxShape3D.new()
-	box.size = Vector3(1.6, 2.0, 1.6)
+	# O furgão, de duas faixas, monta em quem passar em qualquer uma delas.
+	box.size = Vector3(4.4, 2.2, 3.0) if data.two_lanes else Vector3(1.6, 2.0, 1.6)
 	shape.shape = box
 	shape.position.y = 1.0
 	add_child(shape)
 
 	_visual = PlayerVehicle.build_visual(data)
-	_visual.scale = Vector3.ONE * 1.8
-	_visual.position.y = 0.35
+	if not data.two_lanes:
+		_visual.scale = Vector3.ONE * 1.8
+		_visual.position.y = 0.35
 	add_child(_visual)
 	var material: StandardMaterial3D = _visual.get_meta("material")
 	material.emission_energy_multiplier = 0.9
@@ -32,14 +34,15 @@ func _ready() -> void:
 	label.outline_size = 12
 	label.pixel_size = 0.01
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	label.position.y = 1.7
+	label.position.y = 3.4 if data.two_lanes else 1.7
 	add_child(label)
 
 	body_entered.connect(_on_body_entered)
 
 
 func _process(delta: float) -> void:
-	_visual.rotate_y(1.5 * delta)
+	if not data.two_lanes:
+		_visual.rotate_y(1.5 * delta)
 
 
 func _on_body_entered(body: Node3D) -> void:

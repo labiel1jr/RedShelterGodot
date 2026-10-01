@@ -15,6 +15,8 @@ extends Camera3D
 @export var shake_decay := 1.8
 
 var target: Node3D
+## Afastamento extra do veículo montado (seção 63), suavizado.
+var _vehicle_offset := Vector3.ZERO
 var _trauma := 0.0
 var _last_hp := -1
 
@@ -39,7 +41,10 @@ func _process(delta: float) -> void:
 
 	var followed := target.global_position
 	followed.y *= vertical_follow
-	var desired := followed + offset
+	var vehicle := target.get_node_or_null("Vehicle")
+	var wanted: Vector3 = vehicle.data.camera_offset if vehicle and vehicle.is_mounted() else Vector3.ZERO
+	_vehicle_offset = _vehicle_offset.lerp(wanted, minf(1.0, 3.0 * delta))
+	var desired := followed + offset + _vehicle_offset
 	global_position = global_position.lerp(desired, follow_speed * delta)
 	look_at(followed + Vector3(0, 1.0, -look_ahead), Vector3.UP)
 

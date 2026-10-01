@@ -103,6 +103,8 @@ func _process(delta: float) -> void:
 		vehicle_label.text = "%s  ·  HP %d/%d  ·  %d s" % [vehicle.data.display_name.to_upper(), maxi(0, vehicle.hp), vehicle.data.max_hp, ceili(vehicle.time_left)]
 		if vehicle.data.newspapers > 0:
 			vehicle_label.text += "  ·  jornais %d" % vehicle.newspapers_left
+		if vehicle.data.turret_ammo > 0:
+			vehicle_label.text += "  ·  balas %d" % vehicle.turret_ammo_left
 		if vehicle.data.jetpack:
 			vehicle_label.text += "  ·  calor %d%%" % roundi(vehicle.heat)
 			if vehicle.heat >= 80.0:
