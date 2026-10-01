@@ -7,7 +7,7 @@ Survival runner mobile com abrigo. A sobrevivente corre sozinha por três
 faixas, desvia, pula, desliza, luta contra zumbis que a agarram e saqueia o
 que consegue carregar. De volta ao abrigo, os recursos viram construções,
 armas e moradores, e a cada semana uma horda ataca o portão. É o protótipo
-jogável do **GDD 0.5.2** (`../Red Shelter.MD`), feito com formas primitivas.
+jogável do **GDD 0.6** (`../Red Shelter.MD`), feito com formas primitivas.
 Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 
 | | |
@@ -15,7 +15,7 @@ Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 | **Engine** | Godot 4.7 · GDScript · renderer Mobile |
 | **Plataformas-alvo** | Android / iOS (testado no PC com teclado e mouse) |
 | **Estado** | Roadmap do GDD completo: Fases 1–12 |
-| **Próximo** | Jogar de verdade, balancear e trocar as primitivas por arte ([próximos passos](#próximos-passos)) |
+| **Próximo** | Fase 13 — Veículos, depois Fase 14 — Power-ups; em paralelo, jogar, balancear e trocar as primitivas por arte ([próximos passos](#próximos-passos)) |
 
 ## Índice
 
@@ -86,7 +86,7 @@ desligadas ou reexibidas em **Configurações**.
 
 ## Status do roadmap
 
-Seção 58 do GDD. Todas as fases estão concluídas.
+Seção 58 do GDD. As Fases 1 a 12 estão concluídas; as Fases 13 e 14 estão planejadas.
 
 | Fase | Conteúdo |
 | --- | --- |
@@ -102,6 +102,8 @@ Seção 58 do GDD. Todas as fases estão concluídas.
 | 10 — Expedição viva | bifurcações, extração antecipada, Expedition Director, escopeta, SMG, facão, machado, katana, machado pesado |
 | 11 — Pessoas | traços de personalidade, afinidade, pedidos dos moradores |
 | 12 — Defesa | ataques ao abrigo, portão, barricadas, armadilhas, torres |
+| 13 — Veículos 📋 | patins, skate, bicicleta de jornaleiro, moto, mochila a jato e furgão de destruição, cada um com HP e habilidade (seção 63) |
+| 14 — Power-ups 📋 | 14 power-ups nos papéis dos de Subway Surfers: 5 na pista, 1 consumível, 2 na preparação e 6 raros (seção 64) |
 
 ## Cenas e fluxo
 
@@ -776,10 +778,12 @@ RedShelterGodot/
 
 ## Próximos passos
 
-O roadmap do GDD está completo. O que falta:
+As Fases 1 a 12 do roadmap estão concluídas. O que vem agora:
 
 | Item | GDD |
 | --- | --- |
+| **Fase 13 — Veículos**, em 4 etapas (V1 patins e skate · V2 bicicleta e moto · V3 mochila a jato · V4 furgão) | 63 |
+| **Fase 14 — Power-ups**, em 3 etapas (P1 Ímã, Tênis de mola e Escudo · P2 Telhados, Rampa e Adrenalina · P3 preparação e raros) | 64 |
 | Jogar de verdade e ajustar os valores (economia da campanha, regiões avançadas, defesa) | — |
 | Trocar as primitivas por arte low-poly e o áudio sintetizado pelo definitivo; nada na lógica depende disso | 52 |
 | Rumor de local especial na preparação | 26 |
