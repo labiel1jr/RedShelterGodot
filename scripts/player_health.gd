@@ -14,14 +14,33 @@ var current_hp := 100
 # Dano fracionário acumulado, para o multiplicador valer também nos ticks de
 # 1 HP do agarrão.
 var _pending_damage := 0.0
+## Seção 63: depois de cair do veículo, um instante sem dano.
+var _invulnerable := 0.0
 
 
 func _ready() -> void:
 	current_hp = max_hp
 
 
+func _process(delta: float) -> void:
+	if _invulnerable > 0.0:
+		_invulnerable -= delta
+
+
+func make_invulnerable(seconds: float) -> void:
+	_invulnerable = maxf(_invulnerable, seconds)
+
+
+func is_invulnerable() -> bool:
+	return _invulnerable > 0.0
+
+
 func take_damage(amount: int) -> void:
-	if current_hp <= 0:
+	if current_hp <= 0 or _invulnerable > 0.0:
+		return
+	# Montada, o dano vai para o veículo (seção 63).
+	var vehicle := get_parent().get_node_or_null("Vehicle")
+	if vehicle and vehicle.absorb(amount):
 		return
 
 	_pending_damage += amount * damage_multiplier

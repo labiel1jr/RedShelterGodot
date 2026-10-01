@@ -7,7 +7,7 @@ Survival runner mobile com abrigo. A sobrevivente corre sozinha por três
 faixas, desvia, pula, desliza, luta contra zumbis que a agarram e saqueia o
 que consegue carregar. De volta ao abrigo, os recursos viram construções,
 armas e moradores, e a cada semana uma horda ataca o portão. É o protótipo
-jogável do **GDD 0.6.1** (`../Red Shelter.MD`), feito com formas primitivas.
+jogável do **GDD 0.6.2** (`../Red Shelter.MD`), feito com formas primitivas.
 Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 
 | | |
@@ -102,7 +102,7 @@ Seção 58 do GDD. As Fases 1 a 12 estão concluídas; as Fases 13 e 14 estão p
 | 10 — Expedição viva | bifurcações, extração antecipada, Expedition Director, escopeta, SMG, facão, machado, katana, machado pesado |
 | 11 — Pessoas | traços de personalidade, afinidade, pedidos dos moradores |
 | 12 — Defesa | ataques ao abrigo, portão, barricadas, armadilhas, torres |
-| 13 — Veículos 📋 | patins, skate, bicicleta de jornaleiro, moto, mochila a jato e furgão de destruição, cada um com HP e habilidade (seção 63) |
+| 13 — Veículos 🟡 V1 | patins, skate, bicicleta de jornaleiro, moto, mochila a jato e furgão de destruição, cada um com HP e habilidade (seção 63) |
 | 14 — Power-ups 📋 | 14 power-ups nos papéis dos de Subway Surfers: 5 na pista, 1 consumível, 2 na preparação e 6 raros (seção 64) |
 
 ## Cenas e fluxo
@@ -295,6 +295,28 @@ seed e distância, então a rota é idêntica.
 - **Ao encostar:** recupera o que couber na mochila atual.
 - **Prazo:** morrer de novo troca a mochila antiga pela nova; não voltar em
   3 expedições faz ela sumir.
+
+### Veículos (seção 63)
+
+Alguns chunks trazem um veículo estacionado numa faixa livre, com o aviso
+"PATINS À FRENTE" uns 40 m antes. Para montar, basta encostar.
+
+- **HP próprio:** montada, todo dano (batidas, golpes, explosões) vai para o
+  veículo. O HUD mostra o HP e o tempo restante.
+- **Fim:** quando o HP ou o tempo acaba, ela cai na faixa sem dano e fica 1 s
+  invulnerável.
+- **Agarrão:** ninguém agarra a personagem montada; o zumbi bate no veículo
+  (10 de dano) e fica para trás.
+- **Onde aparece:** nunca nos primeiros 120 m (ou na fase Calma, o que for
+  maior), nos últimos 150 m nem perto de uma bifurcação; no máximo um a cada
+  200 m. Chance de 7% por chunk elegível, sorteada pela seed do chunk.
+
+| Veículo | HP | Duração | Habilidade | Fraqueza | Onde |
+| --- | --: | --- | --- | --- | --- |
+| Patins | 40 | 20 s | +15% de velocidade, pulo 1,6× mais alto, troca de faixa 30% mais rápida | um agarrão quebra os patins (e o zumbi agarra) | Bairro, Centro |
+| Skate | 50 | 20 s | +20% de velocidade; atravessa comuns e runners, que levam 40 e ficam para trás (8 de HP do skate cada) | não desliza; o Bruto quebra o skate | Bairro, Centro |
+
+Bicicleta, moto, mochila a jato e furgão vêm nas próximas etapas da Fase 13.
 
 ## Combate
 
@@ -682,6 +704,7 @@ Quase tudo é dado (`.tres`) editável no Inspector:
 | **Criar um tipo de zumbi** | Novo `ZombieData` em `data/zombies/` (HP, velocidades, ataque GRAB/SMASH/EXPLODE, armadura, XP, cor, tamanho), em `zombie_types` da região com o peso em `zombie_weights`. Para a defesa, também em `horde_zombies` do `shelter.tres`. |
 | **Criar uma arma** | Um `WeaponData` (branca) ou `RangedWeaponData` (fogo, com `pellets`, `spread_lanes`, `burst`) por nível, um `WeaponTrack` (`start_level` 0 = fabricar) incluído em `weapon_tracks` do `shelter.tres`. |
 | **Criar uma construção** | Novo `BuildingData` em `data/buildings/` (categoria, custos por nível, Oficina exigida, efeito), incluído em `buildings` do `shelter.tres`. Se produz algo, some a linha em `scripts/shelter/production.gd`; para aparecer no abrigo 3D, crie o nó em `scenes/shelter.tscn`. |
+| **Criar um veículo** | Novo `VehicleData` em `data/vehicles/` (HP, duração, velocidade, pulo, troca de faixa, deslize, regras com zumbis, ruído, regiões, nível), incluído em `vehicles` de `data/world.tres`. O visual com primitivas fica em `PlayerVehicle.build_visual`. |
 | **Criar um traço** | Novo `TraitData` em `data/traits/` (perdas de moral, moral por dia, bônus da profissão, comida a mais, produção, nunca vai embora), incluído em `traits` de `data/world.tres`. |
 | **Ajustar a defesa** | Grupo "Defesa do abrigo" do `shelter.tres` (agenda, horda, perdas, torres, reforço) e as construções `gate`, `barricades`, `traps` e `towers`. |
 | **Trocar um som** | Substitua o `.wav` em `audio/` mantendo o nome. |
@@ -703,7 +726,7 @@ Quase tudo é dado (`.tres`) editável no Inspector:
 | Grupo | Classes |
 | --- | --- |
 | Armas | `WeaponData` (branca), `RangedWeaponData` (fogo), `WeaponTrack` (níveis de uma arma) |
-| Expedição | `WorldData`, `RegionData`, `ChunkData`, `ZombieData`, `EventData`, `BranchData` |
+| Expedição | `WorldData`, `RegionData`, `ChunkData`, `ZombieData`, `EventData`, `BranchData`, `VehicleData` |
 | Abrigo | `ShelterData` (regras), `BuildingData` |
 | Pessoas | `ProfessionData`, `TraitData` |
 | Progressão | `ProgressionData`, `AttributeData`, `PerkData` |
@@ -730,6 +753,7 @@ RedShelterGodot/
 │   ├── regions/              bairro, mercado, centro, hospital, industrial
 │   ├── shelter/shelter.tres  ShelterData (regras do abrigo e da defesa)
 │   ├── traits/               optimist, pessimist, loyal, selfish, fearful
+│   ├── vehicles/             patins, skate
 │   ├── weapons/              knife_1-4, machete, axe, katana, heavy_axe,
 │   │                         pistol_1-3, shotgun_1-3, smg_1-3, *_track
 │   ├── world.tres            WorldData
@@ -747,7 +771,8 @@ RedShelterGodot/
 │   ├── player_controller.gd, player_health.gd, player_combat.gd
 │   ├── camera_follow.gd, run_hud.gd, fx.gd
 │   ├── zombie.gd, obstacle.gd, loot_pickup.gd, extraction_zone.gd,
-│   │   death_bag.gd, survivor_npc.gd
+│   │   death_bag.gd, survivor_npc.gd, player_vehicle.gd, vehicle_pickup.gd,
+│   │   campaign_log.gd, user_paths.gd
 │   ├── expedition/           route_generator, chunk_populator, chunk_streamer,
 │   │                         expedition_events, expedition_director,
 │   │                         mesh_merger, tutorial
@@ -782,7 +807,7 @@ As Fases 1 a 12 do roadmap estão concluídas. O que vem agora:
 
 | Item | GDD |
 | --- | --- |
-| **Fase 13 — Veículos**, em 4 etapas (V1 patins e skate · V2 bicicleta e moto · V3 mochila a jato · V4 furgão) | 63 |
+| **Fase 13 — Veículos**: V1 (patins e skate) ✅; faltam V2 (bicicleta e moto), V3 (mochila a jato) e V4 (furgão) | 63 |
 | **Fase 14 — Power-ups**, em 3 etapas (P1 Ímã, Sinalizador e Escudo · P2 Telhados, Rampa e Adrenalina · P3 preparação e raros) | 64 |
 | Jogar de verdade e ajustar os valores (economia da campanha, regiões avançadas, defesa) | — |
 | Trocar as primitivas por arte low-poly e o áudio sintetizado pelo definitivo; nada na lógica depende disso | 52 |

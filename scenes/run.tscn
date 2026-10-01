@@ -346,6 +346,18 @@ theme_override_colors/font_color = Color(0.55, 0.8, 1, 1)
 theme_override_font_sizes/font_size = 18
 text = "XP: 0"
 
+[node name="VehicleLabel" type="Label" parent="HUD"]
+visible = false
+layout_mode = 0
+offset_left = 20.0
+offset_top = 262.0
+offset_right = 420.0
+offset_bottom = 290.0
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+text = "PATINS  ·  HP 40/40  ·  20 s"
+
 [node name="EventBanner" type="Label" parent="HUD"]
 layout_mode = 1
 anchors_preset = 10

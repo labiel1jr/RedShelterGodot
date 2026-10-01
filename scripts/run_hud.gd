@@ -30,6 +30,7 @@ const HP_STATES := [
 @onready var tutorial_hint: Label = $TutorialHint
 @onready var pause_button: Button = $PauseButton
 @onready var medkit_button: Button = $MedkitButton
+@onready var vehicle_label: Label = $VehicleLabel
 
 ## Abreviações do loot além de comida, água e sucata (seção 62).
 const EXTRA_LOOT := [["components", "Comp."], ["medicine", "Remédio"], ["fuel", "Comb."]]
@@ -94,6 +95,13 @@ func _process(delta: float) -> void:
 	noise_bar.value = run_manager.noise
 
 	xp_label.text = "XP: %d (se extrair)" % run_manager.xp_if_extracted()
+
+	# Seção 63: HP e tempo do veículo montado.
+	var vehicle: PlayerVehicle = run_manager.vehicle
+	vehicle_label.visible = vehicle != null and vehicle.is_mounted()
+	if vehicle_label.visible:
+		vehicle_label.text = "%s  ·  HP %d/%d  ·  %d s" % [vehicle.data.display_name.to_upper(), maxi(0, vehicle.hp), vehicle.data.max_hp, ceili(vehicle.time_left)]
+		vehicle_label.modulate = vehicle.data.color
 
 	var carried: float = run_manager.carried_weight()
 	var capacity: float = run_manager.backpack_capacity()

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="VehicleData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/vehicle_data.gd" id="1_vd"]
+
+[resource]
+script = ExtResource("1_vd")
+id = &"skate"
+display_name = "Skate"
+color = Color(0.95, 0.75, 0.2, 1)
+max_hp = 50
+duration = 20.0
+speed_multiplier = 1.2
+can_slide = false
+contact_damage = 10
+passes_weak_zombies = true
+weak_zombie_cost = 8
+knock_down_damage = 40
+smash_breaks = true
+regions = Array[StringName]([&"bairro", &"centro"])

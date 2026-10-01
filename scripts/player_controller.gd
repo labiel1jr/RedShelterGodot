@@ -30,6 +30,11 @@ var touch_active := false
 var speed_multiplier := 1.0
 ## Faixa que não dá para entrar (-1 = nenhuma), ex.: a divisória da bifurcação.
 var blocked_lane := -1
+## Seção 63: definidos pelo veículo montado (PlayerVehicle).
+var vehicle_speed := 1.0
+var jump_multiplier := 1.0
+var lane_speed_multiplier := 1.0
+var can_slide := true
 
 var _mesh_base_y := 1.0
 var _run_cycle := 0.0
@@ -52,7 +57,7 @@ func _process(delta: float) -> void:
 	# Animação com primitivas: passada (sobe e desce), inclinação para frente,
 	# para o lado na troca de faixa, e esticada no pulo.
 	var grounded := is_on_floor()
-	_run_cycle += delta * forward_speed * speed_multiplier
+	_run_cycle += delta * forward_speed * speed_multiplier * vehicle_speed
 	var bob := absf(sin(_run_cycle * 1.1)) * 0.12 if grounded and not is_sliding else 0.0
 	mesh_instance.position.y = _mesh_base_y + bob
 	mesh_instance.rotation.z = clampf(-velocity.x * 0.04, -0.35, 0.35)
@@ -70,12 +75,12 @@ func _physics_process(delta: float) -> void:
 	else:
 		vertical_velocity += GRAVITY * delta
 
-	var smoothed_x := lerpf(global_position.x, target_x, lane_change_speed * delta)
+	var smoothed_x := lerpf(global_position.x, target_x, lane_change_speed * lane_speed_multiplier * delta)
 	var delta_x := smoothed_x - global_position.x
 
 	velocity.x = delta_x / maxf(delta, 0.0001)
 	velocity.y = vertical_velocity
-	velocity.z = -forward_speed * speed_multiplier
+	velocity.z = -forward_speed * speed_multiplier * vehicle_speed
 
 	move_and_slide()
 
@@ -125,11 +130,11 @@ func _lane_x(lane: int) -> float:
 func _jump() -> void:
 	if not is_on_floor() or is_sliding:
 		return
-	vertical_velocity = sqrt(jump_height * 2.0 * -GRAVITY)
+	vertical_velocity = sqrt(jump_height * jump_multiplier * 2.0 * -GRAVITY)
 
 
 func _slide() -> void:
-	if is_sliding or not is_on_floor():
+	if is_sliding or not is_on_floor() or not can_slide:
 		return
 	is_sliding = true
 	slide_timer = slide_duration

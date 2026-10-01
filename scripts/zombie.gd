@@ -249,7 +249,12 @@ func _on_body_entered(entered: Node3D) -> void:
 	if not entered.is_in_group("player") or state == State.GRAB or state == State.DEAD:
 		return
 
+	# Seção 63: montada, o veículo decide o encontro.
+	var vehicle := entered.get_node_or_null("Vehicle")
 	if data.attack == ZombieData.Attack.SMASH:
+		if vehicle and vehicle.on_smash():
+			_smash_cooldown = SMASH_COOLDOWN
+			return
 		_smash()
 		return
 	if data.attack == ZombieData.Attack.EXPLODE:
@@ -257,6 +262,8 @@ func _on_body_entered(entered: Node3D) -> void:
 		_light_fuse()
 		return
 
+	if vehicle and vehicle.on_grabber_contact(self):
+		return
 	if not _combat:
 		return
 	var slot: int = _combat.register_grab(self)
@@ -281,6 +288,20 @@ func _smash() -> void:
 	var tween := create_tween()
 	tween.tween_property(arms, "rotation:x", -1.2, 0.08)
 	tween.tween_property(arms, "rotation:x", 0.0, 0.25)
+
+
+## Seção 63: derrubado ou empurrado por um veículo — leva `damage` e fica
+## para trás da personagem, cambaleando.
+func shove(damage := 0) -> void:
+	if state == State.DEAD or state == State.GRAB:
+		return
+	if damage > 0:
+		take_hit(damage, false)
+		if state == State.DEAD:
+			return
+	state = State.CHASE
+	global_position.z = _player.global_position.z + 1.5
+	_stagger = 0.8
 
 
 func _distance_to_player() -> float:

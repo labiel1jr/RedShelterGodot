@@ -28,6 +28,22 @@ extends Resource
 ## faixa da personagem nesse ponto decide o caminho.
 @export var fork_decision_offset := 16.0
 
+@export_group("Veículos (seção 63)")
+@export var vehicles: Array[VehicleData] = []
+## Chance de cada chunk elegível ter um veículo estacionado.
+@export_range(0.0, 1.0) var vehicle_chance := 0.07
+## Distância mínima entre dois veículos na mesma expedição.
+@export var vehicle_min_gap := 200.0
+## Sem veículos nos primeiros metros (a fase Calma) e perto do fim.
+@export var vehicle_min_distance := 120.0
+@export var vehicle_clear_before_extraction := 150.0
+## Sem veículos a menos disto de uma bifurcação.
+@export var vehicle_clear_around_fork := 100.0
+## O aviso aparece esta distância antes do veículo.
+@export var vehicle_sign_distance := 40.0
+## Depois de cair do veículo, a personagem fica invulnerável por este tempo.
+@export var vehicle_dismount_invulnerability := 1.0
+
 @export_group("Sobreviventes (seção 44)")
 @export var professions: Array[ProfessionData] = []
 @export var survivor_names := PackedStringArray()

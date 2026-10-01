@@ -61,6 +61,10 @@ var _divider_end := -1.0
 ## Resgatados nesta expedição: [{name, profession}] (seção 44).
 var rescued_survivors: Array[Dictionary] = []
 var _attract_rng := RandomNumberGenerator.new()
+## Seção 63: o veículo montado (nó "Vehicle" da Player) e onde ficou o último
+## veículo estacionado.
+var vehicle: PlayerVehicle
+var _last_vehicle_at := -INF
 
 
 func _enter_tree() -> void:
@@ -91,6 +95,11 @@ func _ready() -> void:
 		chunk_streamer.chunk_loaded.connect(_on_chunk_loaded)
 		events.schedule_banner("SUA MOCHILA À FRENTE", Color(1.0, 0.8, 0.35), bag.at)
 	director.rng.seed = expedition_seed + 1
+	vehicle = PlayerVehicle.new()
+	vehicle.name = "Vehicle"
+	player.add_child(vehicle)
+	vehicle.mounted_changed.connect(_on_vehicle_changed)
+	chunk_streamer.chunk_loaded.connect(_place_vehicle)
 	extraction_distance = chunk_streamer.build(expedition_seed, target_distance)
 	_pending_forks.assign(chunk_streamer.forks)
 	_attract_rng.seed = expedition_seed
@@ -286,6 +295,66 @@ func _on_chunk_loaded(instance: Node3D, chunk: RouteGenerator.RouteChunk) -> voi
 		var zombie_lane := _attract_rng.randi_range(0, 2)
 		var pos := Vector3((zombie_lane - 1) * ChunkPopulator.LANE_WIDTH, 0.0, -(at + 5.0 + i * 3.5))
 		ChunkPopulator.spawn_zombie(chunk_streamer.region, _attract_rng, actors, pos)
+
+
+## Seção 63: alguns chunks recebem um veículo estacionado, numa faixa sem
+## obstáculo. Nunca no começo (fase Calma), perto da extração ou perto de uma
+## bifurcação; a chance e o veículo saem da seed do chunk.
+func _place_vehicle(instance: Node3D, chunk: RouteGenerator.RouteChunk) -> void:
+	var world := GameManager.WORLD
+	if chunk.fork or world.vehicles.is_empty() or extraction_distance <= 0.0:
+		return
+	var start := chunk.start_distance
+	var end := chunk.end_distance()
+	if start < maxf(world.vehicle_min_distance, extraction_distance * director.calm_fraction):
+		return
+	if end > extraction_distance - world.vehicle_clear_before_extraction:
+		return
+	if start - _last_vehicle_at < world.vehicle_min_gap:
+		return
+	for fork in chunk_streamer.forks:
+		if end > fork.decision_distance - world.vehicle_clear_around_fork and start < fork.divider_end:
+			return
+	var rng := RandomNumberGenerator.new()
+	rng.seed = chunk.chunk_seed + 6311
+	if rng.randf() >= world.vehicle_chance:
+		return
+	var options: Array[VehicleData] = []
+	var weights := PackedFloat32Array()
+	for candidate in world.vehicles:
+		if candidate.can_spawn(chunk_streamer.region.id, GameManager.level, target_distance):
+			options.append(candidate)
+			weights.append(candidate.spawn_weight)
+	if options.is_empty():
+		return
+	var chosen: VehicleData = options[rng.rand_weighted(weights)]
+
+	var local_z := -chunk.data.length * 0.5
+	var blocked := {}
+	for child in instance.get_children():
+		if child.is_in_group("obstacle") and absf(child.position.z - local_z) < 3.0:
+			blocked[roundi(child.position.x / ChunkPopulator.LANE_WIDTH) + 1] = true
+	var free_lanes: Array[int] = []
+	for lane in 3:
+		if not blocked.has(lane):
+			free_lanes.append(lane)
+	if free_lanes.is_empty():
+		return
+	var pickup := VehiclePickup.new()
+	pickup.data = chosen
+	instance.add_child(pickup)
+	pickup.position = Vector3((free_lanes[rng.randi() % free_lanes.size()] - 1) * ChunkPopulator.LANE_WIDTH, 0.0, local_z)
+	_last_vehicle_at = start - local_z
+	# O aviso aparece WARN_AHEAD antes do ponto agendado.
+	events.schedule_banner("%s À FRENTE" % chosen.display_name.to_upper(), chosen.color, _last_vehicle_at - world.vehicle_sign_distance + events.WARN_AHEAD)
+
+
+func _on_vehicle_changed(data: VehicleData) -> void:
+	if not data:
+		return
+	hud.show_banner(data.display_name.to_upper() + "!", data.color)
+	if Settings.should_show_hint(&"vehicle"):
+		hud.show_hint("VEÍCULO: o dano vai para o HP dele. Quando acabar, você cai sem se machucar.")
 
 
 ## Encostar na mochila: pega o que couber. Retorna as unidades recuperadas.
