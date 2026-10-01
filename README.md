@@ -7,7 +7,7 @@ Survival runner mobile com abrigo. A sobrevivente corre sozinha por três
 faixas, desvia, pula, desliza, luta contra zumbis que a agarram e saqueia o
 que consegue carregar. De volta ao abrigo, os recursos viram construções,
 armas e moradores, e a cada semana uma horda ataca o portão. É o protótipo
-jogável do **GDD 0.6.3** (`../Red Shelter.MD`), feito com formas primitivas.
+jogável do **GDD 0.6.4** (`../Red Shelter.MD`), feito com formas primitivas.
 Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 
 | | |
@@ -102,7 +102,7 @@ Seção 58 do GDD. As Fases 1 a 12 estão concluídas; as Fases 13 e 14 estão p
 | 10 — Expedição viva | bifurcações, extração antecipada, Expedition Director, escopeta, SMG, facão, machado, katana, machado pesado |
 | 11 — Pessoas | traços de personalidade, afinidade, pedidos dos moradores |
 | 12 — Defesa | ataques ao abrigo, portão, barricadas, armadilhas, torres |
-| 13 — Veículos 🟡 V1–V2 | patins, skate, bicicleta de jornaleiro, moto, mochila a jato e furgão de destruição, cada um com HP e habilidade (seção 63) |
+| 13 — Veículos 🟡 V1–V3 | patins, skate, bicicleta de jornaleiro, moto, mochila a jato e furgão de destruição, cada um com HP e habilidade (seção 63) |
 | 14 — Power-ups 📋 | 14 power-ups nos papéis dos de Subway Surfers: 5 na pista, 1 consumível, 2 na preparação e 6 raros (seção 64) |
 
 ## Cenas e fluxo
@@ -318,10 +318,13 @@ Alguns chunks trazem um veículo estacionado numa faixa livre, com o aviso
 | Patins | 40 | 20 s | +15% de velocidade, pulo 1,6× mais alto, troca de faixa 30% mais rápida | um agarrão quebra os patins (e o zumbi agarra) | Bairro, Centro |
 | Skate | 50 | 20 s | +20% de velocidade; atravessa comuns e runners, que levam 40 e ficam para trás (8 de HP do skate cada) | não desliza; o Bruto quebra o skate | Bairro, Centro |
 | Bicicleta de jornaleiro | 60 | 25 s | +25% de velocidade; o toque (ou ATACAR) lança **dois jornais**, projéteis de 50 de dano: um na faixa dela e outro na do lado (na faixa do meio, para o lado com o zumbi mais perto); 20 lançamentos, sem gastar munição | sem armas; não desliza | Bairro, Mercado |
+| Mochila a jato | 50 | 30 s | +10% de velocidade; **segurar** o dedo (ou Espaço, ↑, W, botão do mouse) sobe até 6 m e passa por cima de tudo; soltar plana (gravidade 35% na descida); deslizar o dedo para o lado troca de faixa segurando; **ímã**: puxa o loot até 14 m à frente na faixa dela e numa faixa ao lado | **calor**: sobe 28% por segundo segurando e desce 18% soltando; em 100% explode (20 de dano direto nela e 80 nos zumbis a 4 m); sem armas; ruído de 0,5 por segundo | Zona Industrial, Hospital (nível 6+) |
 | Moto | 100 | 25 s (+5 s a cada combustível coletado) | +40% de velocidade, pulo 2× (passa por cima dos carros, que têm 2,5 m); derruba comuns e runners sem dano na moto | sem armas; não desliza; ruído de 1,2 por segundo; Bruto, Blindado e Explosivo ferem a moto | Centro, Zona Industrial |
 
-Na primeira vez em cada veículo, uma dica explica o que ele faz. Mochila a
-jato e furgão vêm nas próximas etapas da Fase 13.
+Na primeira vez em cada veículo, uma dica explica o que ele faz. Na faixa do
+meio, o ímã da mochila a jato escolhe o lado com o loot mais perto e fica
+com ele até ela trocar de faixa. A câmera acompanha metade da altura da
+personagem, para o pulo e o voo aparecerem na tela. O furgão vem na etapa V4.
 
 ## Combate
 
@@ -758,7 +761,7 @@ RedShelterGodot/
 │   ├── regions/              bairro, mercado, centro, hospital, industrial
 │   ├── shelter/shelter.tres  ShelterData (regras do abrigo e da defesa)
 │   ├── traits/               optimist, pessimist, loyal, selfish, fearful
-│   ├── vehicles/             patins, skate, bicicleta, moto
+│   ├── vehicles/             patins, skate, bicicleta, moto, jetpack
 │   ├── weapons/              knife_1-4, machete, axe, katana, heavy_axe,
 │   │                         pistol_1-3, shotgun_1-3, smg_1-3, *_track
 │   ├── world.tres            WorldData
@@ -812,7 +815,7 @@ As Fases 1 a 12 do roadmap estão concluídas. O que vem agora:
 
 | Item | GDD |
 | --- | --- |
-| **Fase 13 — Veículos**: V1 (patins e skate) e V2 (bicicleta e moto) ✅; faltam V3 (mochila a jato) e V4 (furgão) | 63 |
+| **Fase 13 — Veículos**: V1 (patins e skate), V2 (bicicleta e moto) e V3 (mochila a jato) ✅; falta V4 (furgão) | 63 |
 | **Fase 14 — Power-ups**, em 3 etapas (P1 Ímã, Sinalizador e Escudo · P2 Telhados, Rampa e Adrenalina · P3 preparação e raros) | 64 |
 | Jogar de verdade e ajustar os valores (economia da campanha, regiões avançadas, defesa) | — |
 | Trocar as primitivas por arte low-poly e o áudio sintetizado pelo definitivo; nada na lógica depende disso | 52 |

@@ -19,6 +19,7 @@ const NAMES: Array[String] = ["Comida", "Água", "Sucata", "Munição", "Compone
 
 
 func _ready() -> void:
+	add_to_group("loot")
 	body_entered.connect(_on_body_entered)
 
 	var mat := StandardMaterial3D.new()

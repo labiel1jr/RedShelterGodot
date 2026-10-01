@@ -35,12 +35,14 @@ func is_invulnerable() -> bool:
 	return _invulnerable > 0.0
 
 
-func take_damage(amount: int) -> void:
-	if current_hp <= 0 or _invulnerable > 0.0:
+## `direct`: ignora o veículo e a invulnerabilidade (a explosão da mochila
+## a jato, que fere a própria personagem).
+func take_damage(amount: int, direct := false) -> void:
+	if current_hp <= 0 or (_invulnerable > 0.0 and not direct):
 		return
 	# Montada, o dano vai para o veículo (seção 63).
 	var vehicle := get_parent().get_node_or_null("Vehicle")
-	if vehicle and vehicle.absorb(amount):
+	if not direct and vehicle and vehicle.absorb(amount):
 		return
 
 	_pending_damage += amount * damage_multiplier

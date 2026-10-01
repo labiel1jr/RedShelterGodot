@@ -48,6 +48,27 @@ extends Resource
 @export var newspaper_speed := 30.0
 @export var newspaper_knockback := 1.2
 
+@export_group("Mochila a jato")
+## Segurar o botão faz voar; soltar plana e desce.
+@export var jetpack := false
+## Aceleração para cima segurando (a gravidade é 25).
+@export var thrust_acceleration := 50.0
+@export var max_rise_speed := 7.0
+## Altura máxima do voo (m); acima de ~2,6 passa por cima de tudo.
+@export var max_height := 6.0
+## Fração da gravidade ao planar (soltou o botão no ar).
+@export var glide_gravity := 0.35
+## Calor (0–100) que sobe por segundo segurando e desce soltando. Em 100,
+## a mochila explode.
+@export var heat_per_second := 28.0
+@export var cool_per_second := 18.0
+@export var explosion_damage := 20
+@export var explosion_radius := 4.0
+@export var explosion_zombie_damage := 80
+## Ímã: puxa o loot da faixa dela e de uma faixa ao lado.
+@export var magnet_range := 14.0
+@export var magnet_speed := 20.0
+
 @export_group("Combustível")
 ## Moto: segundos a mais para cada unidade de combustível coletada montada.
 @export var fuel_time_bonus := 0.0

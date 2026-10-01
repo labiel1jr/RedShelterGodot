@@ -17,6 +17,14 @@ var newspapers_left := 0
 var _throw_cooldown := 0.0
 ## Na faixa do meio sem zumbi à vista, o jornal do lado alterna.
 var _side_toggle := 1
+## Mochila a jato: 0–100; em 100 explode.
+var heat := 0.0
+var _heat_warned := false
+var _flame_timer := 0.0
+## Ímã: a faixa do lado escolhida (-1 = ainda não) e a faixa em que ela
+## estava quando escolheu. Fica a mesma até trocar de faixa.
+var _magnet_side := -1
+var _magnet_from_lane := -1
 var _visual: Node3D
 var _flash_material: StandardMaterial3D
 
@@ -39,6 +47,13 @@ func mount(vehicle: VehicleData) -> bool:
 	player.jump_multiplier = vehicle.jump_multiplier
 	player.lane_speed_multiplier = vehicle.lane_speed_multiplier
 	player.can_slide = vehicle.can_slide
+	heat = 0.0
+	_heat_warned = false
+	_magnet_from_lane = -1
+	if vehicle.jetpack:
+		player.hold_to_fly = true
+		player.max_rise_speed = vehicle.max_rise_speed
+		player.ceiling = vehicle.max_height
 	_visual = build_visual(vehicle)
 	add_child(_visual)
 	_flash_material = _visual.get_meta("material")
@@ -63,6 +78,11 @@ func dismount(message: String) -> void:
 	player.jump_multiplier = 1.0
 	player.lane_speed_multiplier = 1.0
 	player.can_slide = true
+	player.hold_to_fly = false
+	player.thrust_input = false
+	player.lift = 0.0
+	player.gravity_scale = 1.0
+	player.ceiling = INF
 	if _visual:
 		_visual.queue_free()
 		_visual = null
@@ -85,8 +105,98 @@ func _process(delta: float) -> void:
 		var run_manager := get_tree().get_first_node_in_group("run_manager")
 		if run_manager:
 			run_manager.add_noise(data.noise_per_second * delta)
+	if data.jetpack:
+		_update_jetpack(delta)
+		if not data:
+			return
 	if time_left <= 0.0:
 		dismount("%s: ACABOU" % data.display_name.to_upper())
+
+
+## Segurar sobe e esquenta; soltar plana (gravidade menor na descida) e
+## esfria. Em 100 de calor, explode.
+func _update_jetpack(delta: float) -> void:
+	var thrusting: bool = player.thrust_input
+	player.lift = data.thrust_acceleration if thrusting else 0.0
+	player.gravity_scale = data.glide_gravity if not thrusting and player.vertical_velocity < 0.0 else 1.0
+	heat = clampf(heat + (data.heat_per_second if thrusting else -data.cool_per_second) * delta, 0.0, 100.0)
+	if thrusting:
+		_flame_timer -= delta
+		if _flame_timer <= 0.0:
+			_flame_timer = 0.05
+			Fx.burst(player.get_parent(), player.global_position + Vector3(0, 0.8, 0.45), Color(1.0, 0.6, 0.2), 2, 1.5, 0.06)
+	if heat >= 100.0:
+		_explode_jetpack()
+		return
+	if heat >= 80.0 and not _heat_warned:
+		_heat_warned = true
+		Fx.float_text(player, player.global_position + Vector3.UP * 2.6, "SUPERAQUECENDO!", Color(1.0, 0.45, 0.2), 52)
+		AudioManager.play("alarm", -6.0, 1.3, 0.0)
+	elif heat < 60.0:
+		_heat_warned = false
+	_magnet(delta)
+
+
+## A mochila explode: fere a personagem (sem o veículo para absorver) e
+## derruba os zumbis em volta.
+func _explode_jetpack() -> void:
+	var vehicle := data
+	var center := player.global_position + Vector3.UP
+	dismount("%s EXPLODIU" % vehicle.display_name.to_upper())
+	var world := player.get_parent()
+	Fx.burst(world, center, Color(1.0, 0.55, 0.1), 30, 8.0, 0.25)
+	Fx.muzzle_flash(world, center)
+	AudioManager.play("explosion", 0.0, 1.0, 0.1, 0.1)
+	var health := player.get_node_or_null("Health")
+	if health:
+		health.take_damage(vehicle.explosion_damage, true)
+	for zombie in get_tree().get_nodes_in_group("zombie"):
+		if zombie.is_alive() and zombie.global_position.distance_to(player.global_position) <= vehicle.explosion_radius:
+			zombie.take_hit(vehicle.explosion_zombie_damage, false, 2.0)
+	var run_manager := get_tree().get_first_node_in_group("run_manager")
+	if run_manager:
+		run_manager.add_noise(8.0, false)
+
+
+## Puxa o loot à frente na faixa dela e numa faixa ao lado (na faixa do meio,
+## o lado com o loot mais perto). Com a mochila cheia, não puxa.
+func _magnet(delta: float) -> void:
+	var run_manager := get_tree().get_first_node_in_group("run_manager")
+	if run_manager and run_manager.carried_weight() >= run_manager.backpack_capacity() - 0.5:
+		return
+	var lane: int = player.current_lane
+	if lane != _magnet_from_lane:
+		_magnet_from_lane = lane
+		_magnet_side = 1 if lane != 1 else -1
+	if _magnet_side < 0:
+		var side := _side_with_nearest_loot()
+		if side != 0:
+			_magnet_side = 1 + side
+	var side_lane := _magnet_side
+	var target := player.global_position + Vector3(0, 0.4, 0)
+	for loot in get_tree().get_nodes_in_group("loot"):
+		var ahead: float = player.global_position.z - loot.global_position.z
+		if ahead < -1.0 or ahead > data.magnet_range:
+			continue
+		var loot_lane := clampi(roundi(loot.global_position.x / ChunkPopulator.LANE_WIDTH) + 1, 0, 2)
+		if loot_lane != lane and loot_lane != side_lane:
+			continue
+		loot.global_position = loot.global_position.move_toward(target, data.magnet_speed * delta)
+
+
+## +1 / -1 = o lado com o loot mais perto à frente; 0 = nenhum.
+func _side_with_nearest_loot() -> int:
+	var best_ahead := INF
+	var best_side := 0
+	for loot in get_tree().get_nodes_in_group("loot"):
+		var ahead: float = player.global_position.z - loot.global_position.z
+		var dx: float = loot.global_position.x - player.global_position.x
+		if ahead < 0.0 or ahead > data.magnet_range or absf(dx) < 1.2:
+			continue
+		if ahead < best_ahead:
+			best_ahead = ahead
+			best_side = 1 if dx > 0.0 else -1
+	return best_side
 
 
 ## Montada, as armas da personagem não funcionam (mãos ocupadas)?
@@ -232,6 +342,17 @@ static func build_visual(vehicle: VehicleData) -> Node3D:
 			_box(root, Vector3(0.46, 0.34, 1.3), Vector3(0, 0.55, 0), material)
 			_box(root, Vector3(0.36, 0.22, 0.5), Vector3(0, 0.82, -0.25), material)
 			_box(root, Vector3(0.72, 0.06, 0.06), Vector3(0, 1.0, -0.6), wheel_material)
+		&"jetpack":
+			_box(root, Vector3(0.5, 0.6, 0.28), Vector3(0, 1.25, 0.32), material)
+			for x in [-0.15, 0.15]:
+				_box(root, Vector3(0.14, 0.5, 0.14), Vector3(x, 1.1, 0.5), wheel_material)
+			var flame := StandardMaterial3D.new()
+			flame.albedo_color = Color(1.0, 0.6, 0.2)
+			flame.emission_enabled = true
+			flame.emission = Color(1.0, 0.5, 0.1)
+			flame.emission_energy_multiplier = 1.5
+			for x in [-0.15, 0.15]:
+				_box(root, Vector3(0.1, 0.12, 0.1), Vector3(x, 0.8, 0.5), flame)
 		&"skate":
 			_box(root, Vector3(0.42, 0.05, 1.05), Vector3(0, 0.12, 0), material)
 			for x in [-0.15, 0.15]:

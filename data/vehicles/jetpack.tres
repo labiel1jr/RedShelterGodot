@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="VehicleData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/vehicle_data.gd" id="1_vd"]
+
+[resource]
+script = ExtResource("1_vd")
+id = &"jetpack"
+display_name = "Mochila a jato"
+color = Color(0.85, 0.88, 0.95, 1)
+max_hp = 50
+duration = 30.0
+hint = "MOCHILA A JATO: segure o dedo (ou Espaço) para voar e solte para planar. Ela puxa o loot da sua faixa e da do lado. Cuidado com o calor: em 100% ela explode."
+speed_multiplier = 1.1
+can_slide = false
+contact_damage = 10
+disables_weapons = true
+jetpack = true
+noise_per_second = 0.5
+regions = Array[StringName]([&"industrial", &"hospital"])
+spawn_weight = 0.5
+min_level = 6

@@ -31,6 +31,7 @@
 [ext_resource type="Resource" path="res://data/vehicles/skate.tres" id="vh_skate"]
 [ext_resource type="Resource" path="res://data/vehicles/bicicleta.tres" id="vh_bike"]
 [ext_resource type="Resource" path="res://data/vehicles/moto.tres" id="vh_moto"]
+[ext_resource type="Resource" path="res://data/vehicles/jetpack.tres" id="vh_jetpack"]
 
 [resource]
 script = ExtResource("10_taorj")
@@ -41,7 +42,7 @@ distance_unlock_levels = PackedInt32Array(1, 2, 5, 9)
 distance_max_pois = PackedInt32Array(1, 1, 2, 3)
 fork_chunk = ExtResource("8_n3je7")
 branches = Array[ExtResource("1_3stcx")]([ExtResource("2_qn6fu"), ExtResource("3_sdftw"), ExtResource("4_41roe"), ExtResource("5_oajrs"), ExtResource("6_gwpnm"), ExtResource("7_udnid")])
-vehicles = Array[ExtResource("vh_script")]([ExtResource("vh_patins"), ExtResource("vh_skate"), ExtResource("vh_bike"), ExtResource("vh_moto")])
+vehicles = Array[ExtResource("vh_script")]([ExtResource("vh_patins"), ExtResource("vh_skate"), ExtResource("vh_bike"), ExtResource("vh_moto"), ExtResource("vh_jetpack")])
 distance_max_forks = PackedInt32Array(1, 2, 3, 3)
 professions = Array[ExtResource("1_4tvtn")]([ExtResource("2_y13gi"), ExtResource("3_hg0vh"), ExtResource("4_fh3cn"), ExtResource("5_x02ki")])
 survivor_names = PackedStringArray("Ana", "Bruno", "Carla", "Diego", "Elisa", "Fábio", "Gabi", "Hugo", "Íris", "João", "Karina", "Lucas", "Marta", "Nico", "Olga", "Paulo", "Rita", "Sérgio", "Tânia", "Vítor")

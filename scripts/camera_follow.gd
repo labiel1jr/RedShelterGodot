@@ -7,6 +7,9 @@ extends Camera3D
 @export var offset := Vector3(0, 4.0, 6.0)
 @export var follow_speed := 10.0
 @export var look_ahead := 4.0
+## Quanto da altura da personagem a câmera acompanha (1 = tudo). Menos que 1
+## deixa o pulo e o voo da mochila a jato visíveis na tela.
+@export_range(0.0, 1.0) var vertical_follow := 0.5
 ## Deslocamento máximo (m) do tremor com trauma = 1.
 @export var max_shake := 0.35
 @export var shake_decay := 1.8
@@ -34,9 +37,11 @@ func _process(delta: float) -> void:
 	if not target:
 		return
 
-	var desired := target.global_position + offset
+	var followed := target.global_position
+	followed.y *= vertical_follow
+	var desired := followed + offset
 	global_position = global_position.lerp(desired, follow_speed * delta)
-	look_at(target.global_position + Vector3(0, 1.0, -look_ahead), Vector3.UP)
+	look_at(followed + Vector3(0, 1.0, -look_ahead), Vector3.UP)
 
 	# h_offset/v_offset deslocam a imagem sem mexer no acompanhamento.
 	_trauma = maxf(0.0, _trauma - shake_decay * delta)

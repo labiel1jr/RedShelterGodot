@@ -35,6 +35,14 @@ var vehicle_speed := 1.0
 var jump_multiplier := 1.0
 var lane_speed_multiplier := 1.0
 var can_slide := true
+## Mochila a jato: segurar o botão sobe (`lift` = aceleração), soltar plana.
+var hold_to_fly := false
+var thrust_input := false
+var lift := 0.0
+var max_rise_speed := 7.0
+var gravity_scale := 1.0
+var ceiling := INF
+var _drag_moved := false
 
 var _mesh_base_y := 1.0
 var _run_cycle := 0.0
@@ -73,7 +81,11 @@ func _physics_process(delta: float) -> void:
 		if vertical_velocity < 0.0:
 			vertical_velocity = -1.0
 	else:
-		vertical_velocity += GRAVITY * delta
+		vertical_velocity += GRAVITY * gravity_scale * delta
+	if lift > 0.0:
+		vertical_velocity = minf(maxf(vertical_velocity, 1.5) + lift * delta, max_rise_speed)
+	if global_position.y >= ceiling and vertical_velocity > 0.0:
+		vertical_velocity = 0.0
 
 	var smoothed_x := lerpf(global_position.x, target_x, lane_change_speed * lane_speed_multiplier * delta)
 	var delta_x := smoothed_x - global_position.x
@@ -86,6 +98,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if hold_to_fly and _fly_input(event):
+		return
 	if event is InputEventKey and event.pressed and not event.echo:
 		match event.keycode:
 			KEY_LEFT, KEY_A:
@@ -112,6 +126,36 @@ func _unhandled_input(event: InputEvent) -> void:
 				_jump()
 			else:
 				_slide()
+
+
+## Mochila a jato: segurar o toque, o Espaço (ou ↑) ou o botão do mouse faz
+## voar. Deslizar o dedo para o lado troca de faixa mesmo segurando.
+## Retorna true se o evento foi tratado aqui.
+func _fly_input(event: InputEvent) -> bool:
+	if event is InputEventKey and not event.echo and event.keycode in [KEY_UP, KEY_SPACE, KEY_W]:
+		thrust_input = event.pressed
+		return true
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.device != InputEvent.DEVICE_ID_EMULATION:
+		thrust_input = event.pressed
+		return false
+	if event is InputEventScreenTouch:
+		thrust_input = event.pressed
+		if event.pressed:
+			touch_start = event.position
+			_drag_moved = false
+		elif not _drag_moved:
+			var delta_touch: Vector2 = event.position - touch_start
+			if absf(delta_touch.x) > swipe_threshold and absf(delta_touch.x) > absf(delta_touch.y):
+				_change_lane(1 if delta_touch.x > 0 else -1)
+		return true
+	if event is InputEventScreenDrag:
+		var dx: float = event.position.x - touch_start.x
+		if absf(dx) > swipe_threshold:
+			_change_lane(1 if dx > 0 else -1)
+			touch_start = event.position
+			_drag_moved = true
+		return true
+	return false
 
 
 func _change_lane(direction: int) -> void:
