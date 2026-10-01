@@ -14,7 +14,7 @@ Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 | --- | --- |
 | **Engine** | Godot 4.7 · GDScript · renderer Mobile |
 | **Plataformas-alvo** | Android / iOS (testado no PC com teclado e mouse) |
-| **Estado** | Roadmap do GDD completo: Fases 1–12 |
+| **Estado** | Fases 1–12 concluídas · 13 e 14 planejadas |
 | **Próximo** | Fase 13 — Veículos, depois Fase 14 — Power-ups; em paralelo, jogar, balancear e trocar as primitivas por arte ([próximos passos](#próximos-passos)) |
 
 ## Índice
