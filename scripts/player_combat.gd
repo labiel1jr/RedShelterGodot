@@ -84,7 +84,17 @@ func is_knife_broken() -> bool:
 	return knife_durability <= 0
 
 
+## Seção 63: montada, o veículo pode tomar o lugar das armas.
+func _vehicle_takes_input() -> bool:
+	var vehicle := player.get_node_or_null("Vehicle")
+	if not vehicle or not vehicle.is_mounted():
+		return false
+	return vehicle.throw_newspapers() or vehicle.blocks_weapons()
+
+
 func attack() -> void:
+	if _vehicle_takes_input():
+		return
 	if _time_since_attack < weapon.attack_cooldown * cooldown_multiplier:
 		return
 	if _time_since_attack > weapon.combo_window:
@@ -118,6 +128,8 @@ func attack() -> void:
 
 
 func shoot() -> void:
+	if _vehicle_takes_input():
+		return
 	if _bursting or _time_since_shot < pistol.fire_cooldown * cooldown_multiplier:
 		return
 	_time_since_shot = 0.0

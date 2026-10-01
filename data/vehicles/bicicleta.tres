@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="VehicleData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/vehicle_data.gd" id="1_vd"]
+
+[resource]
+script = ExtResource("1_vd")
+id = &"bicicleta"
+display_name = "Bicicleta"
+color = Color(0.45, 0.85, 0.45, 1)
+max_hp = 60
+duration = 25.0
+hint = "BICICLETA: toque (ou ATACAR) lança dois jornais, na sua faixa e na do lado. Sem pistola nem faca."
+speed_multiplier = 1.25
+can_slide = false
+contact_damage = 10
+disables_weapons = true
+newspapers = 20
+newspaper_damage = 50
+regions = Array[StringName]([&"bairro", &"mercado"])

@@ -268,6 +268,8 @@ func collect_loot(loot_type: int, amount: int) -> int:
 	collected[key] += taken
 	if key == "ammo":
 		player_combat.set_ammo(player_combat.ammo + taken)
+	elif key == "fuel" and vehicle:
+		vehicle.add_fuel(taken)
 	return taken
 
 
@@ -355,6 +357,8 @@ func _on_vehicle_changed(data: VehicleData) -> void:
 	hud.show_banner(data.display_name.to_upper() + "!", data.color)
 	if Settings.should_show_hint(&"vehicle"):
 		hud.show_hint("VEÍCULO: o dano vai para o HP dele. Quando acabar, você cai sem se machucar.")
+	elif data.hint != "" and Settings.should_show_hint(StringName("vehicle_%s" % data.id)):
+		hud.show_hint(data.hint)
 
 
 ## Encostar na mochila: pega o que couber. Retorna as unidades recuperadas.

@@ -9,6 +9,7 @@ display_name = "Skate"
 color = Color(0.95, 0.75, 0.2, 1)
 max_hp = 50
 duration = 20.0
+hint = "SKATE: passa por cima de comuns e runners. Não desliza, e o Bruto quebra o skate."
 speed_multiplier = 1.2
 can_slide = false
 contact_damage = 10

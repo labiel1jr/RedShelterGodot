@@ -12,6 +12,11 @@ signal mounted_changed(data: VehicleData)
 var data: VehicleData = null
 var hp := 0
 var time_left := 0.0
+## Bicicleta: lançamentos de jornal que sobram.
+var newspapers_left := 0
+var _throw_cooldown := 0.0
+## Na faixa do meio sem zumbi à vista, o jornal do lado alterna.
+var _side_toggle := 1
 var _visual: Node3D
 var _flash_material: StandardMaterial3D
 
@@ -29,6 +34,7 @@ func mount(vehicle: VehicleData) -> bool:
 	data = vehicle
 	hp = vehicle.max_hp
 	time_left = vehicle.duration
+	newspapers_left = vehicle.newspapers
 	player.vehicle_speed = vehicle.speed_multiplier
 	player.jump_multiplier = vehicle.jump_multiplier
 	player.lane_speed_multiplier = vehicle.lane_speed_multiplier
@@ -36,6 +42,12 @@ func mount(vehicle: VehicleData) -> bool:
 	_visual = build_visual(vehicle)
 	add_child(_visual)
 	_flash_material = _visual.get_meta("material")
+	# Montar sacode quem estava agarrando.
+	var combat := player.get_node_or_null("Combat")
+	if combat:
+		for grabber in combat.grabbers.duplicate():
+			if is_instance_valid(grabber):
+				grabber.shove()
 	AudioManager.play("pickup", -2.0, 0.7)
 	mounted_changed.emit(vehicle)
 	return true
@@ -67,6 +79,7 @@ func dismount(message: String) -> void:
 func _process(delta: float) -> void:
 	if not data:
 		return
+	_throw_cooldown -= delta
 	time_left -= delta
 	if data.noise_per_second > 0.0:
 		var run_manager := get_tree().get_first_node_in_group("run_manager")
@@ -74,6 +87,75 @@ func _process(delta: float) -> void:
 			run_manager.add_noise(data.noise_per_second * delta)
 	if time_left <= 0.0:
 		dismount("%s: ACABOU" % data.display_name.to_upper())
+
+
+## Montada, as armas da personagem não funcionam (mãos ocupadas)?
+func blocks_weapons() -> bool:
+	return data != null and data.disables_weapons
+
+
+## Bicicleta: o toque (ou ATACAR) lança dois jornais — um na faixa dela e
+## outro na do lado. Na faixa do meio, o do lado vai para onde está o zumbi
+## mais perto. Retorna true se a bicicleta tratou o toque.
+func throw_newspapers() -> bool:
+	if not data or data.newspapers <= 0:
+		return false
+	if _throw_cooldown > 0.0:
+		return true
+	if newspapers_left <= 0:
+		AudioManager.play("empty")
+		Fx.float_text(player, player.global_position + Vector3.UP * 2.2, "SEM JORNAIS", data.color, 40)
+		_throw_cooldown = data.newspaper_cooldown
+		return true
+	_throw_cooldown = data.newspaper_cooldown
+	newspapers_left -= 1
+	var lane: int = player.current_lane
+	# Nas faixas da ponta, a única do lado é a do meio.
+	var side_lane := 1 if lane != 1 else 1 + _side_with_nearest_zombie()
+	var run_manager := get_tree().get_first_node_in_group("run_manager")
+	var parent: Node = run_manager.actors if run_manager else get_tree().current_scene
+	for target_lane in [lane, side_lane]:
+		var paper := Newspaper.new()
+		paper.lane_x = (target_lane - 1) * ChunkPopulator.LANE_WIDTH
+		paper.speed = data.newspaper_speed
+		paper.damage = data.newspaper_damage
+		paper.max_range = data.newspaper_range
+		paper.knockback = data.newspaper_knockback
+		parent.add_child(paper)
+		paper.global_position = player.global_position + Vector3(0, 1.2, -0.6)
+	AudioManager.play("swing", -4.0, 1.3)
+	return true
+
+
+## +1 = direita, -1 = esquerda: o lado com o zumbi mais perto à frente.
+func _side_with_nearest_zombie() -> int:
+	var best_ahead := INF
+	var best_side := 0
+	for zombie in get_tree().get_nodes_in_group("zombie"):
+		if not zombie.is_alive():
+			continue
+		var ahead: float = player.global_position.z - zombie.global_position.z
+		if ahead < 0.0 or ahead > data.newspaper_range:
+			continue
+		var dx: float = zombie.global_position.x - player.global_position.x
+		if absf(dx) < 1.2:
+			continue
+		if ahead < best_ahead:
+			best_ahead = ahead
+			best_side = 1 if dx > 0.0 else -1
+	if best_side == 0:
+		_side_toggle = -_side_toggle
+		return _side_toggle
+	return best_side
+
+
+## Moto: combustível coletado montada dá mais tempo.
+func add_fuel(units: int) -> void:
+	if not data or data.fuel_time_bonus <= 0.0 or units <= 0:
+		return
+	var bonus := data.fuel_time_bonus * units
+	time_left += bonus
+	Fx.float_text(player, player.global_position + Vector3.UP * 2.6, "+%d s" % roundi(bonus), data.color, 44)
 
 
 ## Dano que iria para a personagem. Retorna true se o veículo absorveu.
@@ -135,6 +217,21 @@ static func build_visual(vehicle: VehicleData) -> Node3D:
 				_box(root, Vector3(0.18, 0.14, 0.42), Vector3(side * 0.2, 0.13, 0.0), material)
 				for z in [-0.14, 0.0, 0.14]:
 					_box(root, Vector3(0.08, 0.08, 0.08), Vector3(side * 0.2, 0.04, z), wheel_material)
+		&"bicicleta":
+			for z in [-0.55, 0.55]:
+				_box(root, Vector3(0.06, 0.62, 0.62), Vector3(0, 0.31, z), wheel_material)
+			_box(root, Vector3(0.07, 0.07, 1.05), Vector3(0, 0.62, 0), material)
+			_box(root, Vector3(0.07, 0.5, 0.07), Vector3(0, 0.45, -0.45), material)
+			_box(root, Vector3(0.6, 0.05, 0.05), Vector3(0, 0.92, -0.5), wheel_material)
+			var paper_material := StandardMaterial3D.new()
+			paper_material.albedo_color = Color(0.93, 0.92, 0.86)
+			_box(root, Vector3(0.4, 0.24, 0.32), Vector3(0, 0.82, -0.78), paper_material)
+		&"moto":
+			for z in [-0.62, 0.62]:
+				_box(root, Vector3(0.2, 0.62, 0.62), Vector3(0, 0.31, z), wheel_material)
+			_box(root, Vector3(0.46, 0.34, 1.3), Vector3(0, 0.55, 0), material)
+			_box(root, Vector3(0.36, 0.22, 0.5), Vector3(0, 0.82, -0.25), material)
+			_box(root, Vector3(0.72, 0.06, 0.06), Vector3(0, 1.0, -0.6), wheel_material)
 		&"skate":
 			_box(root, Vector3(0.42, 0.05, 1.05), Vector3(0, 0.12, 0), material)
 			for x in [-0.15, 0.15]:

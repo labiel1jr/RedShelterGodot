@@ -101,6 +101,8 @@ func _process(delta: float) -> void:
 	vehicle_label.visible = vehicle != null and vehicle.is_mounted()
 	if vehicle_label.visible:
 		vehicle_label.text = "%s  ·  HP %d/%d  ·  %d s" % [vehicle.data.display_name.to_upper(), maxi(0, vehicle.hp), vehicle.data.max_hp, ceili(vehicle.time_left)]
+		if vehicle.data.newspapers > 0:
+			vehicle_label.text += "  ·  jornais %d" % vehicle.newspapers_left
 		vehicle_label.modulate = vehicle.data.color
 
 	var carried: float = run_manager.carried_weight()

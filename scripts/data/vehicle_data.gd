@@ -12,6 +12,8 @@ extends Resource
 @export var max_hp := 40
 ## Segundos até acabar (se o HP não acabar antes).
 @export var duration := 20.0
+## Dica mostrada na primeira vez que monta.
+@export_multiline var hint := ""
 
 @export_group("Movimento")
 @export var speed_multiplier := 1.0
@@ -33,6 +35,22 @@ extends Resource
 @export var grab_breaks := false
 ## Skate: o golpe do Bruto para (quebra) o veículo.
 @export var smash_breaks := false
+
+@export_group("Armas")
+## Mãos ocupadas: sem arma de fogo nem arma branca (bicicleta, moto).
+@export var disables_weapons := false
+## Bicicleta: lançamentos de jornal (0 = não lança). Cada toque lança dois,
+## um na faixa dela e outro na faixa do lado.
+@export var newspapers := 0
+@export var newspaper_damage := 50
+@export var newspaper_cooldown := 0.4
+@export var newspaper_range := 22.0
+@export var newspaper_speed := 30.0
+@export var newspaper_knockback := 1.2
+
+@export_group("Combustível")
+## Moto: segundos a mais para cada unidade de combustível coletada montada.
+@export var fuel_time_bonus := 0.0
 
 @export_group("Ruído e aparecimento")
 ## Ruído por segundo montada (seção 34); bicicleta, skate e patins: 0.

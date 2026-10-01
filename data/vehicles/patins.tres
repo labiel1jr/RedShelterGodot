@@ -9,6 +9,7 @@ display_name = "Patins"
 color = Color(0.25, 0.75, 0.95, 1)
 max_hp = 40
 duration = 20.0
+hint = "PATINS: pulo mais alto e troca de faixa rápida. Um agarrão quebra os patins."
 speed_multiplier = 1.15
 jump_multiplier = 1.6
 lane_speed_multiplier = 1.3

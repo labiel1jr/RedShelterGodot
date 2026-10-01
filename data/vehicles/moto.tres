@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="VehicleData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/vehicle_data.gd" id="1_vd"]
+
+[resource]
+script = ExtResource("1_vd")
+id = &"moto"
+display_name = "Moto"
+color = Color(0.95, 0.55, 0.15, 1)
+max_hp = 100
+duration = 25.0
+hint = "MOTO: pula por cima dos carros e derruba comuns e runners sem dano. Faz muito barulho. Combustível dá mais tempo."
+speed_multiplier = 1.4
+jump_multiplier = 2.0
+lane_speed_multiplier = 1.2
+can_slide = false
+contact_damage = 20
+passes_weak_zombies = true
+weak_zombie_cost = 0
+knock_down_damage = 150
+disables_weapons = true
+fuel_time_bonus = 5.0
+noise_per_second = 1.2
+regions = Array[StringName]([&"centro", &"industrial"])
+spawn_weight = 0.6

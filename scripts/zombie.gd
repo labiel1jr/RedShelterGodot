@@ -291,10 +291,14 @@ func _smash() -> void:
 
 
 ## Seção 63: derrubado ou empurrado por um veículo — leva `damage` e fica
-## para trás da personagem, cambaleando.
+## para trás da personagem, cambaleando. Quem estava agarrando solta.
 func shove(damage := 0) -> void:
-	if state == State.DEAD or state == State.GRAB:
+	if state == State.DEAD:
 		return
+	if state == State.GRAB:
+		state = State.CHASE
+		if _combat:
+			_combat.release_grab(self)
 	if damage > 0:
 		take_hit(damage, false)
 		if state == State.DEAD:
