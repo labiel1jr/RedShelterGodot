@@ -30,6 +30,24 @@ enum Kind { TIMED, CONSUMABLE }
 ## Zumbis até esta distância da personagem vão atrás da luz e não agarram.
 @export var flare_radius := 0.0
 
+@export_group("Rota dos telhados")
+## Altura dos telhados (m); 0 = não é este power-up.
+@export var roof_height := 0.0
+## Um item (munição ou componente) a cada tantos metros, por faixa.
+@export var roof_loot_spacing := 8.0
+## Sem rota dos telhados nesta distância antes da extração (ela desce antes).
+@export var roof_clear_before_extraction := 200.0
+
+@export_group("Rampa de entulho")
+## Salto de `ramp_distance` metros com pico de `ramp_height` (0 = não é este).
+@export var ramp_distance := 0.0
+@export var ramp_height := 5.0
+
+@export_group("Adrenalina")
+@export var xp_multiplier := 1.0
+## Golpes da arma branca mais rápidos (0,2 = intervalo 20% menor).
+@export var attack_speed_bonus := 0.0
+
 @export_group("Escudo de caçamba")
 @export var craft_cost := {}
 ## Quantos levar por expedição e quantos guardar no abrigo.

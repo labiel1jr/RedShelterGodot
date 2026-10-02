@@ -400,6 +400,9 @@ func _place_powerup(instance: Node3D, chunk: RouteGenerator.RouteChunk) -> void:
 	var options: Array[PowerUpData] = []
 	var weights := PackedFloat32Array()
 	for candidate in world.powerups:
+		# A rota dos telhados termina antes da extração: não aparece perto dela.
+		if candidate.roof_height > 0.0 and chunk.end_distance() > extraction_distance - candidate.roof_clear_before_extraction:
+			continue
 		if candidate.on_track:
 			options.append(candidate)
 			weights.append(candidate.spawn_weight)
@@ -492,6 +495,9 @@ func rescue_survivor(info: Dictionary) -> void:
 
 func register_kill(xp_reward: int) -> void:
 	zombies_killed += 1
+	# Seção 64: a Adrenalina dobra o XP dos abates.
+	if powerups and powerups.is_active(&"adrenalina"):
+		xp_reward = roundi(xp_reward * powerups.data(&"adrenalina").xp_multiplier)
 	kill_xp += xp_reward
 
 

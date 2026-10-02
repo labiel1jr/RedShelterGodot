@@ -7,7 +7,7 @@ Survival runner mobile com abrigo. A sobrevivente corre sozinha por três
 faixas, desvia, pula, desliza, luta contra zumbis que a agarram e saqueia o
 que consegue carregar. De volta ao abrigo, os recursos viram construções,
 armas e moradores, e a cada semana uma horda ataca o portão. É o protótipo
-jogável do **GDD 0.7.1** (`../Red Shelter.MD`), feito com formas primitivas.
+jogável do **GDD 0.7.2** (`../Red Shelter.MD`), feito com formas primitivas.
 Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 
 | | |
@@ -103,7 +103,7 @@ Seção 58 do GDD. As Fases 1 a 13 estão concluídas; a Fase 14 está planejada
 | 11 — Pessoas | traços de personalidade, afinidade, pedidos dos moradores |
 | 12 — Defesa | ataques ao abrigo, portão, barricadas, armadilhas, torres |
 | 13 — Veículos ✅ | patins, skate, bicicleta de jornaleiro, moto, mochila a jato e furgão de destruição, cada um com HP e habilidade (seção 63) |
-| 14 — Power-ups 🟡 P1 | 14 power-ups nos papéis dos de Subway Surfers: 5 na pista, 1 consumível, 2 na preparação e 6 raros (seção 64) |
+| 14 — Power-ups 🟡 P1–P2 | 14 power-ups nos papéis dos de Subway Surfers: 5 na pista, 1 consumível, 2 na preparação e 6 raros (seção 64) |
 
 ## Cenas e fluxo
 
@@ -339,12 +339,16 @@ tempo.
   primeiros 60 m nem nos últimos 60 m, e nunca no chunk de um veículo.
 - **Ao mesmo tempo:** até 2. Pegar o mesmo de novo soma o tempo; um terceiro
   tira o que está mais perto de acabar.
-- **Montada:** os dois funcionam num veículo.
+- **Montada:** ímã, sinalizador e adrenalina funcionam num veículo.
+- **Câmera:** nos telhados, ela acompanha a altura toda da personagem.
 
 | Power-up | Efeito | Duração |
 | --- | --- | --- |
 | Ímã de sucata | puxa o loot das 3 faixas até 14 m à frente; para quando a mochila enche | 6 / 9 / 12 s |
 | Sinalizador | acende onde ela está; os zumbis a até 25 m vão atrás da luz e não agarram nem golpeiam (o Explosivo ainda acende o pavio); quem estava agarrando solta. Os obstáculos continuam valendo | 6 / 9 / 12 s |
+| Rota dos telhados | sobe para os telhados (8 m): lá em cima não há zumbis nem obstáculos, e há uma linha de munição (com componentes a cada três fileiras) em cada faixa; não pula nem desliza. Cancela os outros temporizados e não deixa pegar outro enquanto dura. Desce numa faixa livre, com 1,5 s sem dano, e desce sozinha 40 m antes da extração (o portão fica no chão); não aparece nos últimos 200 m. Montada, não funciona (o anel fica na pista) | 8 / 11 / 14 s |
+| Rampa de entulho | um salto de ~40 m com pico de ~5 m, por cima do que vier (a gravidade se ajusta à velocidade); 0,5 s sem dano ao pousar; quem agarrava solta. Não ocupa vaga de ativo e não melhora. Funciona a pé e nos veículos, menos no furgão e na mochila a jato | instantâneo |
+| Adrenalina | XP dos abates em dobro e golpes da arma branca 20% mais rápidos | 6 / 9 / 12 s |
 | Escudo de caçamba | consumível fabricado na Oficina; leva até 3 por expedição; **toque duplo** (ou Q, ou o botão ESCUDO) ergue um, que segura a próxima batida ou agarrão e quebra. No nível 2 empurra os zumbis da faixa (40 de dano); no 3, também dá 1 s sem dano | até quebrar |
 
 Os escudos usados acabam; na morte, os levados se perdem. Os níveis 2 e 3
@@ -739,7 +743,7 @@ Quase tudo é dado (`.tres`) editável no Inspector:
 | **Criar uma arma** | Um `WeaponData` (branca) ou `RangedWeaponData` (fogo, com `pellets`, `spread_lanes`, `burst`) por nível, um `WeaponTrack` (`start_level` 0 = fabricar) incluído em `weapon_tracks` do `shelter.tres`. |
 | **Criar uma construção** | Novo `BuildingData` em `data/buildings/` (categoria, custos por nível, Oficina exigida, efeito), incluído em `buildings` do `shelter.tres`. Se produz algo, some a linha em `scripts/shelter/production.gd`; para aparecer no abrigo 3D, crie o nó em `scenes/shelter.tscn`. |
 | **Criar um veículo** | Novo `VehicleData` em `data/vehicles/` (HP, duração, dica, velocidade, pulo, troca de faixa, deslize, regras com zumbis, armas bloqueadas, jornais, combustível, ruído, regiões, nível), incluído em `vehicles` de `data/world.tres`. O visual com primitivas fica em `PlayerVehicle.build_visual`. |
-| **Criar um power-up** | Novo `PowerUpData` em `data/powerups/` (nome, nome curto do ícone, cor, durações por nível, se aparece na pista, peso), incluído em `powerups` de `data/world.tres`. O efeito fica em `scripts/player_powerups.gd` (pelo `id`). |
+| **Criar um power-up** | Novo `PowerUpData` em `data/powerups/` (nome, nome curto do ícone, cor, durações por nível, se aparece na pista, peso e os campos do efeito: ímã, sinalizador, telhados, rampa, adrenalina, escudo), incluído em `powerups` de `data/world.tres`. O efeito fica em `scripts/player_powerups.gd` (pelo `id`). |
 | **Criar um traço** | Novo `TraitData` em `data/traits/` (perdas de moral, moral por dia, bônus da profissão, comida a mais, produção, nunca vai embora), incluído em `traits` de `data/world.tres`. |
 | **Ajustar a defesa** | Grupo "Defesa do abrigo" do `shelter.tres` (agenda, horda, perdas, torres, reforço) e as construções `gate`, `barricades`, `traps` e `towers`. |
 | **Trocar um som** | Substitua o `.wav` em `audio/` mantendo o nome. |
@@ -788,7 +792,7 @@ RedShelterGodot/
 │   ├── regions/              bairro, mercado, centro, hospital, industrial
 │   ├── shelter/shelter.tres  ShelterData (regras do abrigo e da defesa)
 │   ├── traits/               optimist, pessimist, loyal, selfish, fearful
-│   ├── powerups/             ima, sinalizador, escudo
+│   ├── powerups/             ima, sinalizador, escudo, telhados, rampa, adrenalina
 │   ├── vehicles/             patins, skate, bicicleta, moto, jetpack, furgao
 │   ├── weapons/              knife_1-4, machete, axe, katana, heavy_axe,
 │   │                         pistol_1-3, shotgun_1-3, smg_1-3, *_track
@@ -843,7 +847,7 @@ As Fases 1 a 13 do roadmap estão concluídas. O que vem agora:
 
 | Item | GDD |
 | --- | --- |
-| **Fase 14 — Power-ups**: P1 (Ímã, Sinalizador e Escudo) ✅; faltam P2 (Telhados, Rampa e Adrenalina), P3 (preparação e raros) e as melhorias na Oficina | 64 |
+| **Fase 14 — Power-ups**: P1 (Ímã, Sinalizador e Escudo) e P2 (Telhados, Rampa e Adrenalina) ✅; faltam P3 (preparação e raros) e as melhorias na Oficina | 64 |
 | Jogar de verdade e ajustar os valores (economia da campanha, regiões avançadas, defesa) | — |
 | Trocar as primitivas por arte low-poly e o áudio sintetizado pelo definitivo; nada na lógica depende disso | 52 |
 | Rumor de local especial na preparação | 26 |

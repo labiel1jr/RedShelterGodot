@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="PowerUpData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/powerup_data.gd" id="1_pu"]
+
+[resource]
+script = ExtResource("1_pu")
+id = &"rampa"
+display_name = "Rampa de entulho"
+short_name = "RAMPA"
+color = Color(0.95, 0.82, 0.55, 1)
+hint = "RAMPA DE ENTULHO: um salto longo, de uns 40 m, por cima do que vier."
+durations = PackedFloat32Array()
+spawn_weight = 0.8
+ramp_distance = 40.0
+ramp_height = 5.0

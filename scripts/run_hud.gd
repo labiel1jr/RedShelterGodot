@@ -108,6 +108,8 @@ func _process(delta: float) -> void:
 			var total := power.duration(PlayerPowerUps.level_of(id))
 			var filled := clampi(ceili(powerups.active[id] / maxf(total, 0.1) * 8.0), 0, 8)
 			parts.append("%s %s %ds" % [power.short_name, "■".repeat(filled) + "□".repeat(8 - filled), ceili(powerups.active[id])])
+		if powerups.is_ramping():
+			parts.append("RAMPA!")
 		if powerups.shield_armed:
 			parts.append("ESCUDO ERGUIDO")
 		powerup_label.text = "   ".join(parts)

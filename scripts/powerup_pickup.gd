@@ -56,6 +56,8 @@ func _on_body_entered(body: Node3D) -> void:
 	if not body.is_in_group("player"):
 		return
 	var powerups := body.get_node_or_null("PowerUps")
+	if powerups and not powerups.can_activate(data):
+		return
 	if powerups:
 		powerups.activate(data)
 		var run_manager := get_tree().get_first_node_in_group("run_manager")

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="PowerUpData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/powerup_data.gd" id="1_pu"]
+
+[resource]
+script = ExtResource("1_pu")
+id = &"telhados"
+display_name = "Rota dos telhados"
+short_name = "TELHADO"
+color = Color(0.65, 1, 0.75, 1)
+hint = "ROTA DOS TELHADOS: ela sobe pela escada de incêndio e corre nos telhados, longe dos zumbis e dos obstáculos, pegando munição e componentes. Cancela os outros power-ups."
+durations = PackedFloat32Array(8, 11, 14)
+spawn_weight = 0.6
+roof_height = 8.0

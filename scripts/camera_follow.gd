@@ -17,6 +17,8 @@ extends Camera3D
 var target: Node3D
 ## Afastamento extra do veículo montado (seção 63), suavizado.
 var _vehicle_offset := Vector3.ZERO
+## Nos telhados (seção 64) a câmera acompanha a altura toda.
+var _vertical := -1.0
 var _trauma := 0.0
 var _last_hp := -1
 
@@ -40,7 +42,10 @@ func _process(delta: float) -> void:
 		return
 
 	var followed := target.global_position
-	followed.y *= vertical_follow
+	var powerups := target.get_node_or_null("PowerUps")
+	var wanted_vertical := 1.0 if powerups and powerups.is_active(&"telhados") else vertical_follow
+	_vertical = wanted_vertical if _vertical < 0.0 else lerpf(_vertical, wanted_vertical, minf(1.0, 2.0 * delta))
+	followed.y *= _vertical
 	var vehicle := target.get_node_or_null("Vehicle")
 	var wanted: Vector3 = vehicle.data.camera_offset if vehicle and vehicle.is_mounted() else Vector3.ZERO
 	_vehicle_offset = _vehicle_offset.lerp(wanted, minf(1.0, 3.0 * delta))

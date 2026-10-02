@@ -51,6 +51,11 @@ var _drag_moved := false
 ## (faixas 2 e 3) e a personagem fica entre as duas.
 var two_lane := false
 var _last_tap_time := -1.0
+## Rota dos telhados (seção 64): >= 0 mantém a personagem nesta altura, sem
+## gravidade, pulo nem deslize.
+var rooftop_height := -1.0
+## Rampa de entulho: > 0 substitui a gravidade durante o salto longo.
+var ramp_gravity_scale := 0.0
 
 var _mesh_base_y := 1.0
 var _run_cycle := 0.0
@@ -85,11 +90,13 @@ func _physics_process(delta: float) -> void:
 	forward_speed += speed_increase_per_second * delta
 	_handle_slide_timer(delta)
 
-	if is_on_floor():
+	if rooftop_height >= 0.0:
+		vertical_velocity = clampf((rooftop_height - global_position.y) * 6.0, -8.0, 12.0)
+	elif is_on_floor():
 		if vertical_velocity < 0.0:
 			vertical_velocity = -1.0
 	else:
-		vertical_velocity += GRAVITY * gravity_scale * delta
+		vertical_velocity += GRAVITY * (ramp_gravity_scale if ramp_gravity_scale > 0.0 else gravity_scale) * delta
 	if lift > 0.0:
 		vertical_velocity = minf(maxf(vertical_velocity, 1.5) + lift * delta, max_rise_speed)
 	if global_position.y >= ceiling and vertical_velocity > 0.0:
@@ -201,13 +208,13 @@ func _lane_x(lane: int) -> float:
 
 
 func _jump() -> void:
-	if not is_on_floor() or is_sliding:
+	if not is_on_floor() or is_sliding or rooftop_height >= 0.0:
 		return
 	vertical_velocity = sqrt(jump_height * jump_multiplier * 2.0 * -GRAVITY)
 
 
 func _slide() -> void:
-	if is_sliding or not is_on_floor() or not can_slide:
+	if is_sliding or not is_on_floor() or not can_slide or rooftop_height >= 0.0:
 		return
 	is_sliding = true
 	slide_timer = slide_duration

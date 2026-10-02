@@ -95,7 +95,7 @@ func _vehicle_takes_input() -> bool:
 func attack() -> void:
 	if _vehicle_takes_input():
 		return
-	if _time_since_attack < weapon.attack_cooldown * cooldown_multiplier:
+	if _time_since_attack < melee_cooldown():
 		return
 	if _time_since_attack > weapon.combo_window:
 		_combo_step = 0
@@ -125,6 +125,15 @@ func attack() -> void:
 		if is_knife_broken():
 			AudioManager.play("crash", -4.0, 1.4)
 			Fx.float_text(player, player.global_position + Vector3.UP * 2.6, "ARMA QUEBRADA", Color(1, 0.35, 0.25), 60)
+
+
+## Intervalo entre golpes da arma branca; a Adrenalina (seção 64) encurta.
+func melee_cooldown() -> float:
+	var bonus := 0.0
+	var powerups := player.get_node_or_null("PowerUps")
+	if powerups and powerups.is_active(&"adrenalina"):
+		bonus = powerups.data(&"adrenalina").attack_speed_bonus
+	return weapon.attack_cooldown * cooldown_multiplier * (1.0 - bonus)
 
 
 func shoot() -> void:

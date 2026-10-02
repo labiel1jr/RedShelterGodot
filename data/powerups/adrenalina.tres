@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="PowerUpData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/powerup_data.gd" id="1_pu"]
+
+[resource]
+script = ExtResource("1_pu")
+id = &"adrenalina"
+display_name = "Adrenalina"
+short_name = "ADRENA"
+color = Color(1, 0.6, 0.85, 1)
+hint = "ADRENALINA: XP dos abates em dobro e golpes da arma branca 20% mais rápidos."
+xp_multiplier = 2.0
+attack_speed_bonus = 0.2
