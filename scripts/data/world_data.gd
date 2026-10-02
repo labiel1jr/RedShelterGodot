@@ -44,6 +44,19 @@ extends Resource
 ## Depois de cair do veículo, a personagem fica invulnerável por este tempo.
 @export var vehicle_dismount_invulnerability := 1.0
 
+@export_group("Power-ups (seção 64)")
+## Os temporizados da pista e o Escudo de caçamba (consumível).
+@export var powerups: Array[PowerUpData] = []
+## Chance de cada chunk elegível ter um power-up (×`powerup_danger_multiplier`
+## na fase Perigo do Director; nenhum no Clímax).
+@export_range(0.0, 1.0) var powerup_chance := 0.3
+@export var powerup_danger_multiplier := 1.5
+@export var powerup_min_gap := 230.0
+@export var powerup_min_distance := 60.0
+@export var powerup_clear_before_extraction := 60.0
+## Quantos temporizados ao mesmo tempo.
+@export var powerup_max_active := 2
+
 @export_group("Sobreviventes (seção 44)")
 @export var professions: Array[ProfessionData] = []
 @export var survivor_names := PackedStringArray()
@@ -105,6 +118,13 @@ func _per_distance(values: PackedInt32Array, distance: float) -> int:
 		if distance >= distances[i] - 1.0 and i < values.size():
 			result = values[i]
 	return result
+
+
+func powerup(id: StringName) -> PowerUpData:
+	for p in powerups:
+		if p.id == id:
+			return p
+	return null
 
 
 func region(id: StringName) -> RegionData:

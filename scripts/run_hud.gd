@@ -31,6 +31,8 @@ const HP_STATES := [
 @onready var pause_button: Button = $PauseButton
 @onready var medkit_button: Button = $MedkitButton
 @onready var vehicle_label: Label = $VehicleLabel
+@onready var powerup_label: Label = $PowerUpLabel
+@onready var shield_button: Button = $ShieldButton
 
 ## Abreviações do loot além de comida, água e sucata (seção 62).
 const EXTRA_LOOT := [["components", "Comp."], ["medicine", "Remédio"], ["fuel", "Comb."]]
@@ -67,6 +69,7 @@ func _ready() -> void:
 	noise_bar.max_value = run_manager.max_noise
 	medkit_button.text = "KIT +%d" % GameManager.SHELTER.medkit_heal
 	medkit_button.button_down.connect(run_manager.use_medkit)
+	shield_button.button_down.connect(func(): if run_manager.powerups: run_manager.powerups.arm_shield())
 
 
 func _process(delta: float) -> void:
@@ -95,6 +98,23 @@ func _process(delta: float) -> void:
 	noise_bar.value = run_manager.noise
 
 	xp_label.text = "XP: %d (se extrair)" % run_manager.xp_if_extracted()
+
+	# Seção 64: power-ups ativos com uma barra de tempo, e o escudo.
+	var powerups: PlayerPowerUps = run_manager.powerups
+	if powerups:
+		var parts: Array[String] = []
+		for id in powerups.active:
+			var power := powerups.data(id)
+			var total := power.duration(PlayerPowerUps.level_of(id))
+			var filled := clampi(ceili(powerups.active[id] / maxf(total, 0.1) * 8.0), 0, 8)
+			parts.append("%s %s %ds" % [power.short_name, "■".repeat(filled) + "□".repeat(8 - filled), ceili(powerups.active[id])])
+		if powerups.shield_armed:
+			parts.append("ESCUDO ERGUIDO")
+		powerup_label.text = "   ".join(parts)
+		powerup_label.visible = not parts.is_empty()
+		shield_button.visible = powerups.shield_charges > 0 or powerups.shield_armed
+		shield_button.disabled = powerups.shield_armed or powerups.shield_charges <= 0
+		shield_button.text = "ERGUIDO" if powerups.shield_armed else "ESCUDO ×%d" % powerups.shield_charges
 
 	# Seção 63: HP e tempo do veículo montado.
 	var vehicle: PlayerVehicle = run_manager.vehicle

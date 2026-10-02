@@ -6,6 +6,10 @@ extends CharacterBody3D
 
 ## Toque curto na tela (sem arrastar): na seção 5 do GDD, "Atirar = Toque".
 signal tapped
+## Dois toques curtos seguidos: ergue o Escudo de caçamba (seção 64).
+signal double_tapped
+
+const DOUBLE_TAP_TIME := 0.3
 
 const LANE_WIDTH := 2.5
 const GRAVITY := -25.0
@@ -46,6 +50,7 @@ var _drag_moved := false
 ## Furgão: ocupa duas faixas; `current_lane` vira 0 (faixas 1 e 2) ou 2
 ## (faixas 2 e 3) e a personagem fica entre as duas.
 var two_lane := false
+var _last_tap_time := -1.0
 
 var _mesh_base_y := 1.0
 var _run_cycle := 0.0
@@ -122,6 +127,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			var delta_touch: Vector2 = event.position - touch_start
 			if delta_touch.length() < swipe_threshold:
 				tapped.emit()
+				var now := Time.get_ticks_msec() / 1000.0
+				if now - _last_tap_time < DOUBLE_TAP_TIME:
+					double_tapped.emit()
+					_last_tap_time = -1.0
+				else:
+					_last_tap_time = now
 				return
 			if abs(delta_touch.x) > abs(delta_touch.y):
 				_change_lane(1 if delta_touch.x > 0 else -1)

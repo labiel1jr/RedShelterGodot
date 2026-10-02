@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="PowerUpData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/powerup_data.gd" id="1_pu"]
+
+[resource]
+script = ExtResource("1_pu")
+id = &"sinalizador"
+display_name = "Sinalizador"
+short_name = "LUZ"
+color = Color(1, 0.75, 0.35, 1)
+hint = "SINALIZADOR: os zumbis por perto vão atrás da luz e não agarram você. Os obstáculos continuam lá."
+flare_radius = 25.0

@@ -406,11 +406,13 @@ func on_grabber_contact(zombie: Node3D) -> bool:
 		# Patins: o agarrão derruba e quebra; o zumbi agarra normalmente.
 		dismount("%s QUEBROU" % data.display_name.to_upper())
 		return false
-	if data.passes_weak_zombies and VehicleData.is_weak(zombie.data):
-		absorb(data.weak_zombie_cost)
-		zombie.shove(data.knock_down_damage)
+	# `absorb` pode desmontar (HP zerado): guarda os valores antes.
+	var vehicle := data
+	if vehicle.passes_weak_zombies and VehicleData.is_weak(zombie.data):
+		absorb(vehicle.weak_zombie_cost)
+		zombie.shove(vehicle.knock_down_damage)
 		return true
-	absorb(data.contact_damage)
+	absorb(vehicle.contact_damage)
 	zombie.shove()
 	return true
 

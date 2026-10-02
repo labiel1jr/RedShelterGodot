@@ -138,6 +138,10 @@ var last_run_lost_survivors: Array[String] = []
 ## Linhas dos moradores vindas da expedição (pedidos cumpridos), que abrem o
 ## relatório do dia.
 var resident_log: Array[String] = []
+## Seção 64: Escudos de caçamba guardados (fabricados na Oficina) e o nível
+## de cada power-up (id → 1..3; melhorias na Oficina).
+var shields := 0
+var powerup_levels := {}
 
 
 func _ready() -> void:
@@ -180,6 +184,8 @@ func new_game() -> void:
 	next_seed = -1
 	arrival_pending = false
 	last_day_report.clear()
+	shields = 0
+	powerup_levels.clear()
 
 
 # ------------------------------------------------------------- consultas
@@ -551,6 +557,9 @@ func commit_run(result: Dictionary) -> void:
 			last_run_bag = "left"
 
 	# Kit médico da Enfermaria (seção 41): gasta um medicamento do abrigo.
+	# Seção 64: escudos levados — os usados acabam; na morte, perde todos.
+	shields = maxi(0, shields - int(result.get("shields_taken", 0) if not survived else result.get("shields_used", 0)))
+
 	last_run_medkit_used = result.get("medkit_used", false)
 	if last_run_medkit_used:
 		medicine = maxi(0, medicine - 1)
@@ -625,6 +634,8 @@ func to_dict() -> Dictionary:
 		"next_attack_day": next_attack_day,
 		"attack_noise": attack_noise,
 		"recovering_bag": recovering_bag,
+		"shields": shields,
+		"powerup_levels": powerup_levels.duplicate(),
 	}
 	for key in RESOURCE_KEYS:
 		data[key] = get(key)
@@ -676,6 +687,9 @@ func from_dict(data: Dictionary) -> void:
 	# Saves antigos: o primeiro ataque vem uma semana depois de carregar.
 	next_attack_day = int(data.get("next_attack_day", maxi(SHELTER.first_attack_day, day + SHELTER.attack_interval)))
 	attack_noise = float(data.get("attack_noise", 0.0))
+	shields = maxi(0, int(data.get("shields", 0)))
+	for id in data.get("powerup_levels", {}):
+		powerup_levels[StringName(id)] = clampi(int(data.powerup_levels[id]), 1, 3)
 	# O JSON devolve números como float.
 	var bag: Dictionary = data.get("death_bag", {})
 	if bag.has("loot") and bag.has("seed"):

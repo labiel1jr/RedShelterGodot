@@ -45,6 +45,15 @@ func _build_rows() -> void:
 			_add_weapon_row(t.id)
 
 	add_section("EQUIPAMENTO")
+	var shield := Workshop.shield_data()
+	add_row(
+		shield.display_name,
+		"Você tem %d (máximo %d). Leva até %d por expedição; toque duas vezes na corrida para erguer. Segura a próxima batida ou agarrão. Na morte, os levados se perdem." % [gm.shields, shield.max_stock, shield.max_per_run],
+		gm.cost_text(Workshop.shield_cost()),
+		"Fabricar",
+		Workshop.craft_shield_block_reason(),
+		func(): return Workshop.craft_shield(),
+	)
 	var backpack := gm.SHELTER.building(&"backpack")
 	var level := gm.level_of(&"backpack")
 	var maxed := level >= backpack.max_level()

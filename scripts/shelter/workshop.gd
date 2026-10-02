@@ -63,6 +63,34 @@ static func craft_ammo() -> bool:
 	return true
 
 
+# --------------------------------------------------- escudo (seção 64)
+
+static func shield_data() -> PowerUpData:
+	return GameManager.WORLD.powerup(&"escudo")
+
+
+static func shield_cost() -> Dictionary:
+	return GameManager.effective_cost(shield_data().craft_cost)
+
+
+static func craft_shield_block_reason() -> String:
+	if GameManager.shields >= shield_data().max_stock:
+		return "Estoque cheio"
+	var cost := shield_cost()
+	if not GameManager.can_afford(cost):
+		return GameManager.missing_text(cost)
+	return ""
+
+
+static func craft_shield() -> bool:
+	if craft_shield_block_reason() != "":
+		return false
+	GameManager.pay(shield_cost())
+	GameManager.shields += 1
+	SaveManager.save_game()
+	return true
+
+
 # ------------------------------------------------------------- componentes
 
 ## Seção 62: desmontar sucata rende componentes (o jeito de consegui-los

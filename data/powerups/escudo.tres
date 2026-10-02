@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PowerUpData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/powerup_data.gd" id="1_pu"]
+
+[resource]
+script = ExtResource("1_pu")
+id = &"escudo"
+display_name = "Escudo de caçamba"
+short_name = "ESCUDO"
+color = Color(0.85, 0.9, 0.7, 1)
+kind = 1
+hint = "ESCUDO DE CAÇAMBA: toque duas vezes (ou Q, ou o botão ESCUDO) para erguer. Ele segura a próxima batida ou agarrão e quebra."
+durations = PackedFloat32Array()
+on_track = false
+craft_cost = {
+"components": 1,
+"scrap": 4
+}

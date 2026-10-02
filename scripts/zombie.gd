@@ -166,8 +166,13 @@ func _detect_distance() -> float:
 func _chase(delta: float) -> void:
 	# Em Z vai na direção da personagem: de frente, se aproxima; depois que
 	# ela passa, persegue por trás (e fica para trás se for mais lento).
-	global_position.z = move_toward(global_position.z, _player.global_position.z, data.chase_speed * delta)
-	global_position.x = move_toward(global_position.x, _player.global_position.x, data.lateral_speed * delta)
+	var target := _player.global_position
+	# Seção 64: perto do sinalizador aceso, vai atrás da luz.
+	var powerups := _player.get_node_or_null("PowerUps")
+	if powerups and powerups.lures(self):
+		target = powerups.flare_position
+	global_position.z = move_toward(global_position.z, target.z, data.chase_speed * delta)
+	global_position.x = move_toward(global_position.x, target.x, data.lateral_speed * delta)
 
 
 ## Desce pela faixa; na barricada ou no portão, ataca a estrutura.
@@ -253,6 +258,10 @@ func _on_body_entered(entered: Node3D) -> void:
 	var vehicle := entered.get_node_or_null("Vehicle")
 	if vehicle and vehicle.ram_zombie(self):
 		return
+	# Seção 64: atrás do sinalizador, não ataca (o Explosivo ainda acende).
+	var powerups := entered.get_node_or_null("PowerUps")
+	if powerups and powerups.lures(self) and data.attack != ZombieData.Attack.EXPLODE:
+		return
 	if data.attack == ZombieData.Attack.SMASH:
 		if vehicle and vehicle.on_smash():
 			_smash_cooldown = SMASH_COOLDOWN
@@ -265,6 +274,8 @@ func _on_body_entered(entered: Node3D) -> void:
 		return
 
 	if vehicle and vehicle.on_grabber_contact(self):
+		return
+	if powerups and powerups.block_grab(self):
 		return
 	if not _combat:
 		return

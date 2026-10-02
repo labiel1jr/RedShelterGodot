@@ -44,6 +44,10 @@ func take_damage(amount: int, direct := false) -> void:
 	var vehicle := get_parent().get_node_or_null("Vehicle")
 	if not direct and vehicle and vehicle.absorb(amount):
 		return
+	# Seção 64: o Escudo de caçamba segura o golpe.
+	var powerups := get_parent().get_node_or_null("PowerUps")
+	if not direct and powerups and powerups.block_hit():
+		return
 
 	_pending_damage += amount * damage_multiplier
 	var whole := int(_pending_damage)
