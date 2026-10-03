@@ -1,3 +1,4 @@
+class_name LootPickup
 extends Area3D
 
 ## Loot da pista (seção 31 do GDD). Instanciado pelo ChunkPopulator e

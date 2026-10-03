@@ -56,6 +56,11 @@ extends Resource
 @export var powerup_clear_before_extraction := 60.0
 ## Quantos temporizados ao mesmo tempo.
 @export var powerup_max_active := 2
+## Raros: chance em cada chunk de local especial, evento ou ramo (e em
+## qualquer chunk, para os da fonte "track"), e distância mínima entre dois.
+@export_range(0.0, 1.0) var rare_powerup_chance := 0.08
+@export_range(0.0, 1.0) var rare_powerup_track_chance := 0.006
+@export var rare_powerup_min_gap := 300.0
 
 @export_group("Sobreviventes (seção 44)")
 @export var professions: Array[ProfessionData] = []
@@ -118,6 +123,13 @@ func _per_distance(values: PackedInt32Array, distance: float) -> int:
 		if distance >= distances[i] - 1.0 and i < values.size():
 			result = values[i]
 	return result
+
+
+func vehicle(id: StringName) -> VehicleData:
+	for v in vehicles:
+		if v.id == id:
+			return v
+	return null
 
 
 func powerup(id: StringName) -> PowerUpData:

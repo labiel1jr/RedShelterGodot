@@ -68,6 +68,7 @@ var _last_vehicle_at := -INF
 ## Seção 64: power-ups ativos (nó "PowerUps" da Player).
 var powerups: PlayerPowerUps
 var _last_powerup_at := -INF
+var _last_rare_at := -INF
 
 
 func _enter_tree() -> void:
@@ -111,8 +112,10 @@ func _ready() -> void:
 		powerups.shield_charges = mini(GameManager.shields, shield.max_per_run)
 	player.double_tapped.connect(powerups.arm_shield)
 	chunk_streamer.chunk_loaded.connect(_place_powerup)
+	chunk_streamer.chunk_loaded.connect(_place_rare_powerup)
 	extraction_distance = chunk_streamer.build(expedition_seed, target_distance)
 	_pending_forks.assign(chunk_streamer.forks)
+	_apply_prep_powerups()
 	_attract_rng.seed = expedition_seed
 
 	# Armas equipadas na preparação (seção 35), no nível atual da Oficina e
@@ -273,6 +276,8 @@ func collect_loot(loot_type: int, amount: int) -> int:
 	# Perk Faro para loot: chance de uma unidade a mais.
 	if _attract_rng.randf() < Progression.stat(&"loot_bonus_chance"):
 		amount += 1
+	if powerups:
+		amount = powerups.loot_amount(amount)
 
 	var unit_weight: float = GameManager.SHELTER.loot_weight_kg[loot_type]
 	var free := backpack_capacity() - carried_weight()
@@ -403,7 +408,7 @@ func _place_powerup(instance: Node3D, chunk: RouteGenerator.RouteChunk) -> void:
 		# A rota dos telhados termina antes da extração: não aparece perto dela.
 		if candidate.roof_height > 0.0 and chunk.end_distance() > extraction_distance - candidate.roof_clear_before_extraction:
 			continue
-		if candidate.on_track:
+		if candidate.on_track and not candidate.rare:
 			options.append(candidate)
 			weights.append(candidate.spawn_weight)
 	if options.is_empty():
@@ -425,6 +430,94 @@ func _place_powerup(instance: Node3D, chunk: RouteGenerator.RouteChunk) -> void:
 	instance.add_child(pickup)
 	pickup.position = Vector3((free_lanes[rng.randi() % free_lanes.size()] - 1) * ChunkPopulator.LANE_WIDTH, 0.0, local_z)
 	_last_powerup_at = start - local_z
+
+
+## Seção 64: power-ups escolhidos na preparação, pagos agora (se ainda der).
+func _apply_prep_powerups() -> void:
+	var world := GameManager.WORLD
+	for id in GameManager.prep_powerups.duplicate():
+		var power := world.powerup(id)
+		if not power:
+			continue
+		var cost := GameManager.prep_cost(power)
+		if not GameManager.can_afford(cost):
+			continue
+		GameManager.pay(cost)
+		if power.headstart_vehicle != &"":
+			var ride := world.vehicle(power.headstart_vehicle)
+			if ride and vehicle.mount(ride):
+				vehicle.protected_until = power.headstart_distance
+		if power.loot_bonus > 0:
+			powerups.map_bonus = power.loot_bonus
+			hud.show_hint(_rumor(), 6.0)
+	GameManager.prep_powerups.clear()
+
+
+## Mapa marcado: o boato do primeiro local especial da rota principal.
+func _rumor() -> String:
+	for chunk in chunk_streamer.route:
+		if chunk.branch == 0 and chunk.data.poi_banner != "":
+			return "MAPA MARCADO: dizem que há %s a uns %d m. E +1 em todo loot." % [chunk.data.display_name.to_lower(), roundi(chunk.start_distance / 50.0) * 50]
+	return "MAPA MARCADO: nenhum local especial nesta rota. Mas +1 em todo loot."
+
+
+## Seção 64: os raros aparecem em locais especiais, eventos e ramos (e, bem
+## raro, em qualquer chunk), um por vez a cada `rare_powerup_min_gap`.
+func _place_rare_powerup(instance: Node3D, chunk: RouteGenerator.RouteChunk) -> void:
+	var world := GameManager.WORLD
+	if chunk.fork or extraction_distance <= 0.0 or chunk.data == chunk_streamer.region.end_chunk:
+		return
+	var start := chunk.start_distance
+	if start < world.powerup_min_distance or chunk.end_distance() > extraction_distance - world.powerup_clear_before_extraction:
+		return
+	if start - _last_rare_at < world.rare_powerup_min_gap:
+		return
+	var sources := PackedStringArray()
+	if chunk.data.poi_banner != "":
+		sources.append("poi")
+	if chunk.event:
+		sources.append("event")
+	if chunk.branch != 0:
+		sources.append("branch")
+	var special := not sources.is_empty()
+	sources.append("track")
+	var options: Array[PowerUpData] = []
+	var weights := PackedFloat32Array()
+	for candidate in world.powerups:
+		if not candidate.rare:
+			continue
+		for source in candidate.rare_sources:
+			if source in sources and (special or source == "track"):
+				options.append(candidate)
+				weights.append(candidate.spawn_weight)
+				break
+	if options.is_empty():
+		return
+	var rng := RandomNumberGenerator.new()
+	rng.seed = chunk.chunk_seed + 9137
+	var only_track := true
+	for candidate in options:
+		if not "track" in candidate.rare_sources or candidate.rare_sources.size() > 1:
+			only_track = false
+	if rng.randf() >= (world.rare_powerup_track_chance if only_track else world.rare_powerup_chance):
+		return
+	var chosen: PowerUpData = options[rng.rand_weighted(weights)]
+	var local_z := -chunk.data.length * 0.65
+	var blocked := {}
+	for child in instance.get_children():
+		if child.is_in_group("obstacle") and absf(child.position.z - local_z) < 3.0:
+			blocked[roundi(child.position.x / ChunkPopulator.LANE_WIDTH) + 1] = true
+	var free_lanes: Array[int] = []
+	for lane in 3:
+		if not blocked.has(lane):
+			free_lanes.append(lane)
+	if free_lanes.is_empty():
+		return
+	var pickup := PowerUpPickup.new()
+	pickup.data = chosen
+	instance.add_child(pickup)
+	pickup.position = Vector3((free_lanes[rng.randi() % free_lanes.size()] - 1) * ChunkPopulator.LANE_WIDTH, 0.0, local_z)
+	_last_rare_at = start - local_z
 
 
 ## Escudos levados nesta expedição (seção 64).
@@ -503,7 +596,7 @@ func register_kill(xp_reward: int) -> void:
 
 ## XP que a expedição daria se terminasse agora com extração.
 func xp_if_extracted() -> int:
-	return Progression.expedition_xp(kill_xp, distance_travelled(), true)
+	return roundi(Progression.expedition_xp(kill_xp, distance_travelled(), true) * (1.0 + (powerups.xp_bonus if powerups else 0.0)))
 
 
 ## Pausa → Abandonar: conta como morte (seção 46).
@@ -530,6 +623,7 @@ func _end_run(survived: bool) -> void:
 		"medkit_used": medkit_used,
 		"shields_used": powerups.shields_used if powerups else 0,
 		"shields_taken": _shields_taken(),
+		"xp_bonus": powerups.xp_bonus if powerups else 0.0,
 		"bag_recovered": bag_recovered,
 		"noise_total": noise_total,
 		"early_extraction": early_extraction and survived,

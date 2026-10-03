@@ -142,6 +142,8 @@ var resident_log: Array[String] = []
 ## de cada power-up (id → 1..3; melhorias na Oficina).
 var shields := 0
 var powerup_levels := {}
+## Power-ups da preparação escolhidos para a próxima expedição (pagos ao partir).
+var prep_powerups: Array[StringName] = []
 
 
 func _ready() -> void:
@@ -186,6 +188,7 @@ func new_game() -> void:
 	last_day_report.clear()
 	shields = 0
 	powerup_levels.clear()
+	prep_powerups.clear()
 
 
 # ------------------------------------------------------------- consultas
@@ -444,6 +447,14 @@ func change_morale(amount: int, reason: String) -> void:
 	morale_log.append("%+d %s" % [amount, reason])
 
 
+## Seção 64: custo de um power-up da preparação (o Mapa marcado sai de
+## graça com o Rádio no nível pedido).
+func prep_cost(power: PowerUpData) -> Dictionary:
+	if power.prep_free_radio_level > 0 and level_of(&"radio") >= power.prep_free_radio_level:
+		return {}
+	return effective_cost(power.prep_cost)
+
+
 func can_afford(cost: Dictionary) -> bool:
 	for key in cost:
 		if get(key) < cost[key]:
@@ -593,7 +604,7 @@ func commit_run(result: Dictionary) -> void:
 	# Seção 42: XP da expedição → nível → pontos. Progressão é permanente.
 	# Seção 24: a extração antecipada não dá o bônus da extração completa.
 	last_run_early = result.get("early_extraction", false)
-	last_run_xp = Progression.expedition_xp(result.kill_xp, result.distance, survived, not last_run_early)
+	last_run_xp = roundi(Progression.expedition_xp(result.kill_xp, result.distance, survived, not last_run_early) * (1.0 + float(result.get("xp_bonus", 0.0))))
 	last_run_levels_gained = Progression.add_xp(last_run_xp)
 
 	# Seção 45: o ruído das expedições atrai a próxima horda.
@@ -635,6 +646,7 @@ func to_dict() -> Dictionary:
 		"attack_noise": attack_noise,
 		"recovering_bag": recovering_bag,
 		"shields": shields,
+		"prep_powerups": prep_powerups.map(func(id): return String(id)),
 		"powerup_levels": powerup_levels.duplicate(),
 	}
 	for key in RESOURCE_KEYS:
@@ -688,6 +700,9 @@ func from_dict(data: Dictionary) -> void:
 	next_attack_day = int(data.get("next_attack_day", maxi(SHELTER.first_attack_day, day + SHELTER.attack_interval)))
 	attack_noise = float(data.get("attack_noise", 0.0))
 	shields = maxi(0, int(data.get("shields", 0)))
+	for id in data.get("prep_powerups", []):
+		if WORLD.powerup(StringName(id)):
+			prep_powerups.append(StringName(id))
 	for id in data.get("powerup_levels", {}):
 		powerup_levels[StringName(id)] = clampi(int(data.powerup_levels[id]), 1, 3)
 	# O JSON devolve números como float.

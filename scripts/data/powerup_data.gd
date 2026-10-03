@@ -3,9 +3,12 @@ extends Resource
 
 ## Power-up da corrida (seção 64 do GDD). Os temporizados aparecem na pista
 ## (um anel branco com o ícone) e duram alguns segundos; o consumível (Escudo
-## de caçamba) é fabricado na Oficina e ativado com toque duplo.
+## de caçamba) é fabricado na Oficina e ativado com toque duplo; os da
+## preparação são escolhidos antes de partir; os raros aparecem em locais
+## especiais, eventos e ramos de bifurcação. Sem `durations`, o efeito é
+## instantâneo.
 
-enum Kind { TIMED, CONSUMABLE }
+enum Kind { TIMED, CONSUMABLE, PREP }
 
 @export var id: StringName
 @export var display_name := ""
@@ -20,6 +23,42 @@ enum Kind { TIMED, CONSUMABLE }
 ## Aparece na pista? Peso no sorteio entre os da pista.
 @export var on_track := true
 @export var spawn_weight := 1.0
+
+@export_group("Raro")
+## Raro: não entra no sorteio comum da pista; aparece nas fontes abaixo.
+@export var rare := false
+## Onde aparece: "poi" (locais especiais), "event" (chunks de evento),
+## "branch" (ramos de bifurcação), "track" (qualquer chunk, bem raro).
+@export var rare_sources := PackedStringArray()
+
+@export_group("Preparação")
+## Custo na preparação (pago ao partir).
+@export var prep_cost := {}
+## Com o Rádio neste nível ou mais, sai de graça (0 = nunca).
+@export var prep_free_radio_level := 0
+## Arrancada: começa montada neste veículo, sem dano nos primeiros metros.
+@export var headstart_vehicle: StringName
+@export var headstart_distance := 0.0
+## Mapa marcado: unidades a mais em todo loot e o boato de um local especial.
+@export var loot_bonus := 0
+
+@export_group("Efeitos dos raros")
+## Mochila abandonada: vira um power-up da pista ao acaso ou um destes
+## recursos ([tipo, quantidade]).
+@export var random_powerup := false
+@export var random_resources: Array = []
+## Rádio de alerta: segundos a mais de fase Calma (adia o clímax).
+@export var calm_seconds := 0.0
+## Segundo fôlego: ao morrer, levanta com esta fração do HP (uma vez).
+@export var revive_fraction := 0.0
+## Esconderijo de saqueador: pacote instantâneo [[tipo, quantidade], ...].
+@export var cache: Array = []
+## Diário de sobrevivente: XP a mais no fim da expedição (e a versão rara).
+@export var xp_bonus := 0.0
+@export var xp_bonus_rare := 0.0
+@export_range(0.0, 1.0) var xp_bonus_rare_chance := 0.0
+## Saco de lona: multiplica o loot coletado enquanto dura.
+@export var loot_multiplier := 1
 
 @export_group("Ímã de sucata")
 ## Puxa o loot das 3 faixas até esta distância à frente.

@@ -55,6 +55,13 @@ func take_damage(amount: int, direct := false) -> void:
 		return
 	_pending_damage -= whole
 	current_hp = max(0, current_hp - whole)
+	# Seção 64: o Segundo fôlego levanta uma vez.
+	if current_hp == 0:
+		var powerups := get_parent().get_node_or_null("PowerUps")
+		var fraction: float = powerups.use_second_wind() if powerups else 0.0
+		if fraction > 0.0:
+			current_hp = maxi(1, roundi(max_hp * fraction))
+			make_invulnerable(2.0)
 	health_changed.emit(current_hp, max_hp)
 
 	if current_hp == 0:

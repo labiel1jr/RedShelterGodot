@@ -98,6 +98,33 @@ func _build_rows() -> void:
 				selected,
 			)
 
+	# Seção 64: power-ups pagos ao partir.
+	add_section("POWER-UPS DA PREPARAÇÃO (seção 64)")
+	for power in world.powerups:
+		if power.kind != PowerUpData.Kind.PREP:
+			continue
+		var cost := gm.prep_cost(power)
+		var chosen := power.id in gm.prep_powerups
+		var detail := power.hint.substr(power.hint.find(":") + 1).strip_edges()
+		if power.prep_free_radio_level > 0:
+			detail += " Com o Rádio nível %d, sai de graça." % power.prep_free_radio_level
+		var power_id: StringName = power.id
+		add_row(
+			power.display_name,
+			detail + " Pago ao partir.",
+			"Levando" if chosen else gm.cost_text(cost),
+			"Tirar" if chosen else "Levar",
+			"" if chosen or gm.can_afford(cost) else gm.missing_text(cost),
+			func():
+				if power_id in gm.prep_powerups:
+					gm.prep_powerups.erase(power_id)
+				else:
+					gm.prep_powerups.append(power_id)
+				SaveManager.save_game()
+				return true,
+			chosen,
+		)
+
 	add_section("")
 	add_row(
 		"Partir para %s" % region.display_name,

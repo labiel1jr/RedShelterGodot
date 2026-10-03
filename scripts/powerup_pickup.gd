@@ -34,6 +34,18 @@ func _ready() -> void:
 	_ring.position.y = 1.0
 	add_child(_ring)
 
+	# Raro: anel maior, com "RARO" embaixo.
+	if data.rare:
+		_ring.scale = Vector3.ONE * 1.4
+		var rare_label := Label3D.new()
+		rare_label.text = "RARO"
+		rare_label.font_size = 28
+		rare_label.outline_size = 8
+		rare_label.pixel_size = 0.008
+		rare_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+		rare_label.position.y = 0.2
+		add_child(rare_label)
+
 	var label := Label3D.new()
 	label.text = data.short_name
 	label.modulate = data.color
@@ -49,7 +61,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_time += delta
-	_ring.scale = Vector3.ONE * (1.0 + 0.12 * sin(_time * 6.0))
+	_ring.scale = Vector3.ONE * (1.4 if data.rare else 1.0) * (1.0 + 0.12 * sin(_time * 6.0))
 
 
 func _on_body_entered(body: Node3D) -> void:

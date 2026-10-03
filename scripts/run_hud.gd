@@ -110,6 +110,12 @@ func _process(delta: float) -> void:
 			parts.append("%s %s %ds" % [power.short_name, "■".repeat(filled) + "□".repeat(8 - filled), ceili(powerups.active[id])])
 		if powerups.is_ramping():
 			parts.append("RAMPA!")
+		if powerups.second_wind:
+			parts.append("FÔLEGO")
+		if powerups.xp_bonus > 0.0:
+			parts.append("DIÁRIO +%d%% XP" % roundi(powerups.xp_bonus * 100.0))
+		if powerups.map_bonus > 0:
+			parts.append("MAPA +%d" % powerups.map_bonus)
 		if powerups.shield_armed:
 			parts.append("ESCUDO ERGUIDO")
 		powerup_label.text = "   ".join(parts)

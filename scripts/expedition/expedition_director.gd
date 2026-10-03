@@ -45,6 +45,8 @@ var _climax_done := false
 var _recent_damage: Array = []
 var _time := 0.0
 var _last_hp := -1
+## Rádio de alerta (seção 64): segundos de calma forçada; adia o clímax.
+var _calm_left := 0.0
 
 
 func _ready() -> void:
@@ -53,6 +55,10 @@ func _ready() -> void:
 	# fazem _ready.
 	_run.get_node("Chunks").chunk_loaded.connect(_on_chunk_loaded)
 	_run.get_node("Player/Health").health_changed.connect(_on_health_changed)
+
+
+func add_calm(seconds: float) -> void:
+	_calm_left += seconds
 
 
 func phase_name() -> String:
@@ -97,10 +103,14 @@ func _process(delta: float) -> void:
 	else:
 		_quiet += delta
 	_relief_left = maxf(0.0, _relief_left - delta)
+	_calm_left = maxf(0.0, _calm_left - delta)
 	_update_phase()
 
 
 func _update_phase() -> void:
+	if _calm_left > 0.0:
+		phase = Phase.CALM
+		return
 	var progress: float = _run.distance_travelled() / maxf(1.0, _run.extraction_distance)
 	if progress >= climax_fraction:
 		phase = Phase.CLIMAX

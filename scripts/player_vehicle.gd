@@ -27,6 +27,8 @@ var _magnet_side := -1
 var _magnet_from_lane := -1
 ## Furgão: balas da metralhadora e a área que cobre as duas faixas.
 var turret_ammo_left := 0
+## Arrancada de moto (seção 64): sem dano no veículo até esta distância.
+var protected_until := -INF
 var _turret_timer := 0.0
 var _bumper: Area3D
 var _visual: Node3D
@@ -91,6 +93,7 @@ func dismount(message: String) -> void:
 		return
 	var color := data.color
 	data = null
+	protected_until = -INF
 	player.vehicle_speed = 1.0
 	player.jump_multiplier = 1.0
 	player.lane_speed_multiplier = 1.0
@@ -387,6 +390,8 @@ func add_fuel(units: int) -> void:
 func absorb(amount: int) -> bool:
 	if not data:
 		return false
+	if -player.global_position.z < protected_until:
+		return true
 	hp -= amount
 	if _flash_material:
 		_flash_material.emission_energy_multiplier = 2.5

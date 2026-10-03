@@ -40,6 +40,14 @@
 [ext_resource type="Resource" path="res://data/powerups/telhados.tres" id="pu_roof"]
 [ext_resource type="Resource" path="res://data/powerups/rampa.tres" id="pu_ramp"]
 [ext_resource type="Resource" path="res://data/powerups/adrenalina.tres" id="pu_adrenaline"]
+[ext_resource type="Resource" path="res://data/powerups/arrancada.tres" id="pu_arrancada"]
+[ext_resource type="Resource" path="res://data/powerups/mapa.tres" id="pu_mapa"]
+[ext_resource type="Resource" path="res://data/powerups/mochila_abandonada.tres" id="pu_mochila_abandonada"]
+[ext_resource type="Resource" path="res://data/powerups/radio_alerta.tres" id="pu_radio_alerta"]
+[ext_resource type="Resource" path="res://data/powerups/segundo_folego.tres" id="pu_segundo_folego"]
+[ext_resource type="Resource" path="res://data/powerups/esconderijo.tres" id="pu_esconderijo"]
+[ext_resource type="Resource" path="res://data/powerups/diario.tres" id="pu_diario"]
+[ext_resource type="Resource" path="res://data/powerups/saco_lona.tres" id="pu_saco_lona"]
 
 [resource]
 script = ExtResource("10_taorj")
@@ -51,7 +59,7 @@ distance_max_pois = PackedInt32Array(1, 1, 2, 3)
 fork_chunk = ExtResource("8_n3je7")
 branches = Array[ExtResource("1_3stcx")]([ExtResource("2_qn6fu"), ExtResource("3_sdftw"), ExtResource("4_41roe"), ExtResource("5_oajrs"), ExtResource("6_gwpnm"), ExtResource("7_udnid")])
 vehicles = Array[ExtResource("vh_script")]([ExtResource("vh_patins"), ExtResource("vh_skate"), ExtResource("vh_bike"), ExtResource("vh_moto"), ExtResource("vh_jetpack"), ExtResource("vh_furgao")])
-powerups = Array[ExtResource("pu_script")]([ExtResource("pu_ima"), ExtResource("pu_flare"), ExtResource("pu_shield"), ExtResource("pu_roof"), ExtResource("pu_ramp"), ExtResource("pu_adrenaline")])
+powerups = Array[ExtResource("pu_script")]([ExtResource("pu_ima"), ExtResource("pu_flare"), ExtResource("pu_shield"), ExtResource("pu_roof"), ExtResource("pu_ramp"), ExtResource("pu_adrenaline"), ExtResource("pu_arrancada"), ExtResource("pu_mapa"), ExtResource("pu_mochila_abandonada"), ExtResource("pu_radio_alerta"), ExtResource("pu_segundo_folego"), ExtResource("pu_esconderijo"), ExtResource("pu_diario"), ExtResource("pu_saco_lona")])
 distance_max_forks = PackedInt32Array(1, 2, 3, 3)
 professions = Array[ExtResource("1_4tvtn")]([ExtResource("2_y13gi"), ExtResource("3_hg0vh"), ExtResource("4_fh3cn"), ExtResource("5_x02ki")])
 survivor_names = PackedStringArray("Ana", "Bruno", "Carla", "Diego", "Elisa", "Fábio", "Gabi", "Hugo", "Íris", "João", "Karina", "Lucas", "Marta", "Nico", "Olga", "Paulo", "Rita", "Sérgio", "Tânia", "Vítor")

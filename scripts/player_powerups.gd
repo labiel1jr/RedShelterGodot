@@ -21,6 +21,11 @@ var _flare_node: Node3D
 var _roof: Node3D
 ## Rampa de entulho: segundos de salto que faltam.
 var _ramp_left := 0.0
+## Raros e preparação (seção 64): segundo fôlego guardado, XP a mais no fim
+## e unidades a mais em todo loot (Mapa marcado).
+var second_wind := false
+var xp_bonus := 0.0
+var map_bonus := 0
 
 @onready var player: CharacterBody3D = get_parent()
 
@@ -57,11 +62,11 @@ func is_ramping() -> bool:
 func activate(power: PowerUpData) -> void:
 	if not can_activate(power):
 		return
-	# Instantâneo: o salto da rampa não ocupa vaga de ativo.
-	if power.ramp_distance > 0.0:
-		_start_ramp(power)
-		AudioManager.play("pickup", -2.0, 1.4)
-		Fx.float_text(player, player.global_position + Vector3.UP * 2.4, "%s!" % power.display_name.to_upper(), power.color, 52)
+	# Instantâneo (sem duração): não ocupa vaga de ativo.
+	if power.durations.is_empty():
+		if _instant(power):
+			AudioManager.play("pickup", -2.0, 1.4)
+			Fx.float_text(player, player.global_position + Vector3.UP * 2.4, "%s!" % power.display_name.to_upper(), power.color, 52)
 		changed.emit()
 		return
 	# A rota dos telhados cancela os outros.
@@ -90,7 +95,60 @@ func activate(power: PowerUpData) -> void:
 	changed.emit()
 
 
+## Efeitos instantâneos. Retorna false se já mostrou o próprio aviso (a
+## Mochila abandonada que virou outro power-up).
+func _instant(power: PowerUpData) -> bool:
+	var run_manager := get_tree().get_first_node_in_group("run_manager")
+	if power.ramp_distance > 0.0:
+		_start_ramp(power)
+	elif power.random_powerup:
+		var options: Array[PowerUpData] = []
+		for candidate in GameManager.WORLD.powerups:
+			if candidate.on_track and not candidate.rare and can_activate(candidate):
+				options.append(candidate)
+		if not options.is_empty() and randf() < 0.5:
+			activate(options[randi() % options.size()])
+			return false
+		if not power.random_resources.is_empty() and run_manager:
+			var item: Array = power.random_resources[randi() % power.random_resources.size()]
+			var taken: int = run_manager.collect_loot(int(item[0]), int(item[1]))
+			Fx.float_text(player, player.global_position + Vector3.UP * 3.0, "+%d %s" % [taken, LootPickup.NAMES[int(item[0])]], power.color, 44)
+	elif not power.cache.is_empty():
+		if run_manager:
+			for item in power.cache:
+				run_manager.collect_loot(int(item[0]), int(item[1]))
+	elif power.revive_fraction > 0.0:
+		second_wind = true
+	elif power.xp_bonus > 0.0:
+		xp_bonus += power.xp_bonus_rare if randf() < power.xp_bonus_rare_chance else power.xp_bonus
+	return true
+
+
+## Ao cair: usa o Segundo fôlego, se tiver. Retorna a fração do HP (0 = não).
+func use_second_wind() -> float:
+	if not second_wind:
+		return 0.0
+	second_wind = false
+	var power := data(&"segundo_folego")
+	Fx.float_text(player, player.global_position + Vector3.UP * 2.6, "SEGUNDO FÔLEGO!", power.color, 60)
+	AudioManager.play("pickup", 0.0, 0.8)
+	changed.emit()
+	return power.revive_fraction
+
+
+## Mapa marcado (+1 por item) e Saco de lona (em dobro, peso incluso).
+func loot_amount(amount: int) -> int:
+	amount += map_bonus
+	if active.has(&"saco_lona"):
+		amount *= data(&"saco_lona").loot_multiplier
+	return amount
+
+
 func _start(power: PowerUpData) -> void:
+	if power.calm_seconds > 0.0:
+		var run_manager := get_tree().get_first_node_in_group("run_manager")
+		if run_manager:
+			run_manager.director.add_calm(power.calm_seconds)
 	if power.roof_height > 0.0:
 		_start_rooftop(power, power.duration(level_of(power.id)))
 	if power.flare_radius > 0.0:
