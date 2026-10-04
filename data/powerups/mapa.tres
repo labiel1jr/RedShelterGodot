@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PowerUpData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/powerup_data.gd" id="1_pu"]
+
+[resource]
+script = ExtResource("1_pu")
+id = &"mapa"
+display_name = "Mapa marcado"
+short_name = "MAPA"
+color = Color(0.9, 0.85, 0.6, 1)
+kind = 2
+hint = "MAPA MARCADO: +1 unidade em todo loot da expedição e o boato de onde fica um local especial."
+durations = PackedFloat32Array()
+on_track = false
+prep_cost = {
+"components": 2
+}
+prep_free_radio_level = 2
+loot_bonus = 1

@@ -106,6 +106,7 @@ func _build_rows() -> void:
 		var cost := gm.prep_cost(power)
 		var chosen := power.id in gm.prep_powerups
 		var detail := power.hint.substr(power.hint.find(":") + 1).strip_edges()
+		detail = detail.left(1).to_upper() + detail.substr(1)
 		if power.prep_free_radio_level > 0:
 			detail += " Com o Rádio nível %d, sai de graça." % power.prep_free_radio_level
 		var power_id: StringName = power.id

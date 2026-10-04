@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="PowerUpData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/powerup_data.gd" id="1_pu"]
+
+[resource]
+script = ExtResource("1_pu")
+id = &"arrancada"
+display_name = "Arrancada de moto"
+short_name = "ARRANCADA"
+color = Color(0.95, 0.55, 0.15, 1)
+kind = 2
+hint = "ARRANCADA DE MOTO: você sai montada na moto, sem dano nos primeiros 250 m. Faz muito barulho."
+durations = PackedFloat32Array()
+on_track = false
+prep_cost = {
+"fuel": 3
+}
+headstart_vehicle = &"moto"
+headstart_distance = 250.0

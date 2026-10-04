@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PowerUpData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/powerup_data.gd" id="1_pu"]
+
+[resource]
+script = ExtResource("1_pu")
+id = &"esconderijo"
+display_name = "Esconderijo de saqueador"
+short_name = "ESCONDE"
+color = Color(0.85, 0.8, 0.7, 1)
+hint = "ESCONDERIJO DE SAQUEADOR: um pacote de sucata e munição de uma vez."
+durations = PackedFloat32Array()
+on_track = false
+rare = true
+rare_sources = PackedStringArray("track")
+cache = [[2, 6], [3, 10]]

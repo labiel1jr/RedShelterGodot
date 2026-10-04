@@ -486,8 +486,9 @@ func _place_rare_powerup(instance: Node3D, chunk: RouteGenerator.RouteChunk) -> 
 	for candidate in world.powerups:
 		if not candidate.rare:
 			continue
+		# Em chunk especial, só os das fontes especiais; nos outros, os da pista.
 		for source in candidate.rare_sources:
-			if source in sources and (special or source == "track"):
+			if source in sources and (source != "track") == special:
 				options.append(candidate)
 				weights.append(candidate.spawn_weight)
 				break
@@ -499,7 +500,12 @@ func _place_rare_powerup(instance: Node3D, chunk: RouteGenerator.RouteChunk) -> 
 	for candidate in options:
 		if not "track" in candidate.rare_sources or candidate.rare_sources.size() > 1:
 			only_track = false
-	if rng.randf() >= (world.rare_powerup_track_chance if only_track else world.rare_powerup_chance):
+	var chance := world.rare_powerup_chance
+	if only_track:
+		chance = world.rare_powerup_track_chance
+	elif chunk.data.poi_banner != "":
+		chance = world.rare_powerup_poi_chance
+	if rng.randf() >= chance:
 		return
 	var chosen: PowerUpData = options[rng.rand_weighted(weights)]
 	var local_z := -chunk.data.length * 0.65

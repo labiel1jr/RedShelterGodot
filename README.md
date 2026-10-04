@@ -7,7 +7,7 @@ Survival runner mobile com abrigo. A sobrevivente corre sozinha por três
 faixas, desvia, pula, desliza, luta contra zumbis que a agarram e saqueia o
 que consegue carregar. De volta ao abrigo, os recursos viram construções,
 armas e moradores, e a cada semana uma horda ataca o portão. É o protótipo
-jogável do **GDD 0.7.2** (`../Red Shelter.MD`), feito com formas primitivas.
+jogável do **GDD 0.7.3** (`../Red Shelter.MD`), feito com formas primitivas.
 Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 
 | | |
@@ -103,7 +103,7 @@ Seção 58 do GDD. As Fases 1 a 13 estão concluídas; a Fase 14 está planejada
 | 11 — Pessoas | traços de personalidade, afinidade, pedidos dos moradores |
 | 12 — Defesa | ataques ao abrigo, portão, barricadas, armadilhas, torres |
 | 13 — Veículos ✅ | patins, skate, bicicleta de jornaleiro, moto, mochila a jato e furgão de destruição, cada um com HP e habilidade (seção 63) |
-| 14 — Power-ups 🟡 P1–P2 | 14 power-ups nos papéis dos de Subway Surfers: 5 na pista, 1 consumível, 2 na preparação e 6 raros (seção 64) |
+| 14 — Power-ups 🟡 P1–P3 | 14 power-ups nos papéis dos de Subway Surfers: 5 na pista, 1 consumível, 2 na preparação e 6 raros (seção 64) |
 
 ## Cenas e fluxo
 
@@ -354,6 +354,27 @@ tempo.
 Os escudos usados acabam; na morte, os levados se perdem. Os níveis 2 e 3
 (as durações maiores) chegam com as melhorias na Oficina, numa etapa
 seguinte da Fase 14.
+
+**Na preparação** (escolhidos no painel Preparar, pagos ao partir):
+
+| Power-up | Efeito | Custo |
+| --- | --- | --- |
+| Arrancada de moto | começa montada na moto, sem dano nela nos primeiros 250 m | 3 combustível |
+| Mapa marcado | +1 unidade em todo loot da expedição e, ao partir, o boato de onde fica o primeiro local especial da rota | 2 componentes (de graça com o Rádio nível 2) |
+
+**Raros** (anel maior, com "RARO"): uns 0,35 por expedição de 1 km.
+
+| Power-up | Efeito | Onde |
+| --- | --- | --- |
+| Mochila abandonada | metade das vezes vira um power-up da pista ao acaso; senão, 3 medicamentos ou 4 componentes | eventos, ramos |
+| Rádio de alerta | 10 s de fase Calma, que adiam a horda do clímax | locais especiais |
+| Segundo fôlego | ao cair, levanta uma vez com 30% do HP e 2 s sem dano | locais especiais |
+| Esconderijo de saqueador | 6 sucata + 10 munição de uma vez (o que couber na mochila) | qualquer chunk, bem raro |
+| Diário de sobrevivente | +25% de XP no fim da expedição (+50% em 1 de cada 5) | eventos |
+| Saco de lona | loot em dobro por 15 s; o peso também dobra | ramos de bifurcação |
+
+Chance de raro: 22% num chunk de local especial, 3,5% num de evento ou de
+ramo, 0,3% nos outros; no máximo um a cada 300 m.
 
 ## Combate
 
@@ -792,7 +813,8 @@ RedShelterGodot/
 │   ├── regions/              bairro, mercado, centro, hospital, industrial
 │   ├── shelter/shelter.tres  ShelterData (regras do abrigo e da defesa)
 │   ├── traits/               optimist, pessimist, loyal, selfish, fearful
-│   ├── powerups/             ima, sinalizador, escudo, telhados, rampa, adrenalina
+│   ├── powerups/             14: ima, sinalizador, escudo, telhados, rampa, adrenalina,
+│   │                         arrancada, mapa e os 6 raros
 │   ├── vehicles/             patins, skate, bicicleta, moto, jetpack, furgao
 │   ├── weapons/              knife_1-4, machete, axe, katana, heavy_axe,
 │   │                         pistol_1-3, shotgun_1-3, smg_1-3, *_track
@@ -828,7 +850,7 @@ RedShelterGodot/
 
 | Arquivo | Conteúdo |
 | --- | --- |
-| `user://save.json` | o jogo: recursos, dia, construções, armas e durabilidades, progressão, moral, moradores (traço, afinidade, pedido), mochila da morte, próximo ataque, escudos guardados e níveis dos power-ups. Salvo ao fim de cada expedição e defesa, e a cada ação no abrigo. |
+| `user://save.json` | o jogo: recursos, dia, construções, armas e durabilidades, progressão, moral, moradores (traço, afinidade, pedido), mochila da morte, próximo ataque, escudos guardados, níveis dos power-ups e os da preparação escolhidos. Salvo ao fim de cada expedição e defesa, e a cada ação no abrigo. |
 | `user://settings.cfg` | volumes, tremor de câmera e dicas já vistas. Fica separado do save: um Novo Jogo não apaga as configurações. |
 | `user://campaign_log.csv` | registro da campanha para balanceamento: uma linha por expedição e por defesa (loot, gastos do dia, estoque, moral, horda prevista), separado por `;`. Começa de novo a cada Novo Jogo. |
 | `user://sandbox/` | save, configurações e registros dos robôs de `tests/` (rodam com `-- --sandbox` e não tocam no save de verdade). |
@@ -847,10 +869,9 @@ As Fases 1 a 13 do roadmap estão concluídas. O que vem agora:
 
 | Item | GDD |
 | --- | --- |
-| **Fase 14 — Power-ups**: P1 (Ímã, Sinalizador e Escudo) e P2 (Telhados, Rampa e Adrenalina) ✅; faltam P3 (preparação e raros) e as melhorias na Oficina | 64 |
+| **Fase 14 — Power-ups**: P1, P2 e P3 ✅ (os 14 power-ups); faltam as melhorias na Oficina | 64 |
 | Jogar de verdade e ajustar os valores (economia da campanha, regiões avançadas, defesa) | — |
 | Trocar as primitivas por arte low-poly e o áudio sintetizado pelo definitivo; nada na lógica depende disso | 52 |
-| Rumor de local especial na preparação | 26 |
 | Tratar moradores feridos na Enfermaria | 41 |
 | Espada e colete | 11, 40 |
 | Tipo de dano (perfurante) contra a armadura do Blindado | 13 |

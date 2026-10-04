@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="PowerUpData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/powerup_data.gd" id="1_pu"]
+
+[resource]
+script = ExtResource("1_pu")
+id = &"radio_alerta"
+display_name = "Rádio de alerta"
+short_name = "RÁDIO"
+color = Color(0.7, 0.95, 1, 1)
+hint = "RÁDIO DE ALERTA: mais tempo de calma e a horda do clímax atrasa."
+durations = PackedFloat32Array(10, 10, 10)
+on_track = false
+rare = true
+rare_sources = PackedStringArray("poi")
+calm_seconds = 10.0

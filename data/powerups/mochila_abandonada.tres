@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="PowerUpData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/powerup_data.gd" id="1_pu"]
+
+[resource]
+script = ExtResource("1_pu")
+id = &"mochila_abandonada"
+display_name = "Mochila abandonada"
+short_name = "MOCHILA?"
+color = Color(0.8, 0.9, 1, 1)
+hint = "MOCHILA ABANDONADA: pode ter um power-up ou um recurso raro."
+durations = PackedFloat32Array()
+on_track = false
+rare = true
+rare_sources = PackedStringArray("event", "branch")
+random_powerup = true
+random_resources = [[5, 3], [4, 4]]

@@ -56,10 +56,12 @@ extends Resource
 @export var powerup_clear_before_extraction := 60.0
 ## Quantos temporizados ao mesmo tempo.
 @export var powerup_max_active := 2
-## Raros: chance em cada chunk de local especial, evento ou ramo (e em
-## qualquer chunk, para os da fonte "track"), e distância mínima entre dois.
-@export_range(0.0, 1.0) var rare_powerup_chance := 0.08
-@export_range(0.0, 1.0) var rare_powerup_track_chance := 0.006
+## Raros: chance em cada chunk de local especial (são poucos por rota), de
+## evento ou ramo, e em qualquer chunk (fonte "track"); e a distância mínima
+## entre dois. Uns 0,35 raro por expedição de 1 km.
+@export_range(0.0, 1.0) var rare_powerup_poi_chance := 0.22
+@export_range(0.0, 1.0) var rare_powerup_chance := 0.035
+@export_range(0.0, 1.0) var rare_powerup_track_chance := 0.003
 @export var rare_powerup_min_gap := 300.0
 
 @export_group("Sobreviventes (seção 44)")

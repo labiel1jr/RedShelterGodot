@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="PowerUpData" format=3]
+
+[ext_resource type="Script" path="res://scripts/data/powerup_data.gd" id="1_pu"]
+
+[resource]
+script = ExtResource("1_pu")
+id = &"diario"
+display_name = "Diário de sobrevivente"
+short_name = "DIÁRIO"
+color = Color(0.95, 0.9, 0.8, 1)
+hint = "DIÁRIO DE SOBREVIVENTE: mais XP no fim desta expedição."
+durations = PackedFloat32Array()
+on_track = false
+rare = true
+rare_sources = PackedStringArray("event")
+xp_bonus = 0.25
+xp_bonus_rare = 0.5
+xp_bonus_rare_chance = 0.2
