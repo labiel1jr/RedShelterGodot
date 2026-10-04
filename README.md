@@ -7,15 +7,15 @@ Survival runner mobile com abrigo. A sobrevivente corre sozinha por três
 faixas, desvia, pula, desliza, luta contra zumbis que a agarram e saqueia o
 que consegue carregar. De volta ao abrigo, os recursos viram construções,
 armas e moradores, e a cada semana uma horda ataca o portão. É o protótipo
-jogável do **GDD 0.7.3** (`../Red Shelter.MD`), feito com formas primitivas.
+jogável do **GDD 0.8** (`../Red Shelter.MD`), feito com formas primitivas.
 Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 
 | | |
 | --- | --- |
 | **Engine** | Godot 4.7 · GDScript · renderer Mobile |
 | **Plataformas-alvo** | Android / iOS (testado no PC com teclado e mouse) |
-| **Estado** | Fases 1–13 concluídas · 14 planejada |
-| **Próximo** | Fase 14 — Power-ups; em paralelo, jogar, balancear e trocar as primitivas por arte ([próximos passos](#próximos-passos)) |
+| **Estado** | Fases 1–14 concluídas (roadmap do GDD completo) |
+| **Próximo** | Jogar, balancear, trocar as primitivas por arte e preparar a versão Android ([próximos passos](#próximos-passos)) |
 
 ## Índice
 
@@ -86,7 +86,7 @@ desligadas ou reexibidas em **Configurações**.
 
 ## Status do roadmap
 
-Seção 58 do GDD. As Fases 1 a 13 estão concluídas; a Fase 14 está planejada.
+Seção 58 do GDD. Todas as fases estão concluídas.
 
 | Fase | Conteúdo |
 | --- | --- |
@@ -103,7 +103,7 @@ Seção 58 do GDD. As Fases 1 a 13 estão concluídas; a Fase 14 está planejada
 | 11 — Pessoas | traços de personalidade, afinidade, pedidos dos moradores |
 | 12 — Defesa | ataques ao abrigo, portão, barricadas, armadilhas, torres |
 | 13 — Veículos ✅ | patins, skate, bicicleta de jornaleiro, moto, mochila a jato e furgão de destruição, cada um com HP e habilidade (seção 63) |
-| 14 — Power-ups 🟡 P1–P3 | 14 power-ups nos papéis dos de Subway Surfers: 5 na pista, 1 consumível, 2 na preparação e 6 raros (seção 64) |
+| 14 — Power-ups ✅ | 14 power-ups nos papéis dos de Subway Surfers: 5 na pista, 1 consumível, 2 na preparação e 6 raros (seção 64) |
 
 ## Cenas e fluxo
 
@@ -352,8 +352,7 @@ tempo.
 | Escudo de caçamba | consumível fabricado na Oficina; leva até 3 por expedição; **toque duplo** (ou Q, ou o botão ESCUDO) ergue um, que segura a próxima batida ou agarrão e quebra. No nível 2 empurra os zumbis da faixa (40 de dano); no 3, também dá 1 s sem dano | até quebrar |
 
 Os escudos usados acabam; na morte, os levados se perdem. Os níveis 2 e 3
-(as durações maiores) chegam com as melhorias na Oficina, numa etapa
-seguinte da Fase 14.
+(as durações maiores e os efeitos extras do escudo) são comprados na Oficina.
 
 **Na preparação** (escolhidos no painel Preparar, pagos ao partir):
 
@@ -506,6 +505,7 @@ e o portão reforçado).
 | Fabricar e melhorar armas | ver a [tabela de armas](#armas) |
 | Melhorar a mochila (seção 32) | 25 → 35 → 50 kg |
 | Fabricar Escudo de caçamba (seção 64) | 4 sucata + 1 componente; guarda até 9 |
+| Melhorar power-ups (seção 64): Ímã, Sinalizador, Telhados, Adrenalina e Escudo | nível 2: 15 sucata + 3 componentes (Oficina 1); nível 3: 30 sucata + 6 componentes + 5 energia (Oficina 2) |
 
 Uma arma nova ou melhorada sai da bancada inteira.
 
@@ -865,11 +865,10 @@ RedShelterGodot/
 
 ## Próximos passos
 
-As Fases 1 a 13 do roadmap estão concluídas. O que vem agora:
+O roadmap do GDD está completo (Fases 1 a 14). O que vem agora:
 
 | Item | GDD |
 | --- | --- |
-| **Fase 14 — Power-ups**: P1, P2 e P3 ✅ (os 14 power-ups); faltam as melhorias na Oficina | 64 |
 | Jogar de verdade e ajustar os valores (economia da campanha, regiões avançadas, defesa) | — |
 | Trocar as primitivas por arte low-poly e o áudio sintetizado pelo definitivo; nada na lógica depende disso | 52 |
 | Tratar moradores feridos na Enfermaria | 41 |

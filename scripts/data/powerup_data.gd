@@ -24,6 +24,14 @@ enum Kind { TIMED, CONSUMABLE, PREP }
 @export var on_track := true
 @export var spawn_weight := 1.0
 
+@export_group("Melhorias na Oficina")
+## Custo para chegar ao nível 2 e ao 3, e a Oficina exigida em cada um.
+@export var upgrade_costs: Array[Dictionary] = [
+	{"scrap": 15, "components": 3},
+	{"scrap": 30, "components": 6, "energy": 5},
+]
+@export var upgrade_workshop := PackedInt32Array([1, 2])
+
 @export_group("Raro")
 ## Raro: não entra no sorteio comum da pista; aparece nas fontes abaixo.
 @export var rare := false
@@ -98,6 +106,23 @@ enum Kind { TIMED, CONSUMABLE, PREP }
 @export var push_damage := 40
 @export var invulnerable_from_level := 3
 @export var invulnerability := 1.0
+
+
+## Melhora na Oficina: os temporizados da pista com durações diferentes por
+## nível, e o Escudo (empurrão no 2, segundos sem dano no 3). A Rampa, os
+## raros e os da preparação não melhoram.
+func is_upgradable() -> bool:
+	if rare or kind == Kind.PREP:
+		return false
+	if kind == Kind.CONSUMABLE:
+		return true
+	return durations.size() >= 2 and durations[0] != durations[durations.size() - 1]
+
+
+func max_level() -> int:
+	if not is_upgradable():
+		return 1
+	return 3 if kind == Kind.CONSUMABLE else durations.size()
 
 
 func duration(level: int) -> float:

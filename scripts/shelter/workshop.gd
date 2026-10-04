@@ -63,6 +63,41 @@ static func craft_ammo() -> bool:
 	return true
 
 
+# ------------------------------------- melhorias dos power-ups (seção 64)
+
+static func powerup_level(id: StringName) -> int:
+	return int(GameManager.powerup_levels.get(id, 1))
+
+
+static func powerup_upgrade_cost(power: PowerUpData) -> Dictionary:
+	var level := powerup_level(power.id)
+	if level >= power.max_level() or level - 1 >= power.upgrade_costs.size():
+		return {}
+	return GameManager.effective_cost(power.upgrade_costs[level - 1])
+
+
+static func powerup_upgrade_block_reason(power: PowerUpData) -> String:
+	var level := powerup_level(power.id)
+	if level >= power.max_level():
+		return "Nível máximo"
+	var required := power.upgrade_workshop[level - 1] if level - 1 < power.upgrade_workshop.size() else 0
+	if GameManager.level_of(&"workshop") < required:
+		return "Requer Oficina nível %d" % required
+	var cost := powerup_upgrade_cost(power)
+	if not GameManager.can_afford(cost):
+		return GameManager.missing_text(cost)
+	return ""
+
+
+static func upgrade_powerup(power: PowerUpData) -> bool:
+	if powerup_upgrade_block_reason(power) != "":
+		return false
+	GameManager.pay(powerup_upgrade_cost(power))
+	GameManager.powerup_levels[power.id] = powerup_level(power.id) + 1
+	SaveManager.save_game()
+	return true
+
+
 # --------------------------------------------------- escudo (seção 64)
 
 static func shield_data() -> PowerUpData:

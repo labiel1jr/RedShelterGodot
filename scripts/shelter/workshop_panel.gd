@@ -44,6 +44,11 @@ func _build_rows() -> void:
 		if t.ranged:
 			_add_weapon_row(t.id)
 
+	add_section("POWER-UPS (seção 64)")
+	for power in gm.WORLD.powerups:
+		if power.is_upgradable():
+			_add_powerup_row(power)
+
 	add_section("EQUIPAMENTO")
 	var shield := Workshop.shield_data()
 	add_row(
@@ -64,6 +69,35 @@ func _build_rows() -> void:
 		"Máximo" if maxed else "Melhorar",
 		Construction.block_reason(backpack),
 		func(): return Construction.upgrade(backpack),
+	)
+
+
+## O que cada nível do power-up faz.
+static func powerup_level_text(power: PowerUpData, level: int) -> String:
+	if power.kind == PowerUpData.Kind.CONSUMABLE:
+		match level:
+			1:
+				return "segura uma batida ou agarrão"
+			2:
+				return "também empurra a faixa (%d de dano)" % power.push_damage
+			_:
+				return "também dá %.0f s sem dano" % power.invulnerability
+	return "dura %.0f s" % power.duration(level)
+
+
+func _add_powerup_row(power: PowerUpData) -> void:
+	var level := Workshop.powerup_level(power.id)
+	var maxed := level >= power.max_level()
+	var detail := "Agora: " + powerup_level_text(power, level)
+	if not maxed:
+		detail += "  →  nível %d: %s" % [level + 1, powerup_level_text(power, level + 1)]
+	add_row(
+		"%s  —  nível %d/%d" % [power.display_name, level, power.max_level()],
+		detail,
+		GameManager.cost_text(Workshop.powerup_upgrade_cost(power)),
+		"Máximo" if maxed else "Melhorar",
+		Workshop.powerup_upgrade_block_reason(power),
+		func(): return Workshop.upgrade_powerup(power),
 	)
 
 
