@@ -7,7 +7,7 @@ Survival runner mobile com abrigo. A sobrevivente corre sozinha por três
 faixas, desvia, pula, desliza, luta contra zumbis que a agarram e saqueia o
 que consegue carregar. De volta ao abrigo, os recursos viram construções,
 armas e moradores, e a cada semana uma horda ataca o portão. É o protótipo
-jogável do **GDD 0.8** (`../Red Shelter.MD`), feito com formas primitivas.
+jogável do **GDD 0.8.1** (`../Red Shelter.MD`), feito com formas primitivas.
 Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 
 | | |
@@ -80,6 +80,9 @@ Cada expedição é um dia:
 | Arma branca (ataque de emergência) | botão **ATACAR** | F ou J |
 | Kit médico (Enfermaria nv 2) | botão **KIT** | H |
 | Pausa | botão **II** | Esc ou P |
+| Erguer o Escudo de caçamba | toque duplo ou botão **ESCUDO** | Q |
+| Voar (mochila a jato) | segurar o dedo | segurar Espaço, ↑, W ou o botão do mouse |
+| Girar a câmera do abrigo (360°) | segurar o dedo e arrastar | segurar o botão do meio (rodinha) e arrastar |
 
 Dicas curtas aparecem uma única vez, na hora certa (tutorial). Elas podem ser
 desligadas ou reexibidas em **Configurações**.
@@ -439,6 +442,11 @@ inteira também aumenta a próxima horda que ataca o abrigo.
 Seções 32 e 36–41 do GDD. As regras e os valores ficam em
 `data/shelter/shelter.tres` (`ShelterData`), e as construções em
 `data/buildings/*.tres` (`BuildingData`).
+
+**Câmera:** gira 360° em volta do abrigo (`scripts/shelter/shelter_camera.gd`).
+No PC, segure o botão do meio do mouse e arraste; no celular, segure o dedo
+um instante (0,35 s) e arraste. Toques nas barras e nos painéis não giram.
+As paredes altas entre a câmera e o abrigo somem, para não tapar as salas.
 
 ### Recursos e o dia (seções 37 e 62)
 
