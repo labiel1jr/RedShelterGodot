@@ -32,6 +32,7 @@ Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 - [Interface, áudio e desempenho](#interface-áudio-e-desempenho)
 - [Balanceamento](#balanceamento)
 - [Como estender](#como-estender)
+- [Arte e assets](#arte-e-assets)
 - [Arquitetura e dados](#arquitetura-e-dados)
 - [Save e configurações](#save-e-configurações)
 - [Próximos passos](#próximos-passos)
@@ -90,7 +91,7 @@ desligadas ou reexibidas em **Configurações**.
 
 ## Status do roadmap
 
-Seção 58 do GDD. Todas as fases estão concluídas.
+Seção 58 do GDD. As Fases 1 a 14 estão concluídas; a 15 (direção de arte) está planejada.
 
 | Fase | Conteúdo |
 | --- | --- |
@@ -108,6 +109,7 @@ Seção 58 do GDD. Todas as fases estão concluídas.
 | 12 — Defesa | ataques ao abrigo, portão, barricadas, armadilhas, torres |
 | 13 — Veículos ✅ | patins, skate, bicicleta de jornaleiro, moto, mochila a jato e furgão de destruição, cada um com HP e habilidade (seção 63) |
 | 14 — Power-ups ✅ | 14 power-ups nos papéis dos de Subway Surfers: 5 na pista, 1 consumível, 2 na preparação e 6 raros (seção 64) |
+| 15 — Direção de arte 📋 | estilo toon shading / cel-shading decidido; A1 base técnica (shader toon, contorno, textura-paleta, névoa) até A6 acabamento (seção 65) |
 
 ## Cenas e fluxo
 
@@ -216,7 +218,7 @@ Cada obstáculo causa 15 de dano. O loot é um cubo girando na cor do recurso:
 | amarelo | munição | 3–6 | 0,1 kg | Estacionamento, Contêineres |
 | ciano | componentes | 1–2 | 1 kg | Zona Industrial, Mercado, Centro |
 | branco | medicamentos | 1–2 | 0,5 kg | Hospital, Centro, evento Recurso raro |
-| vermelho | combustível | 1–3 | 2 kg | Posto, Engarrafamento, Zona Industrial |
+| roxo | combustível | 1–3 | 2 kg | Posto, Engarrafamento, Zona Industrial |
 
 O Centro, o Hospital e a Zona Industrial somam +1 em cada loot. Com a
 mochila cheia, o loot fica na pista ("MOCHILA CHEIA"); se só parte cabe, ela
@@ -781,6 +783,19 @@ Quase tudo é dado (`.tres`) editável no Inspector:
 | **Ajustar a defesa** | Grupo "Defesa do abrigo" do `shelter.tres` (agenda, horda, perdas, torres, reforço) e as construções `gate`, `barricades`, `traps` e `towers`. |
 | **Trocar um som** | Substitua o `.wav` em `audio/` mantendo o nome. |
 
+## Arte e assets
+
+- **Estilo:** toon shading / cel-shading — seção 65 do [GDD](docs/GDD.md):
+  luz em 3 faixas chapadas com sombra colorida por região, contorno escuro
+  (grosso em atores e coletáveis, médio em obstáculos, fino ou nenhum no
+  fundo), detalhe desenhado na textura-paleta, sem PBR. O vermelho fica
+  reservado ao abrigo, à personagem e ao perigo; o combustível é roxo.
+- **Catálogo para os artistas:** [`docs/assets/asset_list.json`](docs/assets/asset_list.json)
+  — 115 assets de cenário e objetos (personagens e zumbis ficam para
+  depois) com medidas, prioridades P1–P3, regras de formato (.glb, metros,
+  pivô) e um modelo para pedir assets novos.
+- **Hoje:** o jogo ainda usa formas primitivas; os modelos entram pela Fase 15.
+
 ## Arquitetura e dados
 
 **Autoloads**, carregados nesta ordem:
@@ -882,7 +897,8 @@ O roadmap do GDD está completo (Fases 1 a 14). O que vem agora:
 | Item | GDD |
 | --- | --- |
 | Jogar de verdade e ajustar os valores (economia da campanha, regiões avançadas, defesa) | — |
-| Trocar as primitivas por arte low-poly e o áudio sintetizado pelo definitivo; nada na lógica depende disso | 52 |
+| **Fase 15 — Direção de arte**: estilo toon shading / cel-shading (luz em 3 faixas, contorno por classe de objeto, cor por região, vermelho reservado). Primeiro a base técnica (A1), depois os modelos do catálogo de assets | 65 |
+| Trocar o áudio sintetizado pelo definitivo; nada na lógica depende disso | 52 |
 | Tratar moradores feridos na Enfermaria | 41 |
 | Espada e colete | 11, 40 |
 | Tipo de dano (perfurante) contra a armadura do Blindado | 13 |
