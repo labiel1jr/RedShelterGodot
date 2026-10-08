@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "project": "Red Shelter",
   "document": "Catálogo de assets de cenário e objetos (sem personagens e sem zumbis)",
   "updated": "2026-10-08",
@@ -18,14 +18,16 @@
     "axes": "Y para cima; a frente do objeto aponta para -Z (sentido em que a personagem corre)",
     "pivot": "no chão, centro da base (x=0, z=0, y=0), salvo indicação no asset",
     "lane_reference": "a pista tem 3 faixas de 2,5 m (x = -2,5, 0, +2,5); objetos de faixa têm no máximo 2,0 m de largura",
-    "art_style": "toon noir vermelho: low-poly facetado, sombreamento em 2 tons, contorno escuro só em personagens, zumbis e itens coletáveis (o contorno é feito pelo shader, não modelar) — definido na seção 65 do GDD (docs/GDD.md), ainda como proposta",
+    "art_style": "toon shading / cel-shading (seção 65 do GDD, docs/GDD.md): formas estilizadas, luz em 3 faixas chapadas feita pelo shader, contorno escuro feito pelo shader (não modelar) — grosso em atores e coletáveis, médio em obstáculos e beira da pista, fino ou nenhum no fundo; detalhes (rachaduras, costuras, tábuas) desenhados na textura-paleta, não modelados; bordas levemente chanfradas para o contorno ficar limpo; sem PBR (sem normal, rugosidade ou metal)",
     "palette_rules": {
-      "city": "cinza-azulado dessaturado (prédios, asfalto, carros, mobiliário urbano)",
-      "red_reserved": "vermelho saturado SÓ para: o abrigo, a mochila-caixa da personagem, perigo (fogo, explosivo) e alertas. Não usar vermelho em cenário comum",
+      "scenery": "cor de cada região em saturação média (Bairro tijolo/ocre, Mercado azul/amarelo gastos, Centro cinza-azulado, Hospital verde-água/branco sujo, Industrial ferrugem/cinza, Abrigo madeira/lona); nunca mais saturado que o loot",
+      "shadow": "a sombra é uma cor da região (lilás, azul, verde-escuro...), nunca preto",
+      "outline": "uma cor só no jogo inteiro: #16141F",
+      "red_reserved": "vermelho saturado #D2382F SÓ para: o abrigo, a mochila-caixa da personagem, perigo (fogo, explosivo) e alertas",
       "loot_colors": "cada recurso tem cor fixa (ver categoria 'loot'); nada do cenário usa essas cores saturadas",
       "powerups": "anel branco com ícone; sem vermelho e sem as cores do loot"
     },
-    "texturing": "uma textura-paleta compartilhada 256x256 (gradientes por cor) para quase tudo; mapear UV em faixas da paleta. Textura própria só onde indicado (placas, letreiros), no máximo 512x512",
+    "texturing": "uma textura-paleta compartilhada 256x256: faixas de cor chapada por região e linhas de detalhe desenhadas (estilo cel); UV nas faixas. Textura própria só onde indicado (placas, letreiros), no máximo 512x512",
     "materials": "1 material por asset (a textura-paleta); emissivo só onde indicado (luzes, telas, fogo)",
     "tri_budgets": {
       "pequeno": "até 300 triângulos (itens de mão, loot, garrafas)",
@@ -2414,6 +2416,11 @@
       "date": "2026-10-08",
       "version": "1.0",
       "change": "Primeira versão: 115 assets de cenário, objetos, veículos, abrigo, defesa e armas; personagens e zumbis reservados para depois."
+    },
+    {
+      "date": "2026-10-08",
+      "version": "1.1",
+      "change": "Estilo definido como toon shading / cel-shading: regras de contorno por classe, paleta por região e sombra colorida (GDD 0.9.1, seção 65)."
     }
   ]
 }

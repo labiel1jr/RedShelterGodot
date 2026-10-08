@@ -1,6 +1,6 @@
 # RED SHELTER
 
-## Game Design Document — GDD 0.9
+## Game Design Document — GDD 0.9.1
 
 **Gênero:** Survival Runner + Shooter + Scavenging + Shelter Management
 **Plataformas:** Android / iOS
@@ -23,6 +23,7 @@
 
 | Versão | Mudanças |
 | ------ | -------- |
+| 0.9.1 | Estilo decidido: toon shading / cel-shading (luz em 3 faixas, contorno por classe de objeto, cor por região). Seção 65 reescrita a partir da recomendação; análise mantida. |
 | 0.9 | Seção 65 nova: direção de arte — análise de estilos para o jogo, recomendação "toon noir vermelho", paleta, luz por região, técnica e plano da Fase 15. Roadmap (58) com a Fase 15. |
 | 0.8.2 | Câmera do abrigo aproxima e afasta (rodinha ou pinça), até 150%. Seção 36 atualizada. |
 | 0.8.1 | Câmera do abrigo gira 360° (botão do meio do mouse ou dedo segurado). Seção 36 atualizada. |
@@ -2638,7 +2639,7 @@ ajuda a escapar dos zumbis em vez de pular.
 
 # 65. DIREÇÃO DE ARTE
 
-**Status:** 📋 proposta (Fase 15). Estilo recomendado: **toon noir vermelho** (low-poly facetado com sombreamento em dois tons). Aguarda aprovação para virar regra dos assets (`docs/assets/asset_list.json`).
+**Status:** ✅ estilo decidido — **toon shading / cel-shading** (GDD 0.9.1) · implementação 📋 (Fase 15). É a regra para os assets de `docs/assets/asset_list.json`.
 
 ## Critérios
 
@@ -2670,61 +2671,73 @@ Leituras:
 * **Low-poly flat** é o mais barato e rápido, mas parece "pacote de assets".
 * **Cel-shading com contorno** equilibra todos os critérios.
 
-## Recomendação: toon noir vermelho
+## Estilo escolhido: toon shading com cel-shading
 
-Uma mistura dos três melhores:
+**Decisão (GDD 0.9.1):** o jogo começa em **toon shading / cel-shading** — formas estilizadas, luz em faixas de tom chapado (sem degradê suave) e contorno escuro desenhado, no espírito de Borderlands, The Legend of Zelda: The Wind Waker e Hi-Fi Rush, adaptado ao celular.
 
-* a **geometria do low-poly** (facetada, barata, kits modulares);
-* o **sombreamento e o contorno do cel-shading** (dois tons de luz, contorno escuro só no que importa);
-* a **disciplina de cor do noir** (cidade dessaturada; cor saturada só no que o jogador precisa ver; vermelho reservado).
+Por que este e não os outros: é o melhor equilíbrio da tabela — lê bem em movimento (o contorno separa o que é ator do que é fundo), roda bem no renderizador Mobile (sem texturas grandes nem materiais PBR), aceita kits reaproveitáveis e mantém o peso da sobrevivência com uma paleta controlada. O vermelho continua reservado, como regra de leitura do jogo.
 
-Frase-guia: **"Cidade cinza. Ela é a cor."**
+Frase-guia: **"Tudo desenhado, nada perdido."** — cada coisa que importa tem contorno e cor própria.
+
+### Como o cel-shading é feito
+
+* **Luz em faixas:** 3 tons por material — luz, meio-tom e sombra — com bordas duras entre eles (rampa de cor no shader, não textura). A sombra puxa para o azul-arroxeado da região, não para o preto.
+* **Brilho de borda (rim):** uma faixa clara fina na borda contra a luz, só em personagem, zumbis, loot e veículos, para destacá-los do fundo.
+* **Contorno:** linha escura de espessura constante na tela.
+  * atores e coletáveis (personagem, zumbis, loot, pickups, power-ups, veículos): contorno grosso (casco invertido);
+  * obstáculos de faixa e objetos da beira da pista: contorno médio, para o jogador ler o que bloqueia;
+  * prédios e fundo: contorno fino ou nenhum, e só nos primeiros 40 m (o resto some na névoa).
+* **Detalhe desenhado, não modelado:** rachaduras, costuras, tábuas e marcas como linhas pintadas na textura-paleta ou em decalques simples, no lugar de geometria.
+* **Sem PBR:** sem mapas de normal, rugosidade ou metal; o brilho de metal é uma faixa de cor na rampa.
 
 ### Regras de forma
 
 * Silhuetas simples e grossas; nada mais fino que 5 cm (some a 15% da tela).
-* Proporção levemente estilizada: objetos de interação (loot, armas, veículos) um pouco maiores que o real.
+* Proporção estilizada: objetos de interação (loot, armas, veículos) uns 15% maiores que o real; bordas levemente chanfradas para a linha de contorno ficar limpa.
 * Obstáculos com forma que diz o tipo: parede é bloco alto e largo; baixo é horizontal e até o joelho; alto deixa o vão de baixo visivelmente livre.
-* Cenário de fundo com menos detalhe que o da beira da pista.
+* Fundo com menos detalhe e menos contorno que a beira da pista.
 
 ### Paleta
 
+Mais cor que um estilo realista, mas com hierarquia: o cenário tem cor de região em saturação média; o que o jogador precisa ver tem saturação alta.
+
 | Uso | Cor | Regra |
 | --- | --- | --- |
-| Cidade (prédios, asfalto, carros) | cinza-azulado `#6B7787` e variações | dessaturado, mais claro ao longe |
+| Cenário | cor de cada região em saturação média (tabela abaixo) | nunca mais saturado que o loot |
 | Vermelho do abrigo | `#D2382F` | só a personagem (mochila-caixa), o abrigo, perigo e alertas |
 | Zumbis | oliva doente `#7D8A62` | cada tipo especial com uma marca só |
-| Loot | comida `#F28C33`, água `#4D99FF`, sucata `#B3B3B8`, munição `#F2CC4D`, componentes `#4DE6CC`, medicamentos `#F7F7FF`, combustível `#9B5DE5` | cores fixas; o cenário não usa essas cores saturadas |
+| Loot | comida `#F28C33`, água `#4D99FF`, sucata `#B3B3B8`, munição `#F2CC4D`, componentes `#4DE6CC`, medicamentos `#F7F7FF`, combustível `#9B5DE5` | cores fixas, com contorno grosso |
 | Power-ups | anel branco | sem vermelho e sem as cores do loot |
+| Contorno | quase preto azulado `#16141F` | uma cor só no jogo inteiro |
 | Interface | off-white `#ECE8DF` sobre carvão | vermelho só em alerta |
 
 Decisão: o combustível deixa de ser vermelho (era `#D9334A`) e passa a roxo.
 
-### Luz e atmosfera por região
+### Cor e luz por região
 
-| Região | Céu e névoa | Luz |
-| ------ | ----------- | --- |
-| Bairro | fim de tarde, névoa leve | quente e baixa |
-| Mercado | nublado | neutra |
-| Centro | cinza, névoa média | fria |
-| Hospital | entardecer esverdeado | fria, com lâmpadas internas |
-| Zona Industrial | fumaça alaranjada | contraluz |
-| Abrigo | interior | lâmpadas quentes (gerador) |
+| Região | Cor do cenário | Céu e névoa | Sombra |
+| ------ | -------------- | ----------- | ------ |
+| Bairro | tijolo e ocre | fim de tarde dourado | lilás |
+| Mercado | azul e amarelo gastos | nublado claro | azul |
+| Centro | cinza-azulado e concreto | cinza, névoa média | azul-escuro |
+| Hospital | verde-água e branco sujo | entardecer esverdeado | verde-escuro |
+| Zona Industrial | ferrugem e cinza | fumaça alaranjada, contraluz | marrom-roxo |
+| Abrigo | madeira e lona | interior com lâmpadas quentes | marrom |
 
-A névoa esconde o fim do streaming de chunks (120 m) e dá a profundidade de Into the Dead 2 sem custo.
+A névoa esconde o fim do streaming de chunks (120 m) e dá profundidade sem custo.
 
 ### Técnica (Godot, renderizador Mobile)
 
-* **Sombreamento:** um shader toon próprio — rampa de 2 tons + brilho de borda (rim) — em um material compartilhado.
-* **Contorno:** casco invertido (segunda passada) só em personagem, zumbis, loot, pickups e veículos; o cenário não tem contorno.
-* **Textura:** uma textura-paleta 256 × 256 para quase tudo (UV nas faixas de cor); placas e letreiros com textura própria de até 512 × 512.
-* **Mescla:** com um material por chunk, a mescla de geometria que o jogo já faz (seção 51) continua valendo.
+* **Shader toon** próprio (`ShaderMaterial`): rampa de 3 tons + rim + cor de sombra por região, num material compartilhado.
+* **Contorno por casco invertido:** segunda passada com a malha inflada e faces de trás, cor `#16141F`; espessura por classe de objeto (acima). Sem pós-processamento de borda (caro no celular).
+* **Textura-paleta** 256 × 256 para quase tudo (UV nas faixas de cor e nas linhas desenhadas); placas e letreiros com textura própria de até 512 × 512.
+* **Mescla:** com um material por chunk, a mescla de geometria que o jogo já faz (seção 51) continua valendo; o contorno do cenário entra na mesma malha mesclada.
 * **Sombras:** projetada só na personagem; mancha simples nos zumbis e no loot.
 * **Orçamento:** personagem ~3.000 triângulos; zumbi ~1.500; demais classes em `docs/assets/asset_list.json`.
 
 ## Plano de implementação (Fase 15)
 
-* **A1 — Base técnica:** shader toon, contorno, textura-paleta, névoa e céu por região, trocados sobre as primitivas atuais.
+* **A1 — Base técnica:** shader toon, contorno, textura-paleta, névoa e céu por região, aplicados sobre as primitivas atuais.
 * **A2 — Kit P1:** os assets P1 do catálogo (obstáculos, loot, kit de rua, postes, árvores, carros, fachadas, estrutura do abrigo).
 * **A3 — Personagem:** escolha do conceito e do nome (proposta: Entregadora, mochila-caixa vermelha), modelo e animações.
 * **A4 — Zumbis:** os 5 tipos com o mesmo esqueleto.
@@ -2735,6 +2748,5 @@ Cada etapa termina com medição no celular (FPS e draw calls) antes da seguinte
 
 ## Decisões em aberto
 
-* aprovar o estilo toon noir vermelho;
 * escolher o conceito e o nome da personagem;
 * confirmar o roxo do combustível (muda também a cor no jogo).
