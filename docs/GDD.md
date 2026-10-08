@@ -1,6 +1,6 @@
 # RED SHELTER
 
-## Game Design Document — GDD 0.9.1
+## Game Design Document — GDD 0.9.2
 
 **Gênero:** Survival Runner + Shooter + Scavenging + Shelter Management
 **Plataformas:** Android / iOS
@@ -23,6 +23,7 @@
 
 | Versão | Mudanças |
 | ------ | -------- |
+| 0.9.2 | Combustível roxo aprovado e aplicado no loot do jogo; personagem adiada. Seção 65 atualizada. |
 | 0.9.1 | Estilo decidido: toon shading / cel-shading (luz em 3 faixas, contorno por classe de objeto, cor por região). Seção 65 reescrita a partir da recomendação; análise mantida. |
 | 0.9 | Seção 65 nova: direção de arte — análise de estilos para o jogo, recomendação "toon noir vermelho", paleta, luz por região, técnica e plano da Fase 15. Roadmap (58) com a Fase 15. |
 | 0.8.2 | Câmera do abrigo aproxima e afasta (rodinha ou pinça), até 150%. Seção 36 atualizada. |
@@ -2711,7 +2712,7 @@ Mais cor que um estilo realista, mas com hierarquia: o cenário tem cor de regi�
 | Contorno | quase preto azulado `#16141F` | uma cor só no jogo inteiro |
 | Interface | off-white `#ECE8DF` sobre carvão | vermelho só em alerta |
 
-Decisão: o combustível deixa de ser vermelho (era `#D9334A`) e passa a roxo.
+Decisão (GDD 0.9.2): o combustível deixa de ser vermelho (era `#D9334A`) e passa a roxo `#9B5DE5`, já aplicado no jogo.
 
 ### Cor e luz por região
 
@@ -2748,5 +2749,4 @@ Cada etapa termina com medição no celular (FPS e draw calls) antes da seguinte
 
 ## Decisões em aberto
 
-* escolher o conceito e o nome da personagem;
-* confirmar o roxo do combustível (muda também a cor no jogo).
+* escolher o conceito e o nome da personagem (adiado: por enquanto a personagem não muda).

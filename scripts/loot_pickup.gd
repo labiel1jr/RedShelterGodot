@@ -9,7 +9,7 @@ extends Area3D
 
 const COLORS: Array[Color] = [
 	Color(0.95, 0.55, 0.2), Color(0.3, 0.6, 1.0), Color(0.7, 0.7, 0.72), Color(0.95, 0.8, 0.3),
-	Color(0.3, 0.9, 0.8), Color(0.97, 0.97, 1.0), Color(0.85, 0.2, 0.25),
+	Color(0.3, 0.9, 0.8), Color(0.97, 0.97, 1.0), Color(0.61, 0.36, 0.9),
 ]
 const NAMES: Array[String] = ["Comida", "Água", "Sucata", "Munição", "Componentes", "Medicamentos", "Combustível"]
 
