@@ -1,6 +1,6 @@
 # RED SHELTER
 
-## Game Design Document — GDD 0.8.2
+## Game Design Document — GDD 0.9
 
 **Gênero:** Survival Runner + Shooter + Scavenging + Shelter Management
 **Plataformas:** Android / iOS
@@ -23,6 +23,7 @@
 
 | Versão | Mudanças |
 | ------ | -------- |
+| 0.9 | Seção 65 nova: direção de arte — análise de estilos para o jogo, recomendação "toon noir vermelho", paleta, luz por região, técnica e plano da Fase 15. Roadmap (58) com a Fase 15. |
 | 0.8.2 | Câmera do abrigo aproxima e afasta (rodinha ou pinça), até 150%. Seção 36 atualizada. |
 | 0.8.1 | Câmera do abrigo gira 360° (botão do meio do mouse ou dedo segurado). Seção 36 atualizada. |
 | 0.8 | Fase 14 concluída com as melhorias dos power-ups na Oficina (níveis 2 e 3). Roadmap do GDD completo de novo (Fases 1–14). Seções 0, 40, 58 e 64 atualizadas. |
@@ -2374,6 +2375,11 @@ montada) serve também para os power-ups da Fase 14, por isso vem primeiro.
 * ✅ melhorias dos power-ups na Oficina (40);
 * robô de campanha medindo o efeito na economia.
 
+## 📋 Fase 15 — Direção de arte
+
+* A1 base técnica (shader toon, contorno, textura-paleta, névoa por região);
+* A2 assets P1; A3 personagem; A4 zumbis; A5 assets P2; A6 acabamento (65).
+
 ## Depois do roadmap
 
 * balancear jogando de verdade, com o `campaign_log.csv` (economia com uma pessoa jogando, regiões avançadas);
@@ -2626,3 +2632,109 @@ melhorias, raridade, fases do Director em que aparece, regiões, cor e
 **Decisão:** o papel do Super Sneakers (pular mais alto) já é dos Patins e
 da Moto (63). Por isso o power-up equivalente é o **Sinalizador**, que
 ajuda a escapar dos zumbis em vez de pular.
+
+
+---
+
+# 65. DIREÇÃO DE ARTE
+
+**Status:** 📋 proposta (Fase 15). Estilo recomendado: **toon noir vermelho** (low-poly facetado com sombreamento em dois tons). Aguarda aprovação para virar regra dos assets (`docs/assets/asset_list.json`).
+
+## Critérios
+
+O estilo de Red Shelter precisa servir a quatro coisas, nesta ordem:
+
+1. **Leitura em meio segundo:** a personagem corre a 8–15 m/s numa tela de celular em retrato; parede, barreira baixa, placa alta, zumbi, loot e power-up têm que ser reconhecidos pela forma e pela cor antes da cor de detalhe.
+2. **Desempenho em celular intermediário:** renderizador Mobile do Godot, 60 fps como meta (30 aceitável), poucos materiais, sem texturas grandes.
+3. **Produção enxuta:** equipe pequena; o estilo tem que permitir kits reaproveitáveis e pouca textura pintada.
+4. **Identidade:** tensão de sobrevivência (não comédia), algo que se reconheça num print da loja.
+
+## Análise dos estilos
+
+Notas de 1 (ruim) a 5 (ótimo) para este jogo.
+
+| Estilo | Exemplos | Leitura | Desempenho | Custo de produção | Identidade | Tom de sobrevivência |
+| ------ | -------- | :-----: | :--------: | :---------------: | :--------: | :------------------: |
+| Low-poly flat (cor chapada, sem contorno) | Unturned, pacotes Synty | 4 | 5 | 5 | 2 | 3 |
+| Cel-shading com contorno | Borderlands, Wind Waker, Hi-Fi Rush | 5 | 4 | 4 | 4 | 4 |
+| Cartoon vibrante | Subway Surfers, Plants vs. Zombies | 5 | 4 | 3 | 3 | 1 |
+| Noir gráfico (P&B + vermelho) | MadWorld | 3 | 5 | 4 | 5 | 5 |
+| Realista estilizado (PBR) | Into the Dead 2, Last Day on Earth | 3 | 2 | 2 | 3 | 5 |
+| Pintado à mão | Torchlight, World of Warcraft | 4 | 3 | 1 | 4 | 3 |
+
+Leituras:
+
+* **Realista/PBR** é o mais comum no gênero, mas exige texturas e materiais por objeto (pesado no celular e caro de produzir) e lê mal em movimento, porque tudo tem o mesmo peso visual.
+* **Cartoon vibrante** é o mais legível e vende bem na loja, mas tira o peso da morte, da moral e da horda.
+* **Noir gráfico** é o mais marcante e casa com o nome RED SHELTER, mas em preto e branco o loot e os obstáculos perdem a cor que os identifica.
+* **Low-poly flat** é o mais barato e rápido, mas parece "pacote de assets".
+* **Cel-shading com contorno** equilibra todos os critérios.
+
+## Recomendação: toon noir vermelho
+
+Uma mistura dos três melhores:
+
+* a **geometria do low-poly** (facetada, barata, kits modulares);
+* o **sombreamento e o contorno do cel-shading** (dois tons de luz, contorno escuro só no que importa);
+* a **disciplina de cor do noir** (cidade dessaturada; cor saturada só no que o jogador precisa ver; vermelho reservado).
+
+Frase-guia: **"Cidade cinza. Ela é a cor."**
+
+### Regras de forma
+
+* Silhuetas simples e grossas; nada mais fino que 5 cm (some a 15% da tela).
+* Proporção levemente estilizada: objetos de interação (loot, armas, veículos) um pouco maiores que o real.
+* Obstáculos com forma que diz o tipo: parede é bloco alto e largo; baixo é horizontal e até o joelho; alto deixa o vão de baixo visivelmente livre.
+* Cenário de fundo com menos detalhe que o da beira da pista.
+
+### Paleta
+
+| Uso | Cor | Regra |
+| --- | --- | --- |
+| Cidade (prédios, asfalto, carros) | cinza-azulado `#6B7787` e variações | dessaturado, mais claro ao longe |
+| Vermelho do abrigo | `#D2382F` | só a personagem (mochila-caixa), o abrigo, perigo e alertas |
+| Zumbis | oliva doente `#7D8A62` | cada tipo especial com uma marca só |
+| Loot | comida `#F28C33`, água `#4D99FF`, sucata `#B3B3B8`, munição `#F2CC4D`, componentes `#4DE6CC`, medicamentos `#F7F7FF`, combustível `#9B5DE5` | cores fixas; o cenário não usa essas cores saturadas |
+| Power-ups | anel branco | sem vermelho e sem as cores do loot |
+| Interface | off-white `#ECE8DF` sobre carvão | vermelho só em alerta |
+
+Decisão: o combustível deixa de ser vermelho (era `#D9334A`) e passa a roxo.
+
+### Luz e atmosfera por região
+
+| Região | Céu e névoa | Luz |
+| ------ | ----------- | --- |
+| Bairro | fim de tarde, névoa leve | quente e baixa |
+| Mercado | nublado | neutra |
+| Centro | cinza, névoa média | fria |
+| Hospital | entardecer esverdeado | fria, com lâmpadas internas |
+| Zona Industrial | fumaça alaranjada | contraluz |
+| Abrigo | interior | lâmpadas quentes (gerador) |
+
+A névoa esconde o fim do streaming de chunks (120 m) e dá a profundidade de Into the Dead 2 sem custo.
+
+### Técnica (Godot, renderizador Mobile)
+
+* **Sombreamento:** um shader toon próprio — rampa de 2 tons + brilho de borda (rim) — em um material compartilhado.
+* **Contorno:** casco invertido (segunda passada) só em personagem, zumbis, loot, pickups e veículos; o cenário não tem contorno.
+* **Textura:** uma textura-paleta 256 × 256 para quase tudo (UV nas faixas de cor); placas e letreiros com textura própria de até 512 × 512.
+* **Mescla:** com um material por chunk, a mescla de geometria que o jogo já faz (seção 51) continua valendo.
+* **Sombras:** projetada só na personagem; mancha simples nos zumbis e no loot.
+* **Orçamento:** personagem ~3.000 triângulos; zumbi ~1.500; demais classes em `docs/assets/asset_list.json`.
+
+## Plano de implementação (Fase 15)
+
+* **A1 — Base técnica:** shader toon, contorno, textura-paleta, névoa e céu por região, trocados sobre as primitivas atuais.
+* **A2 — Kit P1:** os assets P1 do catálogo (obstáculos, loot, kit de rua, postes, árvores, carros, fachadas, estrutura do abrigo).
+* **A3 — Personagem:** escolha do conceito e do nome (proposta: Entregadora, mochila-caixa vermelha), modelo e animações.
+* **A4 — Zumbis:** os 5 tipos com o mesmo esqueleto.
+* **A5 — Regiões, POIs, veículos e defesa:** os assets P2.
+* **A6 — Acabamento:** P3, efeitos e interface com a paleta.
+
+Cada etapa termina com medição no celular (FPS e draw calls) antes da seguinte.
+
+## Decisões em aberto
+
+* aprovar o estilo toon noir vermelho;
+* escolher o conceito e o nome da personagem;
+* confirmar o roxo do combustível (muda também a cor no jogo).
