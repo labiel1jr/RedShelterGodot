@@ -1,0 +1,255 @@
+{
+  "schema_version": "1.0",
+  "project": "Red Shelter",
+  "document": "Catálogo de assets de cenário e objetos (sem personagens e sem zumbis)",
+  "updated": "2026-10-08",
+  "gdd": "docs/GDD.md",
+
+  "how_to_use": [
+    "Cada item de 'assets' é um modelo (ou kit de modelos) a criar. O 'id' é o nome do arquivo entregue.",
+    "Comece pelos itens de prioridade P1: são os que aparecem em toda expedição e no abrigo.",
+    "'size_m' é o tamanho de referência em metros [largura X, altura Y, profundidade Z]. Itens com 'gameplay_rules' têm medidas obrigatórias: o modelo precisa caber na colisão que o jogo já usa.",
+    "'status' começa em 'a_fazer'. O artista atualiza para 'em_andamento', 'em_revisao' ou 'aprovado' (ou usa a planilha da equipe com o mesmo id).",
+    "Para pedir um asset novo no futuro, copie 'new_asset_template', escolha uma categoria existente (ou crie uma em 'categories'), use o próximo número livre do prefixo e registre em 'change_log'."
+  ],
+
+  "global_specs": {
+    "engine": "Godot 4.7 (renderizador Mobile), celular intermediário em retrato",
+    "file_format": "glTF 2.0 binário (.glb), um arquivo por asset; kits podem ter várias malhas nomeadas no mesmo .glb",
+    "units": "1 unidade = 1 metro, escala aplicada (scale 1,1,1)",
+    "axes": "Y para cima; a frente do objeto aponta para -Z (sentido em que a personagem corre)",
+    "pivot": "no chão, centro da base (x=0, z=0, y=0), salvo indicação no asset",
+    "lane_reference": "a pista tem 3 faixas de 2,5 m (x = -2,5, 0, +2,5); objetos de faixa têm no máximo 2,0 m de largura",
+    "art_style": "toon noir vermelho: low-poly facetado, sombreamento em 2 tons, contorno escuro só em personagens, zumbis e itens coletáveis (o contorno é feito pelo shader, não modelar)",
+    "palette_rules": {
+      "city": "cinza-azulado dessaturado (prédios, asfalto, carros, mobiliário urbano)",
+      "red_reserved": "vermelho saturado SÓ para: o abrigo, a mochila-caixa da personagem, perigo (fogo, explosivo) e alertas. Não usar vermelho em cenário comum",
+      "loot_colors": "cada recurso tem cor fixa (ver categoria 'loot'); nada do cenário usa essas cores saturadas",
+      "powerups": "anel branco com ícone; sem vermelho e sem as cores do loot"
+    },
+    "texturing": "uma textura-paleta compartilhada 256x256 (gradientes por cor) para quase tudo; mapear UV em faixas da paleta. Textura própria só onde indicado (placas, letreiros), no máximo 512x512",
+    "materials": "1 material por asset (a textura-paleta); emissivo só onde indicado (luzes, telas, fogo)",
+    "tri_budgets": {
+      "pequeno": "até 300 triângulos (itens de mão, loot, garrafas)",
+      "medio": "até 800 (caixas, lixeiras, bancos, placas)",
+      "grande": "até 1.500 (carros, árvores, barracas)",
+      "estrutura": "até 3.000 (fachadas de prédio, ambulância, ônibus, construções do abrigo)",
+      "kit_modulo": "até 1.200 por módulo"
+    },
+    "lod": "não é necessário; o jogo carrega só uns 120 m à frente",
+    "collision": "não modelar colisão: o jogo usa caixas próprias. Respeitar as medidas de 'gameplay_rules'",
+    "animation": "nenhuma, salvo indicação (ex.: hélice, porta); objetos que giram no jogo (loot, pickups) giram por código",
+    "naming": "id em minúsculas com _, ex.: obs_wall_car_sedan.glb; malhas internas com o mesmo prefixo",
+    "delivery_folder": "art/models/<categoria>/<id>.glb (fontes .blend em art/source/<categoria>/)"
+  },
+
+  "id_prefixes": {
+    "obs_": "obstáculos de faixa (colidem com a personagem)",
+    "loot_": "itens coletáveis na pista",
+    "pick_": "pickups especiais (veículos estacionados, power-ups, mochila da morte)",
+    "veh_": "veículos que a personagem usa",
+    "prop_": "objetos de cenário sem colisão (beira da pista, fundo)",
+    "bld_": "prédios e fachadas da beira da pista",
+    "kit_": "kits modulares (rua, calçada, cerca, muro)",
+    "poi_": "conjuntos dos locais especiais",
+    "evt_": "objetos de eventos da corrida",
+    "nav_": "sinalização da rota (bifurcação, extração)",
+    "shl_": "abrigo e suas construções",
+    "def_": "estruturas de defesa do abrigo",
+    "wpn_": "armas (modelo na mão e no painel)",
+    "fx_": "formas de efeito (fogo, faísca, destroço) usadas pelas partículas",
+    "ui3d_": "formas 3D de interface (anel de power-up, marcadores)"
+  },
+
+  "categories": [
+    {"id": "obstacles", "name": "Obstáculos de faixa", "description": "Bloqueiam uma faixa. Três tipos com medidas fixas: parede (desviar), baixo (pular), alto (deslizar)."},
+    {"id": "loot", "name": "Loot", "description": "Os 7 recursos coletados na pista, com cor fixa por tipo."},
+    {"id": "pickups", "name": "Pickups especiais", "description": "Mochila da morte, anel de power-up e marcadores."},
+    {"id": "vehicles_rideable", "name": "Veículos da personagem", "description": "Os 6 veículos que ela monta (seção 63 do GDD)."},
+    {"id": "street_props", "name": "Mobiliário urbano", "description": "Objetos de beira de pista, sem colisão."},
+    {"id": "nature", "name": "Natureza", "description": "Árvores, arbustos, canteiros."},
+    {"id": "parked_vehicles", "name": "Veículos de cenário", "description": "Carros e utilitários abandonados (alguns viram obstáculos)."},
+    {"id": "buildings", "name": "Prédios e fachadas", "description": "Fachadas de beira de pista por região."},
+    {"id": "street_kit", "name": "Kit de rua", "description": "Módulos de asfalto, calçada, guia, faixa de pedestre."},
+    {"id": "region_bairro", "name": "Região Bairro", "description": "Casas, muros, quintais."},
+    {"id": "region_mercado", "name": "Região Mercado", "description": "Feira, galeria, hipermercado, docas."},
+    {"id": "region_centro", "name": "Região Centro", "description": "Lojas, praça, trânsito parado."},
+    {"id": "region_hospital", "name": "Região Hospital", "description": "Pronto-socorro, triagem, corredores, jardim."},
+    {"id": "region_industrial", "name": "Região Zona Industrial", "description": "Fábrica, contêineres, ferrovia, armazéns."},
+    {"id": "points_of_interest", "name": "Locais especiais", "description": "Os 6 POIs da seção 26 do GDD."},
+    {"id": "events", "name": "Eventos", "description": "Caminhão tombado, explosão, recurso raro, sobrevivente (seção 27)."},
+    {"id": "navigation", "name": "Sinalização da rota", "description": "Placa e mureta de bifurcação, portão de extração."},
+    {"id": "shelter", "name": "Abrigo", "description": "Estrutura do abrigo e as 15 construções com seus níveis."},
+    {"id": "defense", "name": "Defesa do abrigo", "description": "Portão, barricadas, armadilhas, torres e a pista de defesa."},
+    {"id": "weapons", "name": "Armas", "description": "As 8 armas, em todos os níveis visíveis."},
+    {"id": "fx_shapes", "name": "Formas de efeito", "description": "Malhas simples para partículas."},
+    {"id": "ui3d", "name": "Formas 3D de interface", "description": "Anéis, placas e marcadores 3D."}
+  ],
+
+  "assets": [
+    {"id": "obs_wall_car_sedan", "category": "obstacles", "name": "Carro sedã batido (parede)", "priority": "P1", "status": "a_fazer", "size_class": "grande", "size_m": [2.0, 2.5, 1.0], "description": "Carro de lado ou de frente atravessado na faixa, bloqueando-a.", "gameplay_rules": "parede: ocupa 2,0 x 2,5 x 1,0 m; não pode ser pulado a pé (a moto, com pulo 2x, passa por cima)", "variants": ["amassado", "sem portas", "pegando fogo leve"], "regions": ["todas"]},
+    {"id": "obs_wall_debris", "category": "obstacles", "name": "Pilha de entulho (parede)", "priority": "P1", "status": "a_fazer", "size_class": "medio", "size_m": [2.0, 2.5, 1.0], "description": "Tijolos, vigas e madeira empilhados.", "gameplay_rules": "parede: 2,0 x 2,5 x 1,0 m", "variants": ["concreto", "madeira"], "regions": ["bairro", "centro"]},
+    {"id": "obs_wall_cart_pile", "category": "obstacles", "name": "Pilha de carrinhos de mercado (parede)", "priority": "P1", "status": "a_fazer", "size_class": "medio", "size_m": [2.0, 2.5, 1.0], "description": "Carrinhos de supermercado emaranhados.", "gameplay_rules": "parede: 2,0 x 2,5 x 1,0 m", "regions": ["mercado"]},
+    {"id": "obs_wall_gurney_pile", "category": "obstacles", "name": "Macas e biombos empilhados (parede)", "priority": "P1", "status": "a_fazer", "size_class": "medio", "size_m": [2.0, 2.5, 1.0], "description": "Barricada improvisada de hospital.", "gameplay_rules": "parede: 2,0 x 2,5 x 1,0 m", "regions": ["hospital"]},
+    {"id": "obs_wall_container_end", "category": "obstacles", "name": "Ponta de contêiner (parede)", "priority": "P2", "status": "a_fazer", "size_class": "grande", "size_m": [2.0, 2.5, 1.0], "description": "Contêiner caído ocupando a faixa.", "gameplay_rules": "parede: 2,0 x 2,5 x 1,0 m", "regions": ["industrial"]},
+    {"id": "obs_low_barrier", "category": "obstacles", "name": "Barreira baixa de obra", "priority": "P1", "status": "a_fazer", "size_class": "medio", "size_m": [2.0, 0.7, 0.5], "description": "Cavalete ou barreira de concreto baixa.", "gameplay_rules": "baixo: altura máxima 0,7 m; a personagem pula por cima", "variants": ["concreto", "cavalete listrado (sem vermelho: preto e branco)"], "regions": ["todas"]},
+    {"id": "obs_low_gondola", "category": "obstacles", "name": "Gôndola tombada", "priority": "P1", "status": "a_fazer", "size_class": "medio", "size_m": [2.0, 0.7, 0.5], "description": "Prateleira de mercado caída com produtos espalhados.", "gameplay_rules": "baixo: altura máxima 0,7 m", "regions": ["mercado"]},
+    {"id": "obs_low_stretcher", "category": "obstacles", "name": "Maca caída", "priority": "P1", "status": "a_fazer", "size_class": "medio", "size_m": [2.0, 0.7, 0.5], "description": "Maca tombada no corredor.", "gameplay_rules": "baixo: altura máxima 0,7 m", "regions": ["hospital"]},
+    {"id": "obs_low_pipes", "category": "obstacles", "name": "Tubos no chão", "priority": "P2", "status": "a_fazer", "size_class": "medio", "size_m": [2.0, 0.7, 0.5], "description": "Feixe de tubos de aço.", "gameplay_rules": "baixo: altura máxima 0,7 m", "regions": ["industrial"]},
+    {"id": "obs_high_bar", "category": "obstacles", "name": "Barra alta (poste caído)", "priority": "P1", "status": "a_fazer", "size_class": "medio", "size_m": [2.0, 2.3, 0.5], "description": "Poste ou viga atravessada na altura do peito, apoiada nos lados.", "gameplay_rules": "alto: a parte que bloqueia fica entre 1,3 m e 2,3 m; abaixo de 1,3 m livre (a personagem desliza por baixo)", "variants": ["poste", "andaime"], "regions": ["todas"]},
+    {"id": "obs_high_price_sign", "category": "obstacles", "name": "Placa de preço pendurada", "priority": "P1", "status": "a_fazer", "size_class": "medio", "size_m": [2.0, 2.3, 0.5], "description": "Letreiro de oferta caído, pendurado por correntes.", "gameplay_rules": "alto: bloqueia de 1,3 m a 2,3 m", "regions": ["mercado"]},
+    {"id": "obs_high_curtain", "category": "obstacles", "name": "Cortina de triagem", "priority": "P1", "status": "a_fazer", "size_class": "medio", "size_m": [2.0, 2.3, 0.5], "description": "Trilho com cortina hospitalar.", "gameplay_rules": "alto: bloqueia de 1,3 m a 2,3 m", "regions": ["hospital"]},
+    {"id": "obs_high_crane_hook", "category": "obstacles", "name": "Viga de ponte rolante", "priority": "P3", "status": "a_fazer", "size_class": "medio", "size_m": [2.0, 2.3, 0.5], "description": "Viga industrial baixa.", "gameplay_rules": "alto: bloqueia de 1,3 m a 2,3 m", "regions": ["industrial"]},
+
+    {"id": "loot_food", "category": "loot", "name": "Comida", "priority": "P1", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.6, 0.6, 0.6], "description": "Caixa de mantimentos ou latas amarradas.", "gameplay_rules": "cabe numa caixa de 0,6 m; cor dominante laranja #F28C33; gira no lugar; versão 'rara' é a mesma 1,6x maior com brilho", "regions": ["todas"]},
+    {"id": "loot_water", "category": "loot", "name": "Água", "priority": "P1", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.6, 0.6, 0.6], "description": "Galão ou fardo de garrafas.", "gameplay_rules": "0,6 m; azul #4D99FF", "regions": ["todas"]},
+    {"id": "loot_scrap", "category": "loot", "name": "Sucata", "priority": "P1", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.6, 0.6, 0.6], "description": "Peças de metal, engrenagens, chapas.", "gameplay_rules": "0,6 m; cinza claro #B3B3B8", "regions": ["todas"]},
+    {"id": "loot_ammo", "category": "loot", "name": "Munição", "priority": "P1", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.6, 0.6, 0.6], "description": "Caixa de balas.", "gameplay_rules": "0,6 m; amarelo #F2CC4D", "regions": ["todas"]},
+    {"id": "loot_components", "category": "loot", "name": "Componentes", "priority": "P1", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.6, 0.6, 0.6], "description": "Placa eletrônica, fios, motor pequeno.", "gameplay_rules": "0,6 m; ciano #4DE6CC", "regions": ["todas"]},
+    {"id": "loot_medicine", "category": "loot", "name": "Medicamentos", "priority": "P1", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.6, 0.6, 0.6], "description": "Maleta de primeiros socorros (cruz verde, não vermelha).", "gameplay_rules": "0,6 m; branco #F7F7FF", "regions": ["todas"]},
+    {"id": "loot_fuel", "category": "loot", "name": "Combustível", "priority": "P1", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.6, 0.6, 0.6], "description": "Galão de combustível.", "gameplay_rules": "0,6 m; roxo #9B5DE5 (deixa de ser vermelho, que fica reservado)", "regions": ["todas"]},
+
+    {"id": "pick_death_bag", "category": "pickups", "name": "Mochila deixada na morte", "priority": "P2", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.8, 0.8, 0.6], "description": "A mochila-caixa vermelha da personagem caída no chão, com itens espalhados.", "gameplay_rules": "precisa ser reconhecível de longe; pode usar o vermelho do abrigo", "regions": ["todas"]},
+    {"id": "ui3d_powerup_ring", "category": "ui3d", "name": "Anel de power-up", "priority": "P1", "status": "a_fazer", "size_class": "pequeno", "size_m": [1.1, 1.1, 0.15], "description": "Anel branco emissivo, versão comum e versão 'rara' (detalhe extra).", "gameplay_rules": "o ícone no centro é trocado por código; o anel pulsa por código", "regions": ["todas"]},
+    {"id": "ui3d_powerup_icons", "category": "ui3d", "name": "Ícones 3D dos power-ups", "priority": "P2", "status": "a_fazer", "size_class": "kit_modulo", "size_m": [0.6, 0.6, 0.2], "description": "Um ícone simples por power-up, para ficar dentro do anel: ímã, sinalizador, escudo de caçamba, telhado, rampa, adrenalina (seringa), moto, mapa, mochila, rádio, coração/pulmão (segundo fôlego), saco de lona, diário, esconderijo (caixote).", "gameplay_rules": "14 malhas no mesmo .glb, nomeadas pelo id do power-up (ima, sinalizador, escudo, telhados, rampa, adrenalina, arrancada, mapa, mochila_abandonada, radio_alerta, segundo_folego, esconderijo, diario, saco_lona)", "regions": ["todas"]},
+    {"id": "pick_vehicle_sign", "category": "pickups", "name": "Placa de veículo à frente", "priority": "P3", "status": "a_fazer", "size_class": "medio", "size_m": [1.2, 2.0, 0.2], "description": "Cavalete com seta indicando o veículo estacionado.", "regions": ["todas"]},
+
+    {"id": "veh_patins", "category": "vehicles_rideable", "name": "Patins", "priority": "P2", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.2, 0.15, 0.45], "description": "Par de patins (um pé de cada). Cor azul-clara.", "gameplay_rules": "pivot na sola; ficam nos pés da personagem e, estacionados, num banco ou no chão", "regions": ["bairro", "centro"]},
+    {"id": "veh_skate", "category": "vehicles_rideable", "name": "Skate", "priority": "P2", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.45, 0.15, 1.05], "description": "Skate gasto, com adesivos (sem vermelho).", "regions": ["bairro", "centro"]},
+    {"id": "veh_bicicleta", "category": "vehicles_rideable", "name": "Bicicleta de jornaleiro", "priority": "P2", "status": "a_fazer", "size_class": "grande", "size_m": [0.6, 1.1, 1.7], "description": "Bicicleta com cesto dianteiro cheio de jornais.", "gameplay_rules": "malhas separadas para cada roda (giram por código) e para o maço de jornais", "regions": ["bairro", "mercado"]},
+    {"id": "veh_newspaper", "category": "vehicles_rideable", "name": "Jornal lançado", "priority": "P2", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.36, 0.08, 0.26], "description": "Jornal dobrado e amarrado (projétil da bicicleta).", "regions": ["bairro", "mercado"]},
+    {"id": "veh_moto", "category": "vehicles_rideable", "name": "Moto", "priority": "P2", "status": "a_fazer", "size_class": "grande", "size_m": [0.7, 1.1, 1.9], "description": "Moto trail surrada, cor laranja.", "gameplay_rules": "rodas em malhas separadas", "regions": ["centro", "industrial"]},
+    {"id": "veh_jetpack", "category": "vehicles_rideable", "name": "Mochila a jato", "priority": "P2", "status": "a_fazer", "size_class": "medio", "size_m": [0.5, 0.65, 0.4], "description": "Protótipo improvisado com dois cilindros e bocais.", "gameplay_rules": "pivot no ponto de encaixe nas costas; malhas separadas para os 2 bocais (a chama é efeito)", "regions": ["industrial", "hospital"]},
+    {"id": "veh_furgao", "category": "vehicles_rideable", "name": "Furgão de destruição", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [4.0, 2.6, 4.5], "description": "Furgão blindado com chapas soldadas, para-choque de aríete e metralhadora no teto.", "gameplay_rules": "ocupa duas faixas (4,0 m de largura); a metralhadora é malha separada (gira por código); cor cáqui", "regions": ["industrial"]},
+
+    {"id": "prop_streetlight", "category": "street_props", "name": "Poste de luz", "priority": "P1", "status": "a_fazer", "size_class": "medio", "size_m": [0.4, 5.5, 1.5], "description": "Poste com luminária, versão acesa e apagada.", "regions": ["todas"]},
+    {"id": "prop_trash_bin", "category": "street_props", "name": "Lixeira e caçamba", "priority": "P1", "status": "a_fazer", "size_class": "medio", "size_m": [1.8, 1.3, 1.2], "description": "Lixeira de rua e caçamba de entulho (a tampa da caçamba vira o Escudo de caçamba).", "variants": ["lixeira pequena", "caçamba", "sacos de lixo"], "regions": ["todas"]},
+    {"id": "prop_bench", "category": "street_props", "name": "Banco de praça", "priority": "P2", "status": "a_fazer", "size_class": "medio", "size_m": [1.8, 0.9, 0.6], "regions": ["centro", "bairro", "hospital"]},
+    {"id": "prop_bus_stop", "category": "street_props", "name": "Ponto de ônibus", "priority": "P2", "status": "a_fazer", "size_class": "grande", "size_m": [3.0, 2.6, 1.5], "regions": ["centro", "bairro"]},
+    {"id": "prop_traffic_light", "category": "street_props", "name": "Semáforo e placas de trânsito", "priority": "P2", "status": "a_fazer", "size_class": "medio", "size_m": [0.4, 4.0, 0.4], "variants": ["semáforo", "placa pare (contorno, sem vermelho saturado)", "placa de rua"], "regions": ["centro", "bairro"]},
+    {"id": "prop_crates", "category": "street_props", "name": "Caixotes e paletes", "priority": "P1", "status": "a_fazer", "size_class": "medio", "size_m": [1.2, 1.0, 1.0], "variants": ["caixote de madeira", "palete", "pilha de caixas de papelão"], "regions": ["todas"]},
+    {"id": "prop_barrels", "category": "street_props", "name": "Tambores", "priority": "P2", "status": "a_fazer", "size_class": "medio", "size_m": [0.6, 0.9, 0.6], "variants": ["metal", "plástico azul", "tambor com fogo (fogo é efeito)"], "regions": ["todas"]},
+    {"id": "prop_newsstand", "category": "street_props", "name": "Banca de jornal", "priority": "P3", "status": "a_fazer", "size_class": "grande", "size_m": [2.5, 2.5, 2.0], "regions": ["centro", "bairro"]},
+    {"id": "prop_payphone", "category": "street_props", "name": "Orelhão", "priority": "P3", "status": "a_fazer", "size_class": "medio", "size_m": [1.0, 2.3, 1.0], "description": "Detalhe brasileiro para a identidade da cidade.", "regions": ["centro", "bairro"]},
+    {"id": "prop_hydrant_mailbox", "category": "street_props", "name": "Hidrante, caixa de correio, bueiro", "priority": "P3", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.5, 1.2, 0.5], "regions": ["todas"]},
+    {"id": "prop_tires", "category": "street_props", "name": "Pneus", "priority": "P2", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.7, 0.7, 0.3], "variants": ["um pneu", "pilha"], "regions": ["todas"]},
+    {"id": "prop_tools", "category": "street_props", "name": "Ferramentas soltas", "priority": "P2", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.6, 0.3, 0.3], "description": "Caixa de ferramentas, martelo, chave inglesa, pá, carrinho de mão (cenário e Oficina do abrigo).", "regions": ["todas"]},
+    {"id": "prop_debris_small", "category": "street_props", "name": "Detritos pequenos", "priority": "P1", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.5, 0.2, 0.5], "description": "Pedaços de concreto, papel, garrafas, latas, vidro: espalhados na pista e na calçada.", "regions": ["todas"]},
+    {"id": "prop_billboard", "category": "street_props", "name": "Outdoor e letreiros", "priority": "P3", "status": "a_fazer", "size_class": "grande", "size_m": [6.0, 4.0, 0.5], "description": "Painel para textura própria de anúncio velho.", "regions": ["centro", "mercado"]},
+
+    {"id": "prop_tree_urban", "category": "nature", "name": "Árvore de calçada", "priority": "P1", "status": "a_fazer", "size_class": "grande", "size_m": [3.0, 5.0, 3.0], "variants": ["com folhas", "seca", "caída (fundo)"], "regions": ["bairro", "centro", "hospital"]},
+    {"id": "prop_tree_park", "category": "nature", "name": "Árvore de parque", "priority": "P2", "status": "a_fazer", "size_class": "grande", "size_m": [4.0, 6.5, 4.0], "regions": ["bairro", "hospital"]},
+    {"id": "prop_bushes", "category": "nature", "name": "Arbustos e mato", "priority": "P2", "status": "a_fazer", "size_class": "medio", "size_m": [1.5, 1.0, 1.5], "variants": ["arbusto", "mato alto em rachadura", "canteiro"], "regions": ["todas"]},
+    {"id": "prop_planter", "category": "nature", "name": "Vaso e floreira", "priority": "P3", "status": "a_fazer", "size_class": "medio", "size_m": [1.0, 0.8, 1.0], "regions": ["centro", "mercado"]},
+
+    {"id": "prop_car_parked", "category": "parked_vehicles", "name": "Carros abandonados", "priority": "P1", "status": "a_fazer", "size_class": "grande", "size_m": [1.9, 1.5, 4.3], "description": "Carros de passeio parados na beira da pista e no fundo.", "variants": ["hatch", "sedã", "picape", "queimado", "com porta aberta"], "regions": ["todas"]},
+    {"id": "prop_bus", "category": "parked_vehicles", "name": "Ônibus", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [2.6, 3.2, 12.0], "variants": ["parado", "tombado"], "regions": ["centro"]},
+    {"id": "prop_truck", "category": "parked_vehicles", "name": "Caminhão", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [2.6, 3.5, 9.0], "description": "Baú e cavalo; a versão tombada é o evento do caminhão.", "regions": ["industrial", "mercado"]},
+    {"id": "prop_van", "category": "parked_vehicles", "name": "Van de entrega", "priority": "P3", "status": "a_fazer", "size_class": "grande", "size_m": [2.0, 2.3, 5.0], "regions": ["mercado", "centro"]},
+    {"id": "prop_forklift", "category": "parked_vehicles", "name": "Empilhadeira", "priority": "P3", "status": "a_fazer", "size_class": "grande", "size_m": [1.2, 2.2, 2.5], "regions": ["industrial", "mercado"]},
+
+    {"id": "bld_house_row", "category": "buildings", "name": "Fachadas de casas", "priority": "P1", "status": "a_fazer", "size_class": "estrutura", "size_m": [8.0, 6.0, 8.0], "description": "Casas térreas e sobrados com muro e portão, janelas tapadas.", "variants": ["térrea", "sobrado", "com grade", "abandonada com pichação"], "regions": ["bairro"]},
+    {"id": "bld_shop_front", "category": "buildings", "name": "Fachadas de lojas", "priority": "P1", "status": "a_fazer", "size_class": "estrutura", "size_m": [8.0, 8.0, 6.0], "description": "Loja térrea com porta de enrolar e letreiro trocável.", "variants": ["porta fechada", "porta arrombada", "vitrine quebrada"], "regions": ["centro", "mercado", "bairro"]},
+    {"id": "bld_apartment", "category": "buildings", "name": "Prédios de apartamentos", "priority": "P1", "status": "a_fazer", "size_class": "estrutura", "size_m": [12.0, 20.0, 10.0], "description": "Prédio de 4 a 8 andares para o fundo (só a fachada virada para a pista precisa de detalhe).", "regions": ["centro", "bairro"]},
+    {"id": "bld_hospital_block", "category": "buildings", "name": "Bloco do hospital", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [20.0, 15.0, 12.0], "regions": ["hospital"]},
+    {"id": "bld_warehouse", "category": "buildings", "name": "Galpões e fábrica", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [20.0, 10.0, 15.0], "variants": ["galpão", "fábrica com chaminé"], "regions": ["industrial"]},
+    {"id": "bld_market_hall", "category": "buildings", "name": "Hipermercado e galeria", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [25.0, 9.0, 15.0], "regions": ["mercado"]},
+    {"id": "bld_rooftop_kit", "category": "buildings", "name": "Kit de telhados", "priority": "P2", "status": "a_fazer", "size_class": "kit_modulo", "size_m": [8.0, 0.5, 10.0], "description": "Laje, caixa d'água, antenas, escada de incêndio e mureta: usados na Rota dos telhados (a personagem corre a 8 m de altura).", "gameplay_rules": "o piso dos módulos fica na altura y = 8 m quando montado; largura útil de 7,5 m (3 faixas)", "regions": ["todas"]},
+
+    {"id": "kit_road", "category": "street_kit", "name": "Módulos de rua", "priority": "P1", "status": "a_fazer", "size_class": "kit_modulo", "size_m": [7.5, 0.1, 10.0], "description": "Asfalto de 3 faixas com divisórias tracejadas, em módulos de 10 m que se encaixam em sequência.", "gameplay_rules": "largura de 7,5 m (3 x 2,5 m); faixas centradas em x = -2,5, 0, +2,5; módulos de 10 m em Z; o chão fica em y = 0", "variants": ["normal", "rachado", "faixa de pedestre", "bueiro", "poça"], "regions": ["todas"]},
+    {"id": "kit_sidewalk", "category": "street_kit", "name": "Calçada e guia", "priority": "P1", "status": "a_fazer", "size_class": "kit_modulo", "size_m": [3.0, 0.2, 10.0], "description": "Calçada com guia, para os dois lados da rua, em módulos de 10 m.", "regions": ["todas"]},
+    {"id": "kit_fence_wall", "category": "street_kit", "name": "Muros e cercas", "priority": "P2", "status": "a_fazer", "size_class": "kit_modulo", "size_m": [4.0, 2.2, 0.3], "variants": ["muro com pichação", "cerca de arame", "grade", "tapume de obra"], "regions": ["todas"]},
+    {"id": "kit_hospital_corridor", "category": "street_kit", "name": "Corredor de hospital", "priority": "P2", "status": "a_fazer", "size_class": "kit_modulo", "size_m": [7.5, 3.5, 10.0], "description": "Piso, paredes laterais e teto de corredor (o chunk 'corredor' passa por dentro do hospital).", "gameplay_rules": "mesma largura de 7,5 m das 3 faixas", "regions": ["hospital"]},
+    {"id": "kit_railway", "category": "street_kit", "name": "Trilhos", "priority": "P3", "status": "a_fazer", "size_class": "kit_modulo", "size_m": [7.5, 0.3, 10.0], "description": "Trilhos atravessando a pista e vagões de fundo.", "regions": ["industrial"]},
+
+    {"id": "prop_bairro_set", "category": "region_bairro", "name": "Conjunto do Bairro", "priority": "P2", "status": "a_fazer", "size_class": "kit_modulo", "size_m": [3.0, 2.0, 3.0], "description": "Varal, cachorro de cimento, bicicleta encostada, botijão de gás, brinquedos de quintal, caixa d'água.", "regions": ["bairro"]},
+    {"id": "prop_mercado_set", "category": "region_mercado", "name": "Conjunto do Mercado", "priority": "P2", "status": "a_fazer", "size_class": "kit_modulo", "size_m": [3.0, 2.5, 2.0], "description": "Barraca de feira, caixotes de frutas, carrinho de mercado, gôndola de pé, caixa registradora, cestos.", "regions": ["mercado"]},
+    {"id": "prop_centro_set", "category": "region_centro", "name": "Conjunto do Centro", "priority": "P2", "status": "a_fazer", "size_class": "kit_modulo", "size_m": [3.0, 2.5, 2.0], "description": "Chafariz de praça, estátua, cones e cavaletes, caixa eletrônico, mesas de bar.", "regions": ["centro"]},
+    {"id": "prop_hospital_set", "category": "region_hospital", "name": "Conjunto do Hospital", "priority": "P2", "status": "a_fazer", "size_class": "kit_modulo", "size_m": [2.0, 2.0, 2.0], "description": "Cadeira de rodas, suporte de soro, armário de remédios, biombo, cadeiras de espera, carrinho de emergência.", "regions": ["hospital"]},
+    {"id": "prop_industrial_set", "category": "region_industrial", "name": "Conjunto da Zona Industrial", "priority": "P2", "status": "a_fazer", "size_class": "kit_modulo", "size_m": [6.0, 2.6, 2.5], "description": "Contêiner inteiro, tanques, painel elétrico, bobinas de cabo, sacaria.", "regions": ["industrial"]},
+
+    {"id": "poi_supermarket", "category": "points_of_interest", "name": "Supermercado", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [10.0, 5.0, 8.0], "description": "Fachada de mercado de bairro com placa 'SUPERMERCADO' e o baú de loot na frente.", "regions": ["bairro", "mercado"]},
+    {"id": "poi_ambulance", "category": "points_of_interest", "name": "Ambulância", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [2.2, 2.8, 6.0], "description": "Ambulância parada com portas traseiras abertas (cruz e faixas sem vermelho saturado).", "regions": ["hospital", "centro"]},
+    {"id": "poi_police_car", "category": "points_of_interest", "name": "Viatura", "priority": "P2", "status": "a_fazer", "size_class": "grande", "size_m": [1.9, 1.6, 4.6], "description": "Viatura com giroflex apagado, porta aberta e caixa de munição.", "regions": ["centro", "bairro"]},
+    {"id": "poi_garage", "category": "points_of_interest", "name": "Oficina mecânica", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [10.0, 5.0, 8.0], "description": "Oficina com elevador de carro, bancada e pneus.", "regions": ["industrial", "bairro"]},
+    {"id": "poi_gas_station", "category": "points_of_interest", "name": "Posto de combustível", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [12.0, 6.0, 10.0], "description": "Cobertura, bombas, loja de conveniência.", "regions": ["todas"]},
+    {"id": "poi_safehouse", "category": "points_of_interest", "name": "Casa segura", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [8.0, 6.0, 8.0], "description": "Casa com janelas reforçadas por tábuas e marca de sobrevivente na porta.", "regions": ["bairro", "centro"]},
+    {"id": "poi_cache_chest", "category": "points_of_interest", "name": "Baú de recurso raro", "priority": "P1", "status": "a_fazer", "size_class": "medio", "size_m": [1.0, 0.8, 0.7], "description": "Caixa de suprimentos reforçada usada nos POIs e no evento 'recurso raro'.", "regions": ["todas"]},
+
+    {"id": "evt_truck_overturned", "category": "events", "name": "Caminhão tombado", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [5.0, 3.0, 3.0], "description": "Caminhão de lado bloqueando duas faixas vizinhas.", "gameplay_rules": "bloqueia exatamente 2 faixas (5,0 m de largura) com altura de parede (2,5 m)", "regions": ["todas"]},
+    {"id": "evt_burning_wreck", "category": "events", "name": "Destroços em chamas", "priority": "P2", "status": "a_fazer", "size_class": "medio", "size_m": [2.0, 2.5, 1.0], "description": "Base queimada para o fogo do evento 'explosão' (as chamas são partículas).", "gameplay_rules": "medidas de parede", "regions": ["todas"]},
+    {"id": "evt_survivor_spot", "category": "events", "name": "Ponto do sobrevivente", "priority": "P3", "status": "a_fazer", "size_class": "medio", "size_m": [2.0, 2.0, 1.5], "description": "Carro com pisca-alerta ou barricada pequena onde o sobrevivente espera (o sobrevivente não faz parte deste catálogo).", "regions": ["todas"]},
+
+    {"id": "nav_fork_sign", "category": "navigation", "name": "Placa de bifurcação", "priority": "P1", "status": "a_fazer", "size_class": "medio", "size_m": [7.0, 3.5, 0.3], "description": "Pórtico com duas placas (esquerda/direita) onde o jogo escreve o nome do caminho, a recompensa e o perigo.", "gameplay_rules": "duas áreas planas de texto de 3,0 x 1,2 m cada, livres de detalhe (o texto é desenhado por código)", "regions": ["todas"]},
+    {"id": "nav_fork_divider", "category": "navigation", "name": "Mureta da bifurcação", "priority": "P1", "status": "a_fazer", "size_class": "kit_modulo", "size_m": [1.2, 1.2, 10.0], "description": "Mureta de concreto na faixa do meio, em módulos de 10 m.", "regions": ["todas"]},
+    {"id": "nav_extraction_gate", "category": "navigation", "name": "Ponto de extração", "priority": "P1", "status": "a_fazer", "size_class": "estrutura", "size_m": [8.0, 4.0, 3.0], "description": "Portão improvisado com sinal de fumaça e marcação do grupo; o fim de toda expedição.", "regions": ["todas"]},
+
+    {"id": "shl_base", "category": "shelter", "name": "Estrutura do abrigo", "priority": "P1", "status": "a_fazer", "size_class": "estrutura", "size_m": [18.0, 3.0, 12.0], "description": "Planta em maquete: piso, paredes do fundo e laterais (3 m), mureta frontal baixa (1 m) e a porta/saída. A câmera gira 360°: o lado de fora das paredes também precisa de acabamento.", "gameplay_rules": "paredes do fundo e laterais em malhas separadas (somem quando ficam entre a câmera e o abrigo); centro do abrigo em (0, 0, 0,5)", "regions": ["abrigo"]},
+    {"id": "shl_main_room", "category": "shelter", "name": "Sala principal", "priority": "P1", "status": "a_fazer", "size_class": "estrutura", "size_m": [5.0, 2.5, 4.0], "description": "Mesa, colchões, rádio velho, mapa na parede.", "regions": ["abrigo"]},
+    {"id": "shl_storage", "category": "shelter", "name": "Depósito", "priority": "P1", "status": "a_fazer", "size_class": "estrutura", "size_m": [4.0, 2.5, 3.0], "description": "Prateleiras; 3 níveis (mais prateleiras a cada nível). As caixas empilhadas de comida, água e sucata são instâncias de 'shl_storage_crates'.", "variants": ["nível 1", "nível 2", "nível 3"], "regions": ["abrigo"]},
+    {"id": "shl_storage_crates", "category": "shelter", "name": "Caixas do depósito", "priority": "P1", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.6, 0.4, 0.6], "description": "Caixa empilhável nas cores de comida, água e sucata (empilhadas conforme o estoque).", "regions": ["abrigo"]},
+    {"id": "shl_workshop", "category": "shelter", "name": "Oficina", "priority": "P1", "status": "a_fazer", "size_class": "estrutura", "size_m": [4.0, 2.5, 3.0], "description": "Bancada, morsa, ferramentas na parede; nível 2 com torno e solda.", "variants": ["nível 1", "nível 2"], "regions": ["abrigo"]},
+    {"id": "shl_generator", "category": "shelter", "name": "Gerador", "priority": "P1", "status": "a_fazer", "size_class": "grande", "size_m": [2.0, 1.5, 1.5], "description": "Gerador a combustível com lâmpada pendurada (emissiva); nível 2 maior, com tanque.", "variants": ["nível 1", "nível 2"], "regions": ["abrigo"]},
+    {"id": "shl_rain_collector", "category": "shelter", "name": "Coletor de chuva", "priority": "P2", "status": "a_fazer", "size_class": "grande", "size_m": [2.0, 2.5, 2.0], "description": "Lona em funil sobre tambores; nível 2 com caixa d'água.", "variants": ["nível 1", "nível 2"], "regions": ["abrigo"]},
+    {"id": "shl_garden", "category": "shelter", "name": "Horta", "priority": "P2", "status": "a_fazer", "size_class": "grande", "size_m": [4.0, 1.0, 3.0], "description": "Canteiros em pneus e caixotes; nível 2 com estufa de plástico.", "variants": ["nível 1", "nível 2"], "regions": ["abrigo"]},
+    {"id": "shl_kitchen", "category": "shelter", "name": "Cozinha", "priority": "P2", "status": "a_fazer", "size_class": "grande", "size_m": [3.0, 2.0, 2.0], "description": "Fogão a lenha de tambor, panelas; nível 2 com fogão a gás e mesa.", "variants": ["nível 1", "nível 2"], "regions": ["abrigo"]},
+    {"id": "shl_dormitory", "category": "shelter", "name": "Dormitório", "priority": "P2", "status": "a_fazer", "size_class": "grande", "size_m": [4.0, 2.0, 3.0], "description": "Beliches improvisados (2 e depois 4 vagas).", "variants": ["nível 1", "nível 2"], "regions": ["abrigo"]},
+    {"id": "shl_infirmary", "category": "shelter", "name": "Enfermaria", "priority": "P2", "status": "a_fazer", "size_class": "grande", "size_m": [3.0, 2.2, 2.5], "description": "Maca, armário de remédios; nível 2 com suporte de soro e kit médico.", "variants": ["nível 1", "nível 2"], "regions": ["abrigo"]},
+    {"id": "shl_radio", "category": "shelter", "name": "Rádio", "priority": "P3", "status": "a_fazer", "size_class": "medio", "size_m": [1.5, 2.0, 1.0], "description": "Mesa com rádio amador; nível 2 com antena alta no telhado.", "variants": ["nível 1", "nível 2"], "regions": ["abrigo"]},
+    {"id": "shl_battery", "category": "shelter", "name": "Baterias", "priority": "P3", "status": "a_fazer", "size_class": "medio", "size_m": [1.5, 1.2, 1.0], "description": "Banco de baterias de carro ligadas por cabos; nível 2 com mais módulos.", "variants": ["nível 1", "nível 2"], "regions": ["abrigo"]},
+    {"id": "shl_solar", "category": "shelter", "name": "Painéis solares", "priority": "P3", "status": "a_fazer", "size_class": "grande", "size_m": [3.0, 1.5, 2.0], "description": "Placas solares em suporte improvisado; nível 2 com mais placas.", "variants": ["nível 1", "nível 2"], "regions": ["abrigo"]},
+    {"id": "shl_backpack_upgrades", "category": "shelter", "name": "Acessórios da mochila-caixa", "priority": "P3", "status": "a_fazer", "size_class": "pequeno", "size_m": [1.0, 0.6, 0.6], "description": "Peças que se somam à mochila-caixa vermelha nos níveis 35 e 50 kg: saco de dormir enrolado, bolsa lateral, panela, lanterna, caixa maior.", "regions": ["abrigo", "todas"]},
+
+    {"id": "def_gate", "category": "defense", "name": "Portão do abrigo", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [7.5, 3.0, 0.6], "description": "Portão que cobre as 3 faixas da defesa; 3 níveis (madeira, chapa, chapa reforçada) e 3 estados de dano (inteiro, avariado, quase caindo).", "variants": ["nível 1", "nível 2", "nível 3", "dano 50%", "dano 80%"], "regions": ["abrigo", "defesa"]},
+    {"id": "def_barricade", "category": "defense", "name": "Barricada de faixa", "priority": "P2", "status": "a_fazer", "size_class": "medio", "size_m": [2.0, 1.4, 0.8], "description": "Barricada de uma faixa; níveis 1 e 2; versão destruída.", "gameplay_rules": "uma por faixa: 2,0 m de largura", "variants": ["nível 1", "nível 2", "destruída"], "regions": ["defesa", "abrigo"]},
+    {"id": "def_trap", "category": "defense", "name": "Armadilha", "priority": "P2", "status": "a_fazer", "size_class": "pequeno", "size_m": [1.5, 0.3, 1.0], "description": "Armadilha de pregos com botijão (explode uma vez); níveis 1 e 2; versão usada.", "variants": ["nível 1", "nível 2", "detonada"], "regions": ["defesa", "abrigo"]},
+    {"id": "def_tower", "category": "defense", "name": "Torre de tiro", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [2.0, 5.0, 2.0], "description": "Torre de andaime com arma automática no topo (malha separada que gira).", "variants": ["torre 1", "torre 2"], "regions": ["defesa", "abrigo"]},
+    {"id": "def_arena", "category": "defense", "name": "Pátio da defesa", "priority": "P2", "status": "a_fazer", "size_class": "estrutura", "size_m": [12.0, 4.0, 50.0], "description": "A rua em frente ao abrigo vista na defesa: 3 faixas, muros laterais, entulho e o portão ao fundo.", "gameplay_rules": "3 faixas de 2,5 m; o portão fica perto da câmera", "regions": ["defesa"]},
+
+    {"id": "wpn_knife", "category": "weapons", "name": "Faca improvisada", "priority": "P2", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.08, 0.05, 0.35], "description": "4 níveis visíveis (de faca de cozinha com fita a faca tática).", "gameplay_rules": "pivot no cabo (ponto de pegada); lâmina para -Z", "variants": ["nível 1", "nível 2", "nível 3", "nível 4", "quebrada"], "regions": ["todas"]},
+    {"id": "wpn_machete", "category": "weapons", "name": "Facão", "priority": "P3", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.1, 0.05, 0.6], "gameplay_rules": "pivot no cabo", "regions": ["todas"]},
+    {"id": "wpn_axe", "category": "weapons", "name": "Machado", "priority": "P3", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.25, 0.05, 0.7], "gameplay_rules": "pivot no cabo", "regions": ["todas"]},
+    {"id": "wpn_katana", "category": "weapons", "name": "Katana", "priority": "P3", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.06, 0.04, 1.0], "gameplay_rules": "pivot no cabo", "regions": ["todas"]},
+    {"id": "wpn_heavy_axe", "category": "weapons", "name": "Machado pesado", "priority": "P3", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.35, 0.06, 0.9], "gameplay_rules": "pivot no cabo", "regions": ["todas"]},
+    {"id": "wpn_pistol", "category": "weapons", "name": "Pistola", "priority": "P2", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.04, 0.14, 0.22], "description": "3 níveis visíveis (ex.: mira e carregador maior).", "gameplay_rules": "pivot na empunhadura; cano para -Z; um nó 'muzzle' na ponta do cano", "variants": ["nível 1", "nível 2", "nível 3"], "regions": ["todas"]},
+    {"id": "wpn_shotgun", "category": "weapons", "name": "Escopeta", "priority": "P3", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.06, 0.18, 0.9], "gameplay_rules": "pivot na empunhadura; nó 'muzzle'", "variants": ["nível 1", "nível 2", "nível 3"], "regions": ["todas"]},
+    {"id": "wpn_smg", "category": "weapons", "name": "Submetralhadora", "priority": "P3", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.05, 0.2, 0.5], "gameplay_rules": "pivot na empunhadura; nó 'muzzle'", "variants": ["nível 1", "nível 2", "nível 3"], "regions": ["todas"]},
+
+    {"id": "fx_shapes_kit", "category": "fx_shapes", "name": "Formas de efeito", "priority": "P3", "status": "a_fazer", "size_class": "kit_modulo", "size_m": [0.5, 0.5, 0.5], "description": "Malhas mínimas para partículas: chama (3 formatos), faísca, lasca de concreto, estilhaço de vidro, gota (sangue escuro), fumaça (esfera facetada), papel voando, rastro de tiro.", "gameplay_rules": "até 50 triângulos por forma; sem textura (a cor vem do efeito)", "regions": ["todas"]},
+    {"id": "fx_flare", "category": "fx_shapes", "name": "Sinalizador aceso", "priority": "P3", "status": "a_fazer", "size_class": "pequeno", "size_m": [0.2, 0.2, 0.5], "description": "Bastão do sinalizador (power-up) jogado no chão; ponta emissiva laranja.", "regions": ["todas"]},
+    {"id": "fx_shield_lid", "category": "fx_shapes", "name": "Escudo de caçamba", "priority": "P3", "status": "a_fazer", "size_class": "medio", "size_m": [1.2, 1.0, 0.1], "description": "Tampa de caçamba com alça, erguida à frente da personagem; versão quebrada em 3 pedaços.", "regions": ["todas"]}
+  ],
+
+  "reserved_for_future": [
+    {"category": "characters", "note": "Personagem principal (conceitos A/B/C da direção de arte) — fora deste catálogo por enquanto."},
+    {"category": "zombies", "note": "Comum, runner, bruto, explosivo, blindado — fora deste catálogo por enquanto."},
+    {"category": "survivors_npc", "note": "Moradores e sobreviventes resgatados — fora deste catálogo por enquanto."},
+    {"category": "new_regions", "note": "Espaço para regiões novas: criar categoria 'region_<nome>' e prefixo de ids próprio."},
+    {"category": "seasonal_events", "note": "Decorações de eventos especiais (chuva forte, noite, festa junina, Natal)."},
+    {"category": "cosmetics", "note": "Variações cosméticas da mochila-caixa e dos veículos."}
+  ],
+
+  "new_asset_template": {
+    "id": "<prefixo>_<nome_curto>",
+    "category": "<id de 'categories'>",
+    "name": "<nome em português>",
+    "priority": "P1 | P2 | P3",
+    "status": "a_fazer",
+    "size_class": "pequeno | medio | grande | estrutura | kit_modulo",
+    "size_m": [0.0, 0.0, 0.0],
+    "description": "<o que é e como aparece>",
+    "gameplay_rules": "<medidas obrigatórias ou comportamento no jogo; vazio se for só decoração>",
+    "variants": [],
+    "regions": ["todas | bairro | mercado | centro | hospital | industrial | abrigo | defesa"]
+  },
+
+  "priority_legend": {
+    "P1": "necessário para o primeiro visual jogável (aparece em toda expedição ou no abrigo)",
+    "P2": "necessário para o jogo completo (regiões, POIs, veículos, defesa)",
+    "P3": "acabamento e variedade"
+  },
+
+  "change_log": [
+    {"date": "2026-10-08", "version": "1.0", "change": "Primeira versão: 115 assets de cenário, objetos, veículos, abrigo, defesa e armas; personagens e zumbis reservados para depois."}
+  ]
+}
