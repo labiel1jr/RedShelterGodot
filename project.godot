@@ -32,4 +32,14 @@ theme/custom="res://ui/theme.tres"
 
 [rendering]
 
+textures/vram_compression/import_etc2_astc=true
+
 renderer/rendering_method="mobile"
+
+[display]
+
+window/size/viewport_width=1152
+window/size/viewport_height=648
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=4
