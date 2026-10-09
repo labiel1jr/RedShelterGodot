@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "project": "Red Shelter",
   "document": "Catálogo de assets de cenário e objetos (sem personagens e sem zumbis)",
   "updated": "2026-10-08",
@@ -34,7 +34,8 @@
       "medio": "até 800 (caixas, lixeiras, bancos, placas)",
       "grande": "até 1.500 (carros, árvores, barracas)",
       "estrutura": "até 3.000 (fachadas de prédio, ambulância, ônibus, construções do abrigo)",
-      "kit_modulo": "até 1.200 por módulo"
+      "kit_modulo": "até 1.200 por módulo",
+      "2d": "não se aplica (imagem); seguir os tamanhos em pixels do asset"
     },
     "lod": "não é necessário; o jogo carrega só uns 120 m à frente",
     "collision": "não modelar colisão: o jogo usa caixas próprias. Respeitar as medidas de 'gameplay_rules'",
@@ -57,7 +58,8 @@
     "def_": "estruturas de defesa do abrigo",
     "wpn_": "armas (modelo na mão e no painel)",
     "fx_": "formas de efeito (fogo, faísca, destroço) usadas pelas partículas",
-    "ui3d_": "formas 3D de interface (anel de power-up, marcadores)"
+    "ui3d_": "formas 3D de interface (anel de power-up, marcadores)",
+    "brand_": "ícones e imagens de identidade (2D)"
   },
   "categories": [
     {
@@ -169,6 +171,11 @@
       "id": "ui3d",
       "name": "Formas 3D de interface",
       "description": "Anéis, placas e marcadores 3D."
+    },
+    {
+      "id": "branding",
+      "name": "Identidade e ícones",
+      "description": "Ícone do jogo para Android e Windows e imagens de loja. Arte 2D no estilo cel-shading (seção 65 do GDD, 'Ícone do jogo')."
     }
   ],
   "assets": [
@@ -2359,6 +2366,103 @@
       "regions": [
         "todas"
       ]
+    },
+    {
+      "id": "brand_icon_master",
+      "category": "branding",
+      "name": "Arte-mestra do ícone",
+      "priority": "P1",
+      "status": "a_fazer",
+      "size_class": "2d",
+      "size_m": [
+        0,
+        0,
+        0
+      ],
+      "description": "Conceito: o ABRIGO vermelho (#D2382F) — silhueta de casa/barracão com tábuas pregadas e uma porta com luz quente — sobre fundo carvão (#16141F → cinza-azulado escuro), com contorno grosso #16141F e luz em 3 faixas chapadas (cel-shading). Sem texto, sem personagem (ainda não definida) e sem zumbi explícito; no máximo silhuetas de mãos ou de prédios ao fundo. Tem que ser reconhecível em 48 px. Desenhar uma vez em 1024 x 1024 px e em vetor (SVG ou .ai/.kra com camadas); todos os outros tamanhos saem desta.",
+      "gameplay_rules": "camadas separadas: FUNDO, FRENTE (o abrigo) e uma versão MONOCROMÁTICA (só a silhueta, uma cor, fundo transparente)",
+      "variants": [
+        "opção A: abrigo frontal com tábuas e porta acesa",
+        "opção B: abrigo em perspectiva com a cidade escura atrás"
+      ],
+      "regions": [
+        "—"
+      ],
+      "deliverables": [
+        "art/icons/source/icon_master.svg (ou .kra/.ai)",
+        "art/icons/icon_master_1024.png"
+      ]
+    },
+    {
+      "id": "brand_icon_android",
+      "category": "branding",
+      "name": "Ícone Android (adaptativo)",
+      "priority": "P1",
+      "status": "a_fazer",
+      "size_class": "2d",
+      "size_m": [
+        0,
+        0,
+        0
+      ],
+      "description": "Ícone adaptativo do Android: o sistema recorta em círculo, quadrado arredondado ou gota, e pode animar (paralaxe) as duas camadas.",
+      "gameplay_rules": "PNG 432 x 432 por camada. FRENTE com fundo transparente e todo o desenho importante dentro do círculo central de 264 px (zona segura de 66%); FUNDO opaco preenchendo os 432 px; MONOCROMÁTICO (Android 13, ícones temáticos): silhueta branca em fundo transparente, mesma zona segura. Mais o ícone antigo 192 x 192 (fundo + frente juntos, cantos arredondados).",
+      "variants": [],
+      "regions": [
+        "—"
+      ],
+      "deliverables": [
+        "art/icons/android/icon_foreground_432.png",
+        "art/icons/android/icon_background_432.png",
+        "art/icons/android/icon_monochrome_432.png",
+        "art/icons/android/icon_main_192.png"
+      ]
+    },
+    {
+      "id": "brand_icon_windows",
+      "category": "branding",
+      "name": "Ícone Windows",
+      "priority": "P1",
+      "status": "a_fazer",
+      "size_class": "2d",
+      "size_m": [
+        0,
+        0,
+        0
+      ],
+      "description": "Ícone do executável, da barra de tarefas e da janela no Windows.",
+      "gameplay_rules": "um .ico com os tamanhos 16, 24, 32, 48, 64, 128 e 256 px (fundo + frente juntos, cantos arredondados, transparência nas bordas); nos tamanhos 16 e 24 simplificar o desenho (só a silhueta do abrigo e a porta), não apenas reduzir. Mais um PNG 512 x 512 para o ícone do projeto no Godot.",
+      "variants": [],
+      "regions": [
+        "—"
+      ],
+      "deliverables": [
+        "art/icons/windows/icon.ico",
+        "art/icons/windows/icon_512.png"
+      ]
+    },
+    {
+      "id": "brand_store_assets",
+      "category": "branding",
+      "name": "Imagens de loja",
+      "priority": "P3",
+      "status": "a_fazer",
+      "size_class": "2d",
+      "size_m": [
+        0,
+        0,
+        0
+      ],
+      "description": "Para quando o jogo for publicado: ícone da Play Store e banner.",
+      "gameplay_rules": "ícone 512 x 512 PNG (32 bits, sem transparência); banner (feature graphic) 1024 x 500 PNG/JPG com o logotipo RED SHELTER",
+      "variants": [],
+      "regions": [
+        "—"
+      ],
+      "deliverables": [
+        "art/icons/store/play_icon_512.png",
+        "art/icons/store/feature_graphic_1024x500.png"
+      ]
     }
   ],
   "reserved_for_future": [
@@ -2393,7 +2497,7 @@
     "name": "<nome em português>",
     "priority": "P1 | P2 | P3",
     "status": "a_fazer",
-    "size_class": "pequeno | medio | grande | estrutura | kit_modulo",
+    "size_class": "pequeno | medio | grande | estrutura | kit_modulo | 2d",
     "size_m": [
       0.0,
       0.0,
@@ -2421,6 +2525,11 @@
       "date": "2026-10-08",
       "version": "1.1",
       "change": "Estilo definido como toon shading / cel-shading: regras de contorno por classe, paleta por região e sombra colorida (GDD 0.9.1, seção 65)."
+    },
+    {
+      "date": "2026-10-09",
+      "version": "1.2",
+      "change": "Categoria 'branding' com o ícone do jogo: arte-mestra, ícone adaptativo Android (frente, fundo, monocromático, 192 px), ícone Windows (.ico + 512 px) e imagens de loja."
     }
   ]
 }

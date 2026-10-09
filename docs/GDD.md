@@ -1,6 +1,6 @@
 # RED SHELTER
 
-## Game Design Document — GDD 0.9.2
+## Game Design Document — GDD 0.9.3
 
 **Gênero:** Survival Runner + Shooter + Scavenging + Shelter Management
 **Plataformas:** Android / iOS
@@ -23,6 +23,7 @@
 
 | Versão | Mudanças |
 | ------ | -------- |
+| 0.9.3 | Ícone do jogo planejado (Android adaptativo e Windows) na seção 65; etapa A0 na Fase 15. |
 | 0.9.2 | Combustível roxo aprovado e aplicado no loot do jogo; personagem adiada. Seção 65 atualizada. |
 | 0.9.1 | Estilo decidido: toon shading / cel-shading (luz em 3 faixas, contorno por classe de objeto, cor por região). Seção 65 reescrita a partir da recomendação; análise mantida. |
 | 0.9 | Seção 65 nova: direção de arte — análise de estilos para o jogo, recomendação "toon noir vermelho", paleta, luz por região, técnica e plano da Fase 15. Roadmap (58) com a Fase 15. |
@@ -2736,8 +2737,20 @@ A névoa esconde o fim do streaming de chunks (120 m) e dá profundidade sem cus
 * **Sombras:** projetada só na personagem; mancha simples nos zumbis e no loot.
 * **Orçamento:** personagem ~3.000 triângulos; zumbi ~1.500; demais classes em `docs/assets/asset_list.json`.
 
+### Ícone do jogo
+
+**Status:** 📋 planejado (arte em `docs/assets/asset_list.json`, categoria `branding`).
+
+* **Conceito:** o abrigo vermelho — silhueta de casa/barracão com tábuas pregadas e a porta com luz quente — sobre fundo carvão, com contorno grosso e luz em 3 faixas (cel-shading). É a promessa do jogo ("um lugar seguro"), usa a cor reservada do abrigo e não depende da personagem, ainda não definida. Sem texto; reconhecível em 48 px.
+* **Arte-mestra:** 1024 × 1024 px em vetor, com camadas de fundo, frente e uma versão monocromática.
+* **Android (ícone adaptativo):** frente e fundo em 432 × 432 px, com tudo o que importa dentro do círculo central de 264 px (o sistema recorta em círculo, quadrado ou gota); versão monocromática para os ícones temáticos do Android 13; e o ícone antigo de 192 × 192.
+* **Windows:** um `.ico` com 16, 24, 32, 48, 64, 128 e 256 px (os menores redesenhados, não só reduzidos) e um PNG 512 × 512 para o ícone do projeto.
+* **No projeto:** os PNGs do Android entram nas opções `launcher_icons/*` do preset Android; o PNG 512 vira o `config/icon` do projeto (janela e barra de tarefas); o `.ico` vai para `config/windows_native_icon` e, para aparecer no próprio `.exe`, o Godot precisa da ferramenta `rcedit` configurada (preset Windows, a criar).
+* **Loja (depois):** ícone 512 × 512 sem transparência e banner 1024 × 500 com o logotipo.
+
 ## Plano de implementação (Fase 15)
 
+* **A0 — Ícone:** arte do ícone (Android e Windows) e configuração nos presets.
 * **A1 — Base técnica:** shader toon, contorno, textura-paleta, névoa e céu por região, aplicados sobre as primitivas atuais.
 * **A2 — Kit P1:** os assets P1 do catálogo (obstáculos, loot, kit de rua, postes, árvores, carros, fachadas, estrutura do abrigo).
 * **A3 — Personagem:** escolha do conceito e do nome (proposta: Entregadora, mochila-caixa vermelha), modelo e animações.

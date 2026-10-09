@@ -7,7 +7,7 @@ Survival runner mobile com abrigo. A sobrevivente corre sozinha por três
 faixas, desvia, pula, desliza, luta contra zumbis que a agarram e saqueia o
 que consegue carregar. De volta ao abrigo, os recursos viram construções,
 armas e moradores, e a cada semana uma horda ataca o portão. É o protótipo
-jogável do **GDD 0.9.2** ([`docs/GDD.md`](docs/GDD.md)), feito com formas primitivas.
+jogável do **GDD 0.9.3** ([`docs/GDD.md`](docs/GDD.md)), feito com formas primitivas.
 Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 
 | | |
@@ -791,7 +791,7 @@ Quase tudo é dado (`.tres`) editável no Inspector:
   fundo), detalhe desenhado na textura-paleta, sem PBR. O vermelho fica
   reservado ao abrigo, à personagem e ao perigo; o combustível é roxo.
 - **Catálogo para os artistas:** [`docs/assets/asset_list.json`](docs/assets/asset_list.json)
-  — 115 assets de cenário e objetos (personagens e zumbis ficam para
+  — 119 assets: cenário, objetos e o ícone do jogo (personagens e zumbis ficam para
   depois) com medidas, prioridades P1–P3, regras de formato (.glb, metros,
   pivô) e um modelo para pedir assets novos.
 - **Hoje:** o jogo ainda usa formas primitivas; os modelos entram pela Fase 15.
