@@ -165,8 +165,7 @@ func hit_structure(lane: int, amount: float) -> void:
 	var ratio := gate_hp / gate_max
 	for g in _gate_nodes:
 		(g.material_override as StandardMaterial3D).albedo_color = Color(0.45, 0.4, 0.36).lerp(Color(0.6, 0.15, 0.1), 1.0 - ratio)
-	if int(gate_hp) % 10 == 0:
-		camera.shake(0.08)
+	camera.shake(0.05 if int(gate_hp) % 10 != 0 else 0.12)
 	if gate_hp <= 0.0:
 		_finish(false)
 
@@ -229,6 +228,9 @@ func _update_traps() -> void:
 				AudioManager.play("explosion", -4.0, 1.2)
 				Fx.burst(actors, center, Color(1.0, 0.55, 0.1), 30, 7.0, 0.25)
 				Fx.muzzle_flash(actors, center)
+				Juice.shake(Juice.SHAKE_MEDIUM)
+				Juice.hit_stop(0.08)
+				Juice.screen_flash(Color(1.0, 0.55, 0.1), 0.25, 0.3)
 				for other in get_tree().get_nodes_in_group("zombie"):
 					if other.is_alive() and other.global_position.distance_to(center) <= TRAP_RADIUS:
 						other.take_hit(trap_damage, false)
@@ -271,6 +273,11 @@ func _finish(won: bool) -> void:
 	if run_ended:
 		return
 	run_ended = true
+	if won:
+		Juice.screen_flash(Color(1.0, 0.85, 0.3), 0.35, 0.8)
+	else:
+		Juice.slow_motion(0.3, 0.5)
+		Juice.shake(Juice.SHAKE_STRONG)
 	player.set_physics_process(false)
 	for z in get_tree().get_nodes_in_group("zombie"):
 		z.set_process(false)
@@ -455,6 +462,8 @@ func _banner(text: String, color: Color) -> void:
 	AudioManager.play("alarm", -4.0, 1.0, 0.0)
 	banner.text = text
 	banner.modulate = color
+	Juice.punch(banner, 0.3, 0.35)
+	Juice.shake(Juice.SHAKE_LIGHT)
 	var tween := create_tween()
 	tween.tween_interval(2.4)
 	tween.tween_property(banner, "modulate:a", 0.0, 0.5)

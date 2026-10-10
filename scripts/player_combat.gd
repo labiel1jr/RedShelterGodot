@@ -187,6 +187,7 @@ func _fire_once() -> void:
 			_hit(target, pistol.damage, player.global_position.z - target.global_position.z)
 		Fx.tracer(world, from, to)
 	Fx.muzzle_flash(world, from)
+	Fx.burst(world, from + Vector3(0.25, 0.1, 0.3), Color(0.85, 0.68, 0.3), 1, 3.0, 0.05)
 	_play_recoil()
 
 
@@ -223,6 +224,8 @@ func _hit(target: Node3D, base_damage: int, ahead: float) -> void:
 	if is_crit:
 		damage = int(round(damage * pistol.crit_multiplier))
 	target.take_hit(damage, is_crit, pistol.knockback)
+	if not target.is_alive():
+		AudioManager.play("hit", -4.0, 0.6, 0.0)
 
 
 ## Tamanho e cor das armas na mão conforme as equipadas.

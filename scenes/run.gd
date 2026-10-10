@@ -600,6 +600,13 @@ func register_kill(xp_reward: int) -> void:
 	if powerups and powerups.is_active(&"adrenalina"):
 		xp_reward = roundi(xp_reward * powerups.data(&"adrenalina").xp_multiplier)
 	kill_xp += xp_reward
+	if hud:
+		hud.on_kill()
+
+
+## XP de manobras (passar raspando, seção 66); soma ao XP de abates.
+func add_style_xp(amount: int) -> void:
+	kill_xp += amount
 
 
 ## XP que a expedição daria se terminasse agora com extração.

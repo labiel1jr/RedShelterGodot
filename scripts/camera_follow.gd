@@ -21,6 +21,9 @@ var _vehicle_offset := Vector3.ZERO
 var _vertical := -1.0
 var _trauma := 0.0
 var _last_hp := -1
+## Seção 66: o FOV abre um pouco com a velocidade.
+var _base_fov := 0.0
+var _base_speed := 0.0
 
 
 func _ready() -> void:
@@ -31,6 +34,7 @@ func _ready() -> void:
 		if players.size() > 0:
 			target = players[0]
 
+	_base_fov = fov
 	var health: Node = target.get_node_or_null("Health") if target else null
 	if health:
 		_last_hp = health.current_hp
@@ -53,11 +57,23 @@ func _process(delta: float) -> void:
 	global_position = global_position.lerp(desired, follow_speed * delta)
 	look_at(followed + Vector3(0, 1.0, -look_ahead), Vector3.UP)
 
+	if target is CharacterBody3D:
+		var speed := -(target as CharacterBody3D).velocity.z
+		if _base_speed <= 0.0 and speed > 1.0:
+			_base_speed = speed
+		if _base_speed > 0.0:
+			fov = lerpf(fov, _base_fov + 10.0 * speed_ratio(speed), minf(1.0, 3.0 * delta))
+
 	# h_offset/v_offset deslocam a imagem sem mexer no acompanhamento.
 	_trauma = maxf(0.0, _trauma - shake_decay * delta)
 	var amount := _trauma * _trauma * max_shake
 	h_offset = randf_range(-1.0, 1.0) * amount
 	v_offset = randf_range(-1.0, 1.0) * amount
+
+
+## 0 na velocidade inicial, 1 com o dobro dela.
+func speed_ratio(speed: float) -> float:
+	return clampf((speed - _base_speed) / maxf(1.0, _base_speed), 0.0, 1.0) if _base_speed > 0.0 else 0.0
 
 
 func shake(trauma: float) -> void:

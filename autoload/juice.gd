@@ -17,6 +17,11 @@ var _time_requests := {}
 var _next_request := 0
 ## Escala de tempo de antes dos efeitos (os testes aceleram o jogo).
 var _base_time_scale := 1.0
+## Linhas de velocidade nas bordas (0 = nenhuma).
+var _speed_lines: Control
+var _speed_amount := 0.0
+## Contadores rolando: chave → valor mostrado.
+var _rolling := {}
 
 
 func _ready() -> void:
@@ -29,6 +34,12 @@ func _ready() -> void:
 	_flash.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_flash.color = Color(1, 1, 1, 0)
 	_layer.add_child(_flash)
+	_speed_lines = Control.new()
+	_speed_lines.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_speed_lines.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_speed_lines.draw.connect(_draw_speed_lines)
+	_layer.add_child(_speed_lines)
+	get_tree().node_added.connect(_on_node_added)
 	get_tree().scene_changed.connect(_reset_time)
 
 
@@ -110,6 +121,50 @@ func fly_to_hud(world_pos: Vector3, target: Control, color: Color, size := 18.0)
 		punch(target, 0.15, 0.25))
 
 
+## Linhas de velocidade nas bordas da tela, de 0 a 1.
+func set_speed_lines(amount: float) -> void:
+	_speed_amount = clampf(amount, 0.0, 1.0)
+	_speed_lines.queue_redraw()
+
+
+## Valor que rola até `target` em vez de trocar de vez (contadores).
+func roll(key: StringName, target: float, delta: float) -> int:
+	var shown: float = _rolling.get(key, target)
+	shown = move_toward(shown, target, maxf(6.0, absf(target - shown) * 8.0) * delta)
+	_rolling[key] = shown
+	return roundi(shown)
+
+
+func _draw_speed_lines() -> void:
+	if _speed_amount <= 0.01:
+		return
+	var size := _speed_lines.size
+	var center := size / 2.0
+	var color := Color(1, 1, 1, 0.25 * _speed_amount)
+	for i in int(10 + 14 * _speed_amount):
+		var angle := randf() * TAU
+		var dir := Vector2(cos(angle), sin(angle))
+		# Só nas bordas: começa a 70% do caminho até a borda.
+		var reach := (size / 2.0).length()
+		var start := center + dir * reach * randf_range(0.7, 0.85)
+		draw_line_on(start, start + dir * reach * randf_range(0.15, 0.3) * _speed_amount, color)
+
+
+func draw_line_on(from: Vector2, to: Vector2, color: Color) -> void:
+	_speed_lines.draw_line(from, to, color, 2.0)
+
+
+func _process(_delta: float) -> void:
+	if _speed_amount > 0.01:
+		_speed_lines.queue_redraw()
+
+
+## Botões afundam ao tocar (seção 66, interface).
+func _on_node_added(node: Node) -> void:
+	if node is BaseButton:
+		node.button_down.connect(func(): punch(node, -0.08, 0.2))
+
+
 func _time_scale(factor: float, seconds: float) -> void:
 	if _time_requests.is_empty():
 		_base_time_scale = Engine.time_scale
@@ -131,6 +186,8 @@ func _apply_time() -> void:
 
 
 func _reset_time() -> void:
+	set_speed_lines(0.0)
+	_rolling.clear()
 	if not _time_requests.is_empty():
 		_time_requests.clear()
 		Engine.time_scale = _base_time_scale

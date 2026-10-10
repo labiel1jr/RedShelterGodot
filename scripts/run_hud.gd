@@ -45,6 +45,10 @@ var player_health: Node
 var player_combat: Node
 var _pulse_time := 0.0
 var _last_hp := -1
+## Seção 66: sequência de abates (×2, ×3...) que some 2,5 s após o último.
+var _streak := 0
+var _streak_time := 0.0
+var _streak_label: Label
 
 
 func _ready() -> void:
@@ -97,7 +101,12 @@ func _process(delta: float) -> void:
 	seed_label.text = "SEED %d  ·  %s" % [run_manager.expedition_seed, run_manager.director.phase_name()]
 	noise_bar.value = run_manager.noise
 
-	xp_label.text = "XP: %d (se extrair)" % run_manager.xp_if_extracted()
+	xp_label.text = "XP: %d (se extrair)" % Juice.roll(&"hud_xp", run_manager.xp_if_extracted(), delta)
+	var camera := get_viewport().get_camera_3d()
+	if camera and camera.has_method("speed_ratio"):
+		var ratio: float = camera.speed_ratio(-(run_manager.player as CharacterBody3D).velocity.z)
+		Juice.set_speed_lines(0.0 if run_manager.run_ended else clampf((ratio - 0.25) / 0.75, 0.0, 1.0))
+	_update_streak(delta)
 
 	# Seção 64: power-ups ativos com uma barra de tempo, e o escudo.
 	var powerups: PlayerPowerUps = run_manager.powerups
@@ -167,13 +176,51 @@ func _on_health_changed(current: int, max_hp: int) -> void:
 	_last_hp = current
 
 	var ratio := float(current) / float(max_hp)
+	var was_critical := _critical
 	_critical = current > 0 and ratio < HP_STATES[1][0]
+	if _critical != was_critical:
+		_set_world_saturation(0.55 if _critical else 1.0)
 	AudioManager.set_heartbeat(_critical)
 	for hp_state in HP_STATES:
 		if ratio >= hp_state[0]:
 			hp_label.text = "HP: %d/%d  %s" % [current, max_hp, hp_state[1]]
 			hp_label.modulate = hp_state[2]
 			return
+
+
+func on_kill() -> void:
+	_streak += 1
+	_streak_time = 2.5
+	if _streak < 2:
+		return
+	if not _streak_label:
+		_streak_label = Label.new()
+		_streak_label.add_theme_font_size_override("font_size", 54)
+		_streak_label.add_theme_constant_override("outline_size", 12)
+		_streak_label.add_theme_color_override("font_outline_color", Color("#16141F"))
+		_streak_label.set_anchors_preset(Control.PRESET_CENTER_RIGHT)
+		_streak_label.position += Vector2(-190, -120)
+		add_child(_streak_label)
+	_streak_label.text = "×%d" % _streak
+	_streak_label.modulate = Color(1.0, 0.85, 0.3).lerp(Color(1.0, 0.35, 0.25), clampf((_streak - 2) / 6.0, 0.0, 1.0))
+	_streak_label.show()
+	Juice.punch(_streak_label, 0.35 + 0.05 * mini(_streak, 6), 0.35)
+
+
+func _update_streak(delta: float) -> void:
+	if _streak == 0:
+		return
+	_streak_time -= delta
+	if _streak_label:
+		_streak_label.rotation = sin(_pulse_time * 30.0) * 0.04 * minf(_streak, 6)
+	if _streak_time <= 0.0:
+		if _streak >= 3:
+			AudioManager.play("swing", -10.0, 0.6, 0.0)
+		_streak = 0
+		if _streak_label:
+			var tween := create_tween()
+			tween.tween_property(_streak_label, "modulate:a", 0.0, 0.3)
+			tween.tween_callback(_streak_label.hide)
 
 
 ## Desenha os caracteres uma vez nos rótulos grandes (invisíveis) para a
@@ -190,6 +237,16 @@ func warm_up_fonts(charset: String) -> void:
 		label.text = old_text
 		label.visible = was_visible
 		label.self_modulate.a = 1.0
+
+
+## HP crítico (seção 66): o mundo perde um pouco da cor.
+func _set_world_saturation(value: float) -> void:
+	var world_env: WorldEnvironment = run_manager.get_node_or_null("WorldEnvironment") if run_manager else null
+	if not world_env:
+		return
+	var env := world_env.environment
+	env.adjustment_enabled = true
+	create_tween().tween_property(env, "adjustment_saturation", value, 0.6)
 
 
 ## Dica do tutorial na parte de baixo da tela; some sozinha.
@@ -214,7 +271,8 @@ func show_banner(text: String, color: Color) -> void:
 	event_banner.scale = Vector2.ONE * 1.3
 	event_banner.pivot_offset = event_banner.size / 2.0
 	var tween := create_tween()
-	tween.tween_property(event_banner, "scale", Vector2.ONE, 0.25)
+	tween.tween_property(event_banner, "scale", Vector2.ONE, 0.25).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	Juice.shake(Juice.SHAKE_LIGHT)
 	tween.tween_interval(2.2)
 	tween.tween_property(event_banner, "modulate:a", 0.0, 0.5)
 

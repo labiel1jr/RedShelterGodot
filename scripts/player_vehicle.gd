@@ -83,6 +83,8 @@ func mount(vehicle: VehicleData) -> bool:
 			if is_instance_valid(grabber):
 				grabber.shove()
 	AudioManager.play("pickup", -2.0, 0.7)
+	Juice.punch(_visual, 0.4, 0.4)
+	Fx.burst(player.get_parent(), player.global_position + Vector3.UP * 0.2, Color(0.62, 0.58, 0.52), 16, 4.0, 0.12)
 	mounted_changed.emit(vehicle)
 	return true
 
