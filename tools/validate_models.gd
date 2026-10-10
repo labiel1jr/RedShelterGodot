@@ -43,7 +43,8 @@ func _initialize() -> void:
 					problems.append("%d triângulos (limite %d para '%s')" % [stats.tris, budget, asset.size_class])
 				if asset.has("size_m"):
 					var want := Vector3(asset.size_m[0], asset.size_m[1], asset.size_m[2])
-					var has_rules: bool = asset.has("gameplay_rules")
+					# Medida obrigatória só onde há colisão (obstáculos).
+					var has_rules: bool = asset.has("gameplay_rules") and asset.category == "obstacles"
 					for axis in 3:
 						if want[axis] <= 0.0:
 							continue
@@ -54,10 +55,11 @@ func _initialize() -> void:
 								problems.append(msg + " (passa da colisão)")
 							else:
 								warnings.append(msg)
-			if absf(aabb.position.y) > PIVOT_TOLERANCE:
+			# Armas têm o pivô no cabo, não no chão.
+			if asset.get("category", "") != "weapons" and absf(aabb.position.y) > PIVOT_TOLERANCE:
 				problems.append("pivô fora do chão (base em y = %.2f)" % aabb.position.y)
 			var center := aabb.get_center()
-			if absf(center.x) > 0.25 or absf(center.z) > 0.25:
+			if asset.get("category", "") != "weapons" and (absf(center.x) > 0.25 or absf(center.z) > 0.25):
 				warnings.append("pivô fora do centro da base (centro em x=%.2f, z=%.2f)" % [center.x, center.z])
 			if stats.materials > 1:
 				warnings.append("%d materiais (o padrão é 1, a textura-paleta)" % stats.materials)

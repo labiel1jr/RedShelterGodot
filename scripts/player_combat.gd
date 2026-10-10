@@ -15,6 +15,11 @@ signal knife_durability_changed(current: int, max_durability: int)
 const BROKEN_DAMAGE := 10
 
 ## Arma branca equipada (faca, facão, machado...).
+## Armas na mão aparecem maiores que o tamanho real do catálogo, para serem
+## lidas na câmera da corrida (a faca de 0,35 m fica com ~0,55 m, como a
+## forma provisória).
+const HELD_MODEL_SCALE := 1.6
+
 @export var weapon: WeaponData
 ## Arma de fogo equipada (pistola, escopeta ou SMG).
 @export var pistol: RangedWeaponData
@@ -231,6 +236,19 @@ func _hit(target: Node3D, base_damage: int, ahead: float) -> void:
 ## Tamanho e cor das armas na mão conforme as equipadas.
 func apply_visuals() -> void:
 	var knife_mesh: MeshInstance3D = knife_pivot.get_node("Knife")
+	# Modelo do artista (Fase 15 / A2), com o pivô no cabo e a lâmina para -Z.
+	var model := knife_pivot.get_node_or_null("Model")
+	if model and model.get_meta(&"asset_id", &"") != weapon.asset_id:
+		model.free()
+		model = null
+	if not model and AssetLibrary.has_model(weapon.asset_id):
+		model = AssetLibrary.instantiate(weapon.asset_id)
+		model.name = "Model"
+		model.set_meta(&"asset_id", weapon.asset_id)
+		knife_pivot.add_child(model)
+	knife_mesh.visible = model == null
+	if model:
+		model.scale = weapon.visual_scale * HELD_MODEL_SCALE
 	knife_mesh.scale = weapon.visual_scale
 	knife_mesh.position.z = -0.3 * weapon.visual_scale.z
 	var mat := StandardMaterial3D.new()

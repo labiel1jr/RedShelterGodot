@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_npb4k")
+asset_id = &"wpn_knife"
 display_name = "Faca militar"
 level = 4
 combo_damage = PackedInt32Array(70, 84, 126)

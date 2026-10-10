@@ -2160,7 +2160,7 @@
       "category": "weapons",
       "name": "Faca improvisada",
       "priority": "P2",
-      "status": "a_fazer",
+      "status": "em_revisao",
       "size_class": "pequeno",
       "size_m": [
         0.08,

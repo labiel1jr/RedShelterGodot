@@ -21,6 +21,8 @@ extends Resource
 @export var max_durability := 100
 
 @export_group("Visual")
+## Modelo do catálogo de assets (AssetLibrary); sem ele, a lâmina provisória.
+@export var asset_id := &""
 ## Tamanho da lâmina na mão (multiplica o modelo da faca).
 @export var visual_scale := Vector3.ONE
 @export var blade_color := Color(0.75, 0.78, 0.8)

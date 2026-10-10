@@ -4,5 +4,6 @@
 
 [resource]
 script = ExtResource("1_dogwo")
+asset_id = &"wpn_knife"
 display_name = "Faca improvisada"
 combo_damage = PackedInt32Array(25, 30, 45)
