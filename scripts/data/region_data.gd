@@ -31,6 +31,15 @@ extends Resource
 ## spawn_weight de cada ZombieData.
 @export var zombie_weights := PackedFloat32Array()
 
+@export_group("Luz e atmosfera (seção 65)")
+## Céu e névoa (a névoa esconde o fim da pista carregada).
+@export var sky_color := Color(0.42, 0.4, 0.42)
+## Luz ambiente: no cel-shading é a cor da sombra.
+@export var ambient_color := Color(0.6, 0.58, 0.6)
+@export var ambient_energy := 0.6
+@export var sun_color := Color(1, 1, 1)
+@export var sun_energy := 1.0
+
 @export_group("Obstáculos próprios (vazio = os padrões)")
 @export var wall_scene: PackedScene
 @export var low_scene: PackedScene
@@ -45,3 +54,14 @@ extends Resource
 ## Chance de cada chunk do meio da rota ter um evento.
 @export_range(0.0, 1.0) var event_chance := 0.25
 @export var events: Array[EventData] = []
+
+
+## Aplica céu, névoa, sombra e sol da região na cena (corrida e defesa).
+func apply_atmosphere(environment: Environment, sun: DirectionalLight3D) -> void:
+	environment.background_color = sky_color
+	environment.fog_light_color = sky_color
+	environment.ambient_light_color = ambient_color
+	environment.ambient_light_energy = ambient_energy
+	if sun:
+		sun.light_color = sun_color
+		sun.light_energy = sun_energy

@@ -47,3 +47,7 @@ high_scene = ExtResource("14_tbiih")
 pois = Array[ExtResource("1_83rl0")]([ExtResource("16_b72nb"), ExtResource("17_enhaa"), ExtResource("18_o5wg5"), ExtResource("19_cgge5")])
 poi_chance = 0.07
 events = Array[ExtResource("9_drcon")]([ExtResource("10_5emqc"), ExtResource("11_8ffxf"), ExtResource("12_vy5nd"), ExtResource("13_evn0y"), ExtResource("13_evn0y")])
+sky_color = Color(0.64, 0.68, 0.74, 1)
+ambient_color = Color(0.4, 0.5, 0.72, 1)
+sun_color = Color(0.95, 0.95, 0.9, 1)
+sun_energy = 0.95

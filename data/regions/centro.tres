@@ -45,3 +45,7 @@ pois = Array[ExtResource("1_37eua")]([ExtResource("15_xtnm0"), ExtResource("16_e
 poi_chance = 0.07
 event_chance = 0.3
 events = Array[ExtResource("9_nxwv3")]([ExtResource("10_y587a"), ExtResource("11_kpbfc"), ExtResource("12_gqx0m"), ExtResource("13_vw8dx"), ExtResource("14_i6iqm")])
+sky_color = Color(0.5, 0.54, 0.62, 1)
+ambient_color = Color(0.32, 0.38, 0.58, 1)
+sun_color = Color(0.85, 0.9, 1, 1)
+sun_energy = 0.9

@@ -66,6 +66,8 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	var gm := GameManager
 	var rules := gm.SHELTER
+	# Seção 65: a defesa acontece na rua do abrigo, com a luz do Bairro.
+	gm.WORLD.region(&"bairro").apply_atmosphere($WorldEnvironment.environment, $DirectionalLight3D)
 	_rng.seed = gm.day * 7919 + gm.next_attack_day
 
 	# A personagem não corre: fica no pátio, atrás do portão.

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- Molde da arte-mestra (1024 x 1024). Camadas esperadas: FUNDO, FRENTE, MONOCROMATICO. Apague as guias antes de exportar. -->
+  <g id="FUNDO"><rect width="1024" height="1024" fill="#16141F"/></g>
+  <g id="FRENTE"/>
+  <g id="MONOCROMATICO" visibility="hidden"/>
+  <g id="GUIAS">
+    <circle cx="512" cy="512" r="313" fill="none" stroke="#D2382F" stroke-width="5"/>
+    <rect x="64" y="64" width="896" height="896" rx="200" fill="none" stroke="#9AA0A6" stroke-width="3" stroke-dasharray="10 10"/>
+    <text x="512" y="80" font-family="sans-serif" font-size="30" fill="#ECE8DF" text-anchor="middle">1024 px · zona segura (círculo vermelho = 61% da largura)</text>
+    <text x="512" y="990" font-family="sans-serif" font-size="26" fill="#9AA0A6" text-anchor="middle">teste: o desenho precisa ser reconhecível reduzido a 48 px</text>
+  </g>
+</svg>

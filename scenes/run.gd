@@ -85,6 +85,8 @@ func _ready() -> void:
 
 	# Região e distância escolhidas na preparação (seções 25, 28 e 48).
 	chunk_streamer.region = GameManager.current_region()
+	# Seção 65: céu, névoa e cor da sombra da região.
+	chunk_streamer.region.apply_atmosphere($WorldEnvironment.environment, $DirectionalLight3D)
 	target_distance = GameManager.next_distance
 
 	# Seção 23 do GDD: a seed determina chunks, obstáculos, loot, zumbis e

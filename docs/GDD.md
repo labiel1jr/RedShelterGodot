@@ -1,6 +1,6 @@
 # RED SHELTER
 
-## Game Design Document — GDD 0.9.4
+## Game Design Document — GDD 0.9.5
 
 **Gênero:** Survival Runner + Shooter + Scavenging + Shelter Management
 **Plataformas:** Android / iOS
@@ -23,6 +23,7 @@
 
 | Versão | Mudanças |
 | ------ | -------- |
+| 0.9.5 | Fase 15 / A1 ✅: autoload `ToonStyle` (difuso e especular toon, contorno por casco invertido em `art/shaders/outline.gdshader`: ator 0,045 m, obstáculo 0,03 m, cenário 0,018 m sumindo entre 30 e 45 m) e luz/céu por região em `RegionData`. Projeto dos ícones em `art/icons/`. |
 | 0.9.4 | Seção 66 nova: game juice — princípios, efeitos por momento do jogo (J1–J3), ferramentas `Juice` e plano da Fase 16. Roadmap (58) com a Fase 16. |
 | 0.9.3 | Ícone do jogo planejado (Android adaptativo e Windows) na seção 65; etapa A0 na Fase 15. |
 | 0.9.2 | Combustível roxo aprovado e aplicado no loot do jogo; personagem adiada. Seção 65 atualizada. |
@@ -2757,7 +2758,7 @@ A névoa esconde o fim do streaming de chunks (120 m) e dá profundidade sem cus
 ## Plano de implementação (Fase 15)
 
 * **A0 — Ícone:** arte do ícone (Android e Windows) e configuração nos presets.
-* **A1 — Base técnica:** shader toon, contorno, textura-paleta, névoa e céu por região, aplicados sobre as primitivas atuais.
+* ✅ **A1 — Base técnica:** feito com o autoload `ToonStyle` (contorno por classe: ator 0,045 m, obstáculo 0,03 m, cenário 0,018 m com fade 30–45 m) e céu, ambiente e sol por região (`RegionData.apply_atmosphere`); a textura-paleta fica para A2. Plano original: shader toon, contorno, textura-paleta, névoa e céu por região, aplicados sobre as primitivas atuais.
 * **A2 — Kit P1:** os assets P1 do catálogo (obstáculos, loot, kit de rua, postes, árvores, carros, fachadas, estrutura do abrigo).
 * **A3 — Personagem:** escolha do conceito e do nome (proposta: Entregadora, mochila-caixa vermelha), modelo e animações.
 * **A4 — Zumbis:** os 5 tipos com o mesmo esqueleto.
