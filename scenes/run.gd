@@ -92,6 +92,11 @@ func _ready() -> void:
 	# Seção 23 do GDD: a seed determina chunks, obstáculos, loot, zumbis e
 	# eventos.
 	expedition_seed = GameManager.take_expedition_seed()
+	# Seção 66 (J3): papéis, fumaça, lâmpada piscando e às vezes chuva.
+	var ambient := AmbientFx.new()
+	ambient.name = "AmbientFx"
+	ambient.setup(player, expedition_seed, $DirectionalLight3D)
+	add_child(ambient)
 	# Seção 47: voltando ao local da morte, a mesma seed refaz a mesma rota e
 	# a mochila espera no ponto exato.
 	var gm_bag: Dictionary = GameManager.death_bag
