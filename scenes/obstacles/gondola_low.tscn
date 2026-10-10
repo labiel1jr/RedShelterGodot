@@ -32,6 +32,7 @@ size = Vector3(0.3, 0.25, 0.25)
 [node name="GondolaLow" type="Area3D" unique_id=581079189]
 script = ExtResource("1_hgn1n")
 kind = &"low"
+asset_id = &"obs_low_gondola"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2069033469]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)

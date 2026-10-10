@@ -19,6 +19,8 @@ static var _cache := {}
 
 
 static func merge_static(root: Node3D, key: String) -> void:
+	# Modelos dos artistas entram antes, para serem mesclados também.
+	AssetLibrary.resolve_slots(root)
 	var meshes := _collect(root)
 	if meshes.is_empty():
 		return

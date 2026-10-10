@@ -25,6 +25,7 @@ size = Vector3(0.6, 0.5, 0.5)
 
 [node name="CartPile" type="Area3D" unique_id=2094358865]
 script = ExtResource("1_g3cdl")
+asset_id = &"obs_wall_cart_pile"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=696151756]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)

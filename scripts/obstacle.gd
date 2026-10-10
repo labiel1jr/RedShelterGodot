@@ -6,10 +6,13 @@ extends Area3D
 @export var damage := 15
 ## wall / low / high — usado pelas dicas do tutorial.
 @export var kind := &"wall"
+## Modelo do catálogo de assets que substitui a forma provisória (AssetLibrary).
+@export var asset_id := &""
 
 
 func _ready() -> void:
 	add_to_group("obstacle")
+	AssetLibrary.apply(self, asset_id)
 	body_entered.connect(_on_body_entered)
 
 

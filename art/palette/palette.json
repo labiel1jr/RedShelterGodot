@@ -1,0 +1,93 @@
+{
+  "documento": "Textura-paleta compartilhada (seção 65 do GDD)",
+  "arquivo": "art/palette/palette_256.png",
+  "grade": "8 linhas x 8 colunas, células de 32 px; metade de cima chapada, linha de detalhe #16141F em y=24 de cada célula",
+  "uso": "mapear UV de cada face no centro da metade de cima da célula da cor; usar a linha de detalhe para tábuas e rachaduras",
+  "linhas": {
+    "bairro": [
+      "#B5623F",
+      "#D08A55",
+      "#C9A66B",
+      "#E3D3B0",
+      "#7E8F5A",
+      "#5F7FA0",
+      "#8A5A3B",
+      "#6B6470"
+    ],
+    "mercado": [
+      "#3F6E9E",
+      "#6E97C2",
+      "#D9B54A",
+      "#E8D79A",
+      "#A34E3C",
+      "#7AA387",
+      "#B8B2A6",
+      "#5C5A66"
+    ],
+    "centro": [
+      "#5E6B85",
+      "#8593AD",
+      "#AEB7C7",
+      "#D6DAE0",
+      "#4D7F8C",
+      "#B88A4E",
+      "#7D6E8F",
+      "#3E4458"
+    ],
+    "hospital": [
+      "#6FB3A6",
+      "#A7D6CB",
+      "#E6E9E2",
+      "#C9CEC4",
+      "#4E7D73",
+      "#7E98B8",
+      "#B5A98F",
+      "#4A5A57"
+    ],
+    "industrial": [
+      "#9A5A35",
+      "#C27C47",
+      "#7E7F82",
+      "#A8A9AB",
+      "#5E6B47",
+      "#C9A043",
+      "#4F4A4F",
+      "#3A3438"
+    ],
+    "abrigo": [
+      "#8A5A3B",
+      "#B07D52",
+      "#5A3826",
+      "#A8A08A",
+      "#6E7F5C",
+      "#D2382F",
+      "#F2CC4D",
+      "#3B3A40"
+    ],
+    "comum": [
+      "#2B2E38",
+      "#45495A",
+      "#6B6F80",
+      "#9A9EAA",
+      "#C8CAD0",
+      "#ECE8DF",
+      "#16141F",
+      "#5E7AA8"
+    ],
+    "loot": [
+      "#F28C33",
+      "#4D99FF",
+      "#B3B3B8",
+      "#F2CC4D",
+      "#4DE6CC",
+      "#F7F7FF",
+      "#9B5DE5",
+      "#D2382F"
+    ]
+  },
+  "regras": [
+    "vermelho #D2382F só no abrigo e em perigo",
+    "linha 'loot' só para loot",
+    "sombra e luz vêm do shader; não pintar sombra"
+  ]
+}

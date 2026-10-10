@@ -23,6 +23,7 @@ size = Vector3(0.05, 1.2, 0.05)
 [node name="PriceSignHigh" type="Area3D" unique_id=174274107]
 script = ExtResource("1_siyay")
 kind = &"high"
+asset_id = &"obs_high_price_sign"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1543184051]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)

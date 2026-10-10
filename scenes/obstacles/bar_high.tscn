@@ -23,6 +23,7 @@ size = Vector3(0.12, 1.3, 0.12)
 [node name="BarHigh" type="Area3D" unique_id=1243324878]
 script = ExtResource("1_1hla1")
 kind = &"high"
+asset_id = &"obs_high_bar"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=985458298]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
