@@ -348,31 +348,37 @@ outline_size = 16
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.033918, 0.7, -18.87454)
 material_override = ExtResource("8_cbngw")
 mesh = SubResource("CylinderMesh_o7iln")
+metadata/asset_id = &"prop_barrels_rust"
 
 [node name="Barrel2" type="MeshInstance3D" parent="." unique_id=1540600431]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.863489, 0.7, -10.924065)
 material_override = ExtResource("8_cbngw")
 mesh = SubResource("CylinderMesh_bqr7l")
+metadata/asset_id = &"prop_barrels_blue"
 
 [node name="Barrel3" type="MeshInstance3D" parent="." unique_id=1747721548]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.9919987, 0.7, -6.873415)
 material_override = ExtResource("8_cbngw")
 mesh = SubResource("CylinderMesh_g0h6i")
+metadata/asset_id = &"prop_barrels_hazard"
 
 [node name="Barrel4" type="MeshInstance3D" parent="." unique_id=135901294]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.1131005, 0.7, -9.153773)
 material_override = ExtResource("8_cbngw")
 mesh = SubResource("CylinderMesh_cb63a")
+metadata/asset_id = &"prop_barrels_green"
 
 [node name="Barrel5" type="MeshInstance3D" parent="." unique_id=1821566745]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3369093, 0.7, -24.776743)
 material_override = ExtResource("8_cbngw")
 mesh = SubResource("CylinderMesh_1utsh")
+metadata/asset_id = &"prop_barrels_red"
 
 [node name="Barrel6" type="MeshInstance3D" parent="." unique_id=1612975866]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5669737, 0.7, -22.555399)
 material_override = ExtResource("8_cbngw")
 mesh = SubResource("CylinderMesh_gbsn6")
+metadata/asset_id = &"prop_barrels_rust"
 
 [node name="BuildingsLeft" type="Node3D" parent="." unique_id=975359027]
 

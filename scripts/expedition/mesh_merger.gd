@@ -70,14 +70,20 @@ static func _build(root: Node3D, meshes: Array[MeshInstance3D]) -> Array:
 	var group_info := {}
 	for mi in meshes:
 		var shadow := not _is_decor(mi.name)
-		var material: Material = mi.material_override
-		var group_key := [material.get_instance_id() if material else 0, shadow]
-		if not groups.has(group_key):
-			var st := SurfaceTool.new()
-			st.begin(Mesh.PRIMITIVE_TRIANGLES)
-			groups[group_key] = st
-			group_info[group_key] = [material, shadow]
 		for surface in mi.mesh.get_surface_count():
+			# Caixas provisórias usam material_override; modelos dos artistas
+			# (.glb) trazem o material na própria superfície.
+			var material: Material = mi.material_override
+			if not material:
+				material = mi.get_surface_override_material(surface)
+			if not material:
+				material = mi.mesh.surface_get_material(surface)
+			var group_key := [material.get_instance_id() if material else 0, shadow]
+			if not groups.has(group_key):
+				var st := SurfaceTool.new()
+				st.begin(Mesh.PRIMITIVE_TRIANGLES)
+				groups[group_key] = st
+				group_info[group_key] = [material, shadow]
 			groups[group_key].append_from(mi.mesh, surface, _relative_transform(root, mi))
 
 	var result := []

@@ -880,7 +880,7 @@
       "category": "street_props",
       "name": "Tambores",
       "priority": "P2",
-      "status": "a_fazer",
+      "status": "em_revisao",
       "size_class": "medio",
       "size_m": [
         0.6,

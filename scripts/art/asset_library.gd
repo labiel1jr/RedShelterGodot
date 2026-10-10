@@ -10,6 +10,7 @@ extends RefCounted
 ## - obstáculos e loot: pelo `asset_id` do próprio script (obstacle.gd,
 ##   loot_pickup.gd);
 ## - cenário dos chunks e do abrigo: qualquer nó com o metadado `asset_id`
+##   (variantes: `<id>_<variante>`, ex.: prop_barrels_rust)
 ##   (resolve_slots, chamado pelo MeshMerger antes de mesclar).
 
 const MODELS_DIR := "res://art/models/"
@@ -51,12 +52,32 @@ static func apply(root: Node3D, id: StringName) -> Node3D:
 	if not model:
 		return null
 	root.set_meta(&"asset_applied", true)
+	model.name = "Model"
+	if root is MeshInstance3D and root.mesh:
+		# A própria forma provisória é o lugar (tambor, caixa do cenário): o
+		# modelo fica com a base no chão dela e a mesma altura.
+		var box: AABB = root.mesh.get_aabb()
+		root.mesh = null
+		root.material_override = null
+		model.position = Vector3(box.get_center().x, box.position.y, box.get_center().z)
+		var height := _height(model)
+		if height > 0.0:
+			model.scale = Vector3.ONE * (box.size.y / height)
 	for child in root.get_children():
 		if child is MeshInstance3D:
 			child.visible = false
-	model.name = "Model"
 	root.add_child(model)
 	return model
+
+
+static func _height(node: Node) -> float:
+	var top := -INF
+	var bottom := INF
+	for mi in node.find_children("*", "MeshInstance3D", true, false):
+		var box: AABB = mi.transform * mi.mesh.get_aabb()
+		top = maxf(top, box.end.y)
+		bottom = minf(bottom, box.position.y)
+	return top - bottom if top > bottom else 0.0
 
 
 ## Troca todos os nós com o metadado `asset_id` dentro de `root`.

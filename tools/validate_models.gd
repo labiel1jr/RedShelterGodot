@@ -25,6 +25,11 @@ func _initialize() -> void:
 		var problems: Array[String] = []
 		var warnings: Array[String] = []
 		var asset: Dictionary = assets.get(id, {})
+		# Variante: <id>_<variante> (ex.: prop_barrels_rust).
+		var base_id := String(id)
+		while asset.is_empty() and base_id.contains("_"):
+			base_id = base_id.substr(0, base_id.rfind("_"))
+			asset = assets.get(StringName(base_id), {})
 		var path := AssetLibrary.model_path(id)
 		if asset.is_empty():
 			problems.append("id fora do catálogo (nome do arquivo = id do asset)")
