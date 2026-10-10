@@ -54,6 +54,22 @@ janela):
 godot --headless --path . --import
 ```
 
+### APK para Android
+
+O APK **não fica no repositório** (a pasta `build/` é ignorada). As versões
+de teste ficam na pasta compartilhada do Google Drive:
+[Red Shelter — APKs](https://drive.google.com/drive/folders/1o9HXFu672Yu0FbtO2_eB1cxgtaMoTkPS?usp=drive_link).
+
+Para gerar um novo (JDK 17, Android SDK e templates de exportação do Godot
+configurados no editor):
+
+```bash
+godot --headless --path . --export-debug "Android" build/red_shelter.apk
+```
+
+Depois copie `build/red_shelter.apk` para a pasta do Drive. No celular,
+abra o arquivo e permita a instalação de fontes desconhecidas.
+
 ## Como jogar
 
 Cada expedição é um dia:
