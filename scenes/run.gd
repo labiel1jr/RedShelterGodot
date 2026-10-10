@@ -111,6 +111,7 @@ func _ready() -> void:
 	player.add_child(vehicle)
 	vehicle.mounted_changed.connect(_on_vehicle_changed)
 	chunk_streamer.chunk_loaded.connect(_place_vehicle)
+	chunk_streamer.chunk_loaded.connect(ChunkDressing.dress)
 	powerups = PlayerPowerUps.new()
 	powerups.name = "PowerUps"
 	player.add_child(powerups)

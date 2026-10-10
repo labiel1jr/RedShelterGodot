@@ -460,31 +460,43 @@ mesh = SubResource("BoxMesh_nfcju")
 transform = Transform3D(0.34199932, 0, 0.9397002, 0, 1, 0, -0.9397002, 0, 0.34199932, -4.806125, 0.40514365, -17.743895)
 material_override = ExtResource("17_quknv")
 mesh = SubResource("BoxMesh_8e5vv")
+metadata/asset_id = &"prop_debris_small_balde"
+metadata/asset_fit = false
 
 [node name="Debris2" type="MeshInstance3D" parent="Trash" unique_id=1364000029]
 transform = Transform3D(-0.29835576, 0, 0.9544547, 0, 1, 0, -0.9544547, 0, -0.29835576, 5.2473106, 0.34976926, -4.8775387)
 material_override = ExtResource("17_quknv")
 mesh = SubResource("BoxMesh_oflcr")
+metadata/asset_id = &"prop_debris_small_garrafa"
+metadata/asset_fit = false
 
 [node name="Debris3" type="MeshInstance3D" parent="Trash" unique_id=612730091]
 transform = Transform3D(-0.04809525, 0, -0.9988428, 0, 1, 0, 0.9988428, 0, -0.04809525, -5.17982, 0.37900844, -37.884735)
 material_override = ExtResource("17_quknv")
 mesh = SubResource("BoxMesh_ivf0e")
+metadata/asset_id = &"prop_debris_small_lata"
+metadata/asset_fit = false
 
 [node name="Debris4" type="MeshInstance3D" parent="Trash" unique_id=1674606150]
 transform = Transform3D(-0.5919441, 0, 0.805979, 0, 1, 0, -0.805979, 0, -0.5919441, -4.9646173, 0.30496973, -15.101437)
 material_override = ExtResource("17_quknv")
 mesh = SubResource("BoxMesh_gjvcg")
+metadata/asset_id = &"prop_debris_small_laje"
+metadata/asset_fit = false
 
 [node name="Debris5" type="MeshInstance3D" parent="Trash" unique_id=2050982638]
 transform = Transform3D(-0.53336775, 0, 0.8458835, 0, 1, 0, -0.8458835, 0, -0.53336775, -4.2543354, 0.31510514, -15.0226)
 material_override = ExtResource("17_quknv")
 mesh = SubResource("BoxMesh_0e362")
+metadata/asset_id = &"prop_gas_cylinder"
+metadata/asset_fit = false
 
 [node name="Debris6" type="MeshInstance3D" parent="Trash" unique_id=1967882548]
 transform = Transform3D(0.12117747, 0, 0.99263084, 0, 1, 0, -0.99263084, 0, 0.12117747, -4.757416, 0.32969683, -25.453262)
 material_override = ExtResource("17_quknv")
 mesh = SubResource("BoxMesh_1kbie")
+metadata/asset_id = &"prop_debris_small_tijolos"
+metadata/asset_fit = false
 
 [node name="Rows" type="Node3D" parent="." unique_id=1892405860]
 

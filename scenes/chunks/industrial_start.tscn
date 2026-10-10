@@ -489,28 +489,40 @@ outline_size = 16
 transform = Transform3D(-0.7264307, 0, -0.6872397, 0, 1, 0, 0.6872397, 0, -0.7264307, 5.3543444, 0.35552382, -28.900743)
 material_override = ExtResource("13_toe3x")
 mesh = SubResource("BoxMesh_c0ok6")
+metadata/asset_id = &"prop_debris_small_laje"
+metadata/asset_fit = false
 
 [node name="Debris2" type="MeshInstance3D" parent="Trash" unique_id=932496943]
 transform = Transform3D(0.99094135, 0, -0.13429552, 0, 1, 0, 0.13429552, 0, 0.99094135, -5.4895782, 0.34104756, -11.909114)
 material_override = ExtResource("13_toe3x")
 mesh = SubResource("BoxMesh_tj6f0")
+metadata/asset_id = &"prop_gas_cylinder"
+metadata/asset_fit = false
 
 [node name="Debris3" type="MeshInstance3D" parent="Trash" unique_id=953391535]
 transform = Transform3D(0.88407683, 0, 0.46734157, 0, 1, 0, -0.46734157, 0, 0.88407683, -5.6041446, 0.42995137, -2.4461834)
 material_override = ExtResource("13_toe3x")
 mesh = SubResource("BoxMesh_wrhjb")
+metadata/asset_id = &"prop_debris_small_tijolos"
+metadata/asset_fit = false
 
 [node name="Debris4" type="MeshInstance3D" parent="Trash" unique_id=1800186456]
 transform = Transform3D(-0.09107544, 0, 0.995844, 0, 1, 0, -0.995844, 0, -0.09107544, 5.107625, 0.29097664, -2.2989302)
 material_override = ExtResource("13_toe3x")
 mesh = SubResource("BoxMesh_ojjpm")
+metadata/asset_id = &"prop_debris_small_balde"
+metadata/asset_fit = false
 
 [node name="Debris5" type="MeshInstance3D" parent="Trash" unique_id=1240056665]
 transform = Transform3D(-0.33680993, 0, -0.94157267, 0, 1, 0, 0.94157267, 0, -0.33680993, -4.5310464, 0.42308044, -7.8338084)
 material_override = ExtResource("13_toe3x")
 mesh = SubResource("BoxMesh_nbxg3")
+metadata/asset_id = &"prop_debris_small_garrafa"
+metadata/asset_fit = false
 
 [node name="Debris6" type="MeshInstance3D" parent="Trash" unique_id=1972324245]
 transform = Transform3D(-0.46135363, 0, -0.8872163, 0, 1, 0, 0.8872163, 0, -0.46135363, 5.5037174, 0.3990283, -20.468063)
 material_override = ExtResource("13_toe3x")
 mesh = SubResource("BoxMesh_wj1oe")
+metadata/asset_id = &"prop_debris_small_lata"
+metadata/asset_fit = false

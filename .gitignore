@@ -24,3 +24,9 @@ desktop.ini
 
 # Modelos só locais (sem licença liberada) — não versionar
 /art/models_local/
+
+# Fontes pesadas ou pendentes (carros com marca, 4K PBR) — só locais
+/art/source/implantacao/CarroQuebrado/
+/art/source/implantacao/JeepQuebrado/
+/art/source/implantacao/AguaEComida/textures/
+/art/ModelosImplantacao/

@@ -1,8 +1,8 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "project": "Red Shelter",
   "document": "Catálogo de assets de cenário e objetos (sem personagens e sem zumbis)",
-  "updated": "2026-10-08",
+  "updated": "2026-10-10",
   "gdd": "docs/GDD.md",
   "how_to_use": [
     "Cada item de 'assets' é um modelo (ou kit de modelos) a criar. O 'id' é o nome do arquivo entregue.",
@@ -436,7 +436,7 @@
       "category": "loot",
       "name": "Comida",
       "priority": "P1",
-      "status": "a_fazer",
+      "status": "em_revisao",
       "size_class": "pequeno",
       "size_m": [
         0.6,
@@ -454,7 +454,7 @@
       "category": "loot",
       "name": "Água",
       "priority": "P1",
-      "status": "a_fazer",
+      "status": "em_revisao",
       "size_class": "pequeno",
       "size_m": [
         0.6,
@@ -472,7 +472,7 @@
       "category": "loot",
       "name": "Sucata",
       "priority": "P1",
-      "status": "a_fazer",
+      "status": "em_revisao",
       "size_class": "pequeno",
       "size_m": [
         0.6,
@@ -526,7 +526,7 @@
       "category": "loot",
       "name": "Medicamentos",
       "priority": "P1",
-      "status": "a_fazer",
+      "status": "em_revisao",
       "size_class": "pequeno",
       "size_m": [
         0.6,
@@ -763,7 +763,7 @@
       "category": "street_props",
       "name": "Poste de luz",
       "priority": "P1",
-      "status": "a_fazer",
+      "status": "em_revisao",
       "size_class": "medio",
       "size_m": [
         0.4,
@@ -780,7 +780,7 @@
       "category": "street_props",
       "name": "Lixeira e caçamba",
       "priority": "P1",
-      "status": "a_fazer",
+      "status": "em_revisao",
       "size_class": "medio",
       "size_m": [
         1.8,
@@ -837,7 +837,7 @@
       "category": "street_props",
       "name": "Semáforo e placas de trânsito",
       "priority": "P2",
-      "status": "a_fazer",
+      "status": "em_revisao",
       "size_class": "medio",
       "size_m": [
         0.4,
@@ -859,7 +859,7 @@
       "category": "street_props",
       "name": "Caixotes e paletes",
       "priority": "P1",
-      "status": "a_fazer",
+      "status": "em_revisao",
       "size_class": "medio",
       "size_m": [
         1.2,
@@ -989,7 +989,7 @@
       "category": "street_props",
       "name": "Detritos pequenos",
       "priority": "P1",
-      "status": "a_fazer",
+      "status": "em_revisao",
       "size_class": "pequeno",
       "size_m": [
         0.5,
@@ -1017,6 +1017,81 @@
       "regions": [
         "centro",
         "mercado"
+      ]
+    },
+    {
+      "id": "prop_rubble_pile",
+      "category": "street_props",
+      "name": "Pilha de entulho grande",
+      "priority": "P2",
+      "status": "em_revisao",
+      "size_class": "grande",
+      "size_m": [
+        5.2,
+        0.9,
+        5.2
+      ],
+      "description": "Monte de entulho de beira de calçada (enfeite, sem colisão).",
+      "regions": [
+        "todas"
+      ]
+    },
+    {
+      "id": "prop_ruined_oven",
+      "category": "street_props",
+      "name": "Forno em ruínas",
+      "priority": "P3",
+      "status": "em_revisao",
+      "size_class": "grande",
+      "size_m": [
+        2.9,
+        2.2,
+        3.1
+      ],
+      "description": "Forno de tijolos desmoronado com entulho (enfeite).",
+      "regions": [
+        "bairro",
+        "industrial"
+      ]
+    },
+    {
+      "id": "prop_gas_cylinder",
+      "category": "street_props",
+      "name": "Botijão de gás",
+      "priority": "P2",
+      "status": "em_revisao",
+      "size_class": "pequeno",
+      "size_m": [
+        0.25,
+        0.6,
+        0.25
+      ],
+      "description": "Botijão P13 caído ou de pé.",
+      "regions": [
+        "todas"
+      ]
+    },
+    {
+      "id": "prop_logs",
+      "category": "nature",
+      "name": "Troncos cortados",
+      "priority": "P3",
+      "status": "em_revisao",
+      "size_class": "medio",
+      "size_m": [
+        1.5,
+        0.45,
+        0.45
+      ],
+      "description": "Troncos soltos na calçada.",
+      "variants": [
+        "1",
+        "2",
+        "3"
+      ],
+      "regions": [
+        "bairro",
+        "industrial"
       ]
     },
     {
@@ -1375,7 +1450,7 @@
       "category": "street_kit",
       "name": "Muros e cercas",
       "priority": "P2",
-      "status": "a_fazer",
+      "status": "em_revisao",
       "size_class": "kit_modulo",
       "size_m": [
         4.0,
@@ -2530,6 +2605,11 @@
       "date": "2026-10-09",
       "version": "1.2",
       "change": "Categoria 'branding' com o ícone do jogo: arte-mestra, ícone adaptativo Android (frente, fundo, monocromático, 192 px), ícone Windows (.ico + 512 px) e imagens de loja."
+    },
+    {
+      "date": "2026-10-10",
+      "version": "1.3",
+      "changes": "Primeiras entregas em revisão (faca, tambores, loot de comida/água/sucata/medicamentos, lixeiras, postes, caixote, detritos, placas, cerca); novos: prop_rubble_pile, prop_ruined_oven, prop_gas_cylinder, prop_logs."
     }
   ]
 }

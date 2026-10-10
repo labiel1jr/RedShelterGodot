@@ -314,31 +314,43 @@ mesh = SubResource("BoxMesh_bthsk")
 transform = Transform3D(-0.9315035, 0, -0.3637324, 0, 1, 0, 0.3637324, 0, -0.9315035, -4.4186583, 0.43689674, -25.845667)
 material_override = ExtResource("9_ykt8e")
 mesh = SubResource("BoxMesh_tk57p")
+metadata/asset_id = &"prop_debris_small_tijolos"
+metadata/asset_fit = false
 
 [node name="Debris2" type="MeshInstance3D" parent="Trash" unique_id=2016647109]
 transform = Transform3D(0.70264673, 0, -0.71153885, 0, 1, 0, 0.71153885, 0, 0.70264673, -6.1055565, 0.42499712, -25.203094)
 material_override = ExtResource("9_ykt8e")
 mesh = SubResource("BoxMesh_4v2gy")
+metadata/asset_id = &"prop_debris_small_balde"
+metadata/asset_fit = false
 
 [node name="Debris3" type="MeshInstance3D" parent="Trash" unique_id=293716327]
 transform = Transform3D(-0.782076, 0, -0.623183, 0, 1, 0, 0.623183, 0, -0.782076, -5.096805, 0.34908074, -7.4617963)
 material_override = ExtResource("9_ykt8e")
 mesh = SubResource("BoxMesh_u8fhy")
+metadata/asset_id = &"prop_debris_small_garrafa"
+metadata/asset_fit = false
 
 [node name="Debris4" type="MeshInstance3D" parent="Trash" unique_id=31780745]
 transform = Transform3D(0.83488697, 0, -0.5504214, 0, 1, 0, 0.5504214, 0, 0.83488697, 4.32144, 0.32571754, -31.089626)
 material_override = ExtResource("9_ykt8e")
 mesh = SubResource("BoxMesh_1nfq3")
+metadata/asset_id = &"prop_debris_small_lata"
+metadata/asset_fit = false
 
 [node name="Debris5" type="MeshInstance3D" parent="Trash" unique_id=767852641]
 transform = Transform3D(-0.8626664, 0, 0.5057733, 0, 1, 0, -0.5057733, 0, -0.8626664, 4.293009, 0.3242733, -24.418306)
 material_override = ExtResource("9_ykt8e")
 mesh = SubResource("BoxMesh_rd13v")
+metadata/asset_id = &"prop_debris_small_laje"
+metadata/asset_fit = false
 
 [node name="Debris6" type="MeshInstance3D" parent="Trash" unique_id=374991868]
 transform = Transform3D(-0.5580908, 0, 0.8297799, 0, 1, 0, -0.8297799, 0, -0.5580908, 5.922567, 0.29225078, -23.474123)
 material_override = ExtResource("9_ykt8e")
 mesh = SubResource("BoxMesh_xk5vk")
+metadata/asset_id = &"prop_gas_cylinder"
+metadata/asset_fit = false
 
 [node name="Rows" type="Node3D" parent="." unique_id=497060227]
 

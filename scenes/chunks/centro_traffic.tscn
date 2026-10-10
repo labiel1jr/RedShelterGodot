@@ -675,41 +675,57 @@ mesh = SubResource("BoxMesh_uujy5")
 transform = Transform3D(0.07854804, 0, -0.99691033, 0, 1, 0, 0.99691033, 0, 0.07854804, -5.556395, 0.43756473, -13.50807)
 material_override = ExtResource("15_u8rxc")
 mesh = SubResource("BoxMesh_fpjj7")
+metadata/asset_id = &"prop_debris_small_laje"
+metadata/asset_fit = false
 
 [node name="Debris2" type="MeshInstance3D" parent="Trash" unique_id=1865724301]
 transform = Transform3D(0.12090785, 0, -0.99266374, 0, 1, 0, 0.99266374, 0, 0.12090785, -5.854074, 0.37620625, -4.0075912)
 material_override = ExtResource("15_u8rxc")
 mesh = SubResource("BoxMesh_jd12v")
+metadata/asset_id = &"prop_gas_cylinder"
+metadata/asset_fit = false
 
 [node name="Debris3" type="MeshInstance3D" parent="Trash" unique_id=1709478718]
 transform = Transform3D(0.8574777, 0, 0.5145211, 0, 1, 0, -0.5145211, 0, 0.8574777, -5.4407845, 0.41885117, -36.63939)
 material_override = ExtResource("15_u8rxc")
 mesh = SubResource("BoxMesh_21yi3")
+metadata/asset_id = &"prop_debris_small_tijolos"
+metadata/asset_fit = false
 
 [node name="Debris4" type="MeshInstance3D" parent="Trash" unique_id=442346964]
 transform = Transform3D(0.49712825, 0, 0.8676771, 0, 1, 0, -0.8676771, 0, 0.49712825, 4.863688, 0.34559387, -17.825197)
 material_override = ExtResource("15_u8rxc")
 mesh = SubResource("BoxMesh_30d4t")
+metadata/asset_id = &"prop_debris_small_balde"
+metadata/asset_fit = false
 
 [node name="Debris5" type="MeshInstance3D" parent="Trash" unique_id=1339660625]
 transform = Transform3D(0.40094203, 0, 0.9161034, 0, 1, 0, -0.9161034, 0, 0.40094203, 5.0547705, 0.332096, -35.09928)
 material_override = ExtResource("15_u8rxc")
 mesh = SubResource("BoxMesh_5jfif")
+metadata/asset_id = &"prop_debris_small_garrafa"
+metadata/asset_fit = false
 
 [node name="Debris6" type="MeshInstance3D" parent="Trash" unique_id=713693814]
 transform = Transform3D(0.5914604, 0, 0.8063341, 0, 1, 0, -0.8063341, 0, 0.5914604, 5.106023, 0.31715885, -22.808073)
 material_override = ExtResource("15_u8rxc")
 mesh = SubResource("BoxMesh_j7e2g")
+metadata/asset_id = &"prop_debris_small_lata"
+metadata/asset_fit = false
 
 [node name="Debris7" type="MeshInstance3D" parent="Trash" unique_id=628138371]
 transform = Transform3D(-0.23335613, 0, 0.97239137, 0, 1, 0, -0.97239137, 0, -0.23335613, -4.322456, 0.32830974, -33.209324)
 material_override = ExtResource("15_u8rxc")
 mesh = SubResource("BoxMesh_qcxb4")
+metadata/asset_id = &"prop_debris_small_laje"
+metadata/asset_fit = false
 
 [node name="Debris8" type="MeshInstance3D" parent="Trash" unique_id=1717064671]
 transform = Transform3D(0.7691726, 0, -0.6390411, 0, 1, 0, 0.6390411, 0, 0.7691726, 6.2607574, 0.4285434, -20.552345)
 material_override = ExtResource("15_u8rxc")
 mesh = SubResource("BoxMesh_vs6ts")
+metadata/asset_id = &"prop_gas_cylinder"
+metadata/asset_fit = false
 
 [node name="Rows" type="Node3D" parent="." unique_id=1360614892]
 

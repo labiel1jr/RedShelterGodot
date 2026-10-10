@@ -2,7 +2,9 @@
 // material_overlay de cada objeto. A malha é "inflada" e só as faces de trás
 // aparecem, formando a linha escura em volta.
 shader_type spatial;
-render_mode unshaded, cull_front, depth_draw_opaque, shadows_disabled, fog_disabled;
+// world_vertex_coords: a espessura é em metros do mundo, qualquer que seja a
+// escala do nó (modelos importados podem vir com escala 100x ou 0,01x).
+render_mode unshaded, cull_front, depth_draw_opaque, shadows_disabled, fog_disabled, world_vertex_coords;
 
 // Espessura em metros perto da câmera; cresce com a distância para a linha
 // manter mais ou menos a mesma grossura na tela.
@@ -16,13 +18,13 @@ uniform float fade_end = 0.0;
 uniform bool from_center = false;
 
 void vertex() {
-	vec3 world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
-	float dist = length(CAMERA_POSITION_WORLD - world_pos);
+	float dist = length(CAMERA_POSITION_WORLD - VERTEX);
 	float w = width * (1.0 + dist * 0.04);
 	if (fade_end > fade_start) {
 		w *= 1.0 - smoothstep(fade_start, fade_end, dist);
 	}
-	vec3 dir = from_center ? normalize(VERTEX + vec3(0.0001)) : NORMAL;
+	vec3 center = (MODEL_MATRIX * vec4(0.0, 0.0, 0.0, 1.0)).xyz;
+	vec3 dir = from_center ? normalize(VERTEX - center + vec3(0.0001)) : normalize(NORMAL);
 	VERTEX += dir * w;
 }
 

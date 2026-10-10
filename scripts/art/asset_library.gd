@@ -63,7 +63,8 @@ static func apply(root: Node3D, id: StringName) -> Node3D:
 		root.material_override = null
 		model.position = Vector3(box.get_center().x, box.position.y, box.get_center().z)
 		var height := _height(model)
-		if height > 0.0:
+		# `asset_fit = false`: mantém o tamanho real do modelo (detritos).
+		if height > 0.0 and root.get_meta(&"asset_fit", true):
 			model.scale = Vector3.ONE * (box.size.y / height)
 	for child in root.get_children():
 		if child is MeshInstance3D:

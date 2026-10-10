@@ -473,28 +473,40 @@ outline_size = 16
 transform = Transform3D(0.38279638, 0, -0.9238328, 0, 1, 0, 0.9238328, 0, 0.38279638, 5.6099524, 0.3701022, -26.388021)
 material_override = ExtResource("13_i2qph")
 mesh = SubResource("BoxMesh_fkt6d")
+metadata/asset_id = &"prop_debris_small_tijolos"
+metadata/asset_fit = false
 
 [node name="Debris2" type="MeshInstance3D" parent="Trash" unique_id=1051782433]
 transform = Transform3D(0.64464545, 0, 0.7644817, 0, 1, 0, -0.7644817, 0, 0.64464545, -5.9465823, 0.4171432, -15.505172)
 material_override = ExtResource("13_i2qph")
 mesh = SubResource("BoxMesh_50vq5")
+metadata/asset_id = &"prop_debris_small_balde"
+metadata/asset_fit = false
 
 [node name="Debris3" type="MeshInstance3D" parent="Trash" unique_id=1821921944]
 transform = Transform3D(0.16819267, 0, 0.98575413, 0, 1, 0, -0.98575413, 0, 0.16819267, 6.245544, 0.33733642, -8.60151)
 material_override = ExtResource("13_i2qph")
 mesh = SubResource("BoxMesh_b2wv0")
+metadata/asset_id = &"prop_debris_small_garrafa"
+metadata/asset_fit = false
 
 [node name="Debris4" type="MeshInstance3D" parent="Trash" unique_id=994451429]
 transform = Transform3D(0.32990128, 0, 0.94401544, 0, 1, 0, -0.94401544, 0, 0.32990128, 5.247638, 0.31150046, -5.54313)
 material_override = ExtResource("13_i2qph")
 mesh = SubResource("BoxMesh_qm03o")
+metadata/asset_id = &"prop_debris_small_lata"
+metadata/asset_fit = false
 
 [node name="Debris5" type="MeshInstance3D" parent="Trash" unique_id=2006990442]
 transform = Transform3D(0.76758444, 0, -0.6409478, 0, 1, 0, 0.6409478, 0, 0.76758444, -5.4529443, 0.3934198, -20.005817)
 material_override = ExtResource("13_i2qph")
 mesh = SubResource("BoxMesh_osrxu")
+metadata/asset_id = &"prop_debris_small_laje"
+metadata/asset_fit = false
 
 [node name="Debris6" type="MeshInstance3D" parent="Trash" unique_id=1928182757]
 transform = Transform3D(-0.3475291, 0, -0.9376692, 0, 1, 0, 0.9376692, 0, -0.3475291, -4.979942, 0.3180498, -4.4277897)
 material_override = ExtResource("13_i2qph")
 mesh = SubResource("BoxMesh_xle10")
+metadata/asset_id = &"prop_gas_cylinder"
+metadata/asset_fit = false

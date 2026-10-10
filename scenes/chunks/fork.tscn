@@ -874,28 +874,40 @@ mesh = SubResource("BoxMesh_ruft3")
 transform = Transform3D(-0.26209867, 0, 0.9650411, 0, 1, 0, -0.9650411, 0, -0.26209867, -5.607218, 0.3686249, -29.219908)
 material_override = ExtResource("16_kjxnw")
 mesh = SubResource("BoxMesh_1boer")
+metadata/asset_id = &"prop_debris_small_tijolos"
+metadata/asset_fit = false
 
 [node name="Debris2" type="MeshInstance3D" parent="Trash" unique_id=938883392]
 transform = Transform3D(0.9842784, 0, 0.17662422, 0, 1, 0, -0.17662422, 0, 0.9842784, 6.2606153, 0.3212207, -5.5953274)
 material_override = ExtResource("16_kjxnw")
 mesh = SubResource("BoxMesh_kaxqp")
+metadata/asset_id = &"prop_debris_small_balde"
+metadata/asset_fit = false
 
 [node name="Debris3" type="MeshInstance3D" parent="Trash" unique_id=749211566]
 transform = Transform3D(-0.19956382, 0, 0.9798848, 0, 1, 0, -0.9798848, 0, -0.19956382, -6.099839, 0.4206558, -34.05149)
 material_override = ExtResource("16_kjxnw")
 mesh = SubResource("BoxMesh_qbpxi")
+metadata/asset_id = &"prop_debris_small_garrafa"
+metadata/asset_fit = false
 
 [node name="Debris4" type="MeshInstance3D" parent="Trash" unique_id=1513600103]
 transform = Transform3D(0.64383817, 0, -0.7651617, 0, 1, 0, 0.7651617, 0, 0.64383817, 5.939188, 0.37325475, -4.8975773)
 material_override = ExtResource("16_kjxnw")
 mesh = SubResource("BoxMesh_ljjxd")
+metadata/asset_id = &"prop_debris_small_lata"
+metadata/asset_fit = false
 
 [node name="Debris5" type="MeshInstance3D" parent="Trash" unique_id=1696839692]
 transform = Transform3D(0.98800606, 0, 0.15441498, 0, 1, 0, -0.15441498, 0, 0.98800606, 5.2873015, 0.3552786, -5.7712917)
 material_override = ExtResource("16_kjxnw")
 mesh = SubResource("BoxMesh_tkb6o")
+metadata/asset_id = &"prop_debris_small_laje"
+metadata/asset_fit = false
 
 [node name="Debris6" type="MeshInstance3D" parent="Trash" unique_id=837282078]
 transform = Transform3D(0.9967858, 0, 0.08011295, 0, 1, 0, -0.08011295, 0, 0.9967858, 5.0883265, 0.33417585, -47.157154)
 material_override = ExtResource("16_kjxnw")
 mesh = SubResource("BoxMesh_dbo7q")
+metadata/asset_id = &"prop_gas_cylinder"
+metadata/asset_fit = false

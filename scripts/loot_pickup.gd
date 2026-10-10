@@ -36,6 +36,15 @@ func _ready() -> void:
 	if _visual:
 		# O pivô do modelo fica na base (catálogo); a forma provisória, no centro.
 		_visual.position = $MeshInstance3D.position - Vector3(0, 0.3, 0)
+		# A cor do recurso continua legível: base chapada brilhando sob o modelo.
+		var pad: MeshInstance3D = $MeshInstance3D
+		pad.visible = true
+		pad.transform = Transform3D(Basis.from_scale(Vector3(1.5, 0.06, 1.5)), _visual.position - Vector3(0, 0.03, 0))
+		var pad_mat := StandardMaterial3D.new()
+		pad_mat.albedo_color = COLORS[loot_type]
+		pad_mat.emission_enabled = true
+		pad_mat.emission = COLORS[loot_type] * 0.6
+		pad.material_override = pad_mat
 	else:
 		_visual = $MeshInstance3D
 		var mat := StandardMaterial3D.new()

@@ -471,31 +471,43 @@ mesh = SubResource("BoxMesh_eefq0")
 transform = Transform3D(-0.5265473, 0, 0.8501458, 0, 1, 0, -0.8501458, 0, -0.5265473, -5.694147, 0.29650486, -38.410107)
 material_override = ExtResource("14_24epw")
 mesh = SubResource("BoxMesh_0eopa")
+metadata/asset_id = &"prop_debris_small_laje"
+metadata/asset_fit = false
 
 [node name="Debris2" type="MeshInstance3D" parent="Trash" unique_id=483770088]
 transform = Transform3D(-0.7712779, 0, 0.6364986, 0, 1, 0, -0.6364986, 0, -0.7712779, 5.06157, 0.38635927, -36.563606)
 material_override = ExtResource("14_24epw")
 mesh = SubResource("BoxMesh_klf1u")
+metadata/asset_id = &"prop_gas_cylinder"
+metadata/asset_fit = false
 
 [node name="Debris3" type="MeshInstance3D" parent="Trash" unique_id=53130569]
 transform = Transform3D(-0.6545372, 0, -0.7560298, 0, 1, 0, 0.7560298, 0, -0.6545372, 4.8100963, 0.4311836, -9.673062)
 material_override = ExtResource("14_24epw")
 mesh = SubResource("BoxMesh_xkphl")
+metadata/asset_id = &"prop_debris_small_tijolos"
+metadata/asset_fit = false
 
 [node name="Debris4" type="MeshInstance3D" parent="Trash" unique_id=716866298]
 transform = Transform3D(0.5342099, 0, 0.8453519, 0, 1, 0, -0.8453519, 0, 0.5342099, 5.795785, 0.4259939, -32.00463)
 material_override = ExtResource("14_24epw")
 mesh = SubResource("BoxMesh_4nqwo")
+metadata/asset_id = &"prop_debris_small_balde"
+metadata/asset_fit = false
 
 [node name="Debris5" type="MeshInstance3D" parent="Trash" unique_id=167728139]
 transform = Transform3D(-0.93288696, 0, 0.3601693, 0, 1, 0, -0.3601693, 0, -0.93288696, -5.70045, 0.34743395, -17.151146)
 material_override = ExtResource("14_24epw")
 mesh = SubResource("BoxMesh_qt7sy")
+metadata/asset_id = &"prop_debris_small_garrafa"
+metadata/asset_fit = false
 
 [node name="Debris6" type="MeshInstance3D" parent="Trash" unique_id=966017368]
 transform = Transform3D(0.7721625, 0, 0.6354251, 0, 1, 0, -0.6354251, 0, 0.7721625, -6.056133, 0.30902156, -18.597286)
 material_override = ExtResource("14_24epw")
 mesh = SubResource("BoxMesh_hf33b")
+metadata/asset_id = &"prop_debris_small_lata"
+metadata/asset_fit = false
 
 [node name="Rows" type="Node3D" parent="." unique_id=58315794]
 

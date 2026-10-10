@@ -15,10 +15,10 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="Red Shelter"
-config/icon="res://art/icons/windows/icon_512.png"
-config/windows_native_icon="res://art/icons/windows/icon.ico"
 run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.7")
+config/icon="res://art/icons/windows/icon_512.png"
+config/windows_native_icon="res://art/icons/windows/icon.ico"
 
 [autoload]
 
@@ -30,20 +30,17 @@ Transition="*res://autoload/transition.gd"
 ToonStyle="*res://autoload/toon_style.gd"
 Juice="*res://autoload/juice.gd"
 
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=4
+
 [gui]
 
 theme/custom="res://ui/theme.tres"
 
 [rendering]
 
-textures/vram_compression/import_etc2_astc=true
-
 renderer/rendering_method="mobile"
-
-[display]
-
-window/size/viewport_width=1152
-window/size/viewport_height=648
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
-window/handheld/orientation=4
+textures/vram_compression/import_etc2_astc=true

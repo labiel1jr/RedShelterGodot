@@ -1,6 +1,6 @@
 # RED SHELTER
 
-## Game Design Document — GDD 0.9.9
+## Game Design Document — GDD 0.9.10
 
 **Gênero:** Survival Runner + Shooter + Scavenging + Shelter Management
 **Plataformas:** Android / iOS
@@ -23,6 +23,7 @@
 
 | Versão | Mudanças |
 | ------ | -------- |
+| 0.9.10 | A2: primeiras entregas no jogo — faca, 5 tambores, loot de comida/água/medicamentos/sucata (com base colorida do recurso), lixeiras, postes, caixote, detritos, placas, cerca, troncos, botijão e entulho. `ChunkDressing` espalha enfeites nas calçadas pela seed do chunk. Contorno do cel-shading passou a ser medido em metros do mundo (modelos com escala interna 100x engrossavam a linha). |
 | 0.9.9 | Fase 16 / J3 ✅: `AmbientFx` na corrida — papéis voando, duas colunas de fumaça ao longe, uma lâmpada de calçada piscando à frente e chuva leve em 25% das expedições (sorteada pela seed, sol 40% mais fraco). Custo medido no PC: ~2 FPS com chuva. |
 | 0.9.8 | Fase 16 / J2 🟡: linhas de velocidade e FOV com a velocidade, "POR POUCO!" (+2 XP) ao passar raspando, sequência de abates ×N, XP rolando no HUD, cápsula ejetada e "tac" grave no tiro que mata, "pop" e poeira ao montar veículo, banner com pancada, mundo dessaturado com HP crítico, botões afundando ao tocar; defesa com tremor a cada pancada, armadilha com pausa e flash, banners com quique, flash dourado na vitória. |
 | 0.9.7 | Fase 16 / J1 🟡: autoload `Juice` (hit_stop, slow_motion, shake leve/médio/forte, punch, pop_in, screen_flash, fly_to_hud) e opções "Flashes de tela" e "Câmera lenta e pausas de impacto". Efeitos J1 ligados: squash & stretch e poeira no pulo/aterrissagem, poeira no deslizar, whoosh na troca de faixa, pausa de impacto em obstáculo e golpe, câmera lenta no crítico, XP e loot voando ao HUD, tom subindo na sequência de coletas, mochila cheia chacoalhando, power-up com fagulhas e flash da cor, morte e extração com câmera lenta e flash, construção surgindo com quique e poeira, flash dourado ao subir de nível. |
