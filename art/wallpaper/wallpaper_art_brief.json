@@ -1,0 +1,68 @@
+{
+  "documento": "Briefing de arte — Wallpaper do Red Shelter",
+  "versao": "1.0",
+  "data": "2026-10-10",
+  "referencias_internas": ["art/icons/icon_art_brief.json (paleta e estilo)", "docs/GDD.md seção 65", "docs/assets/asset_list.json"],
+  "objetivo": "Ilustração-chave (key art) do jogo, usada como papel de parede de celular e PC, fundo da tela de título e base para materiais de divulgação.",
+  "conceito": {
+    "nome": "A última luz da rua",
+    "cena": "Fim de tarde numa rua brasileira abandonada (casas de muro, fios de poste, carros parados). No centro, o abrigo vermelho com a porta acesa. À frente dele, a rua se abre em perspectiva como a pista da corrida, com loot espalhado (caixas, galões roxos de combustível, garrafas de água). Ao fundo, a cidade escura e, nas sombras dos becos, silhuetas indistintas da horda se aproximando.",
+    "emocao": "Contraste entre o calor seguro do abrigo e o perigo frio que avança.",
+    "ligacao_com_o_icone": "O abrigo do wallpaper é o mesmo desenho do ícone, para criar marca."
+  },
+  "estilo": {
+    "nome": "Toon / cel-shading, ilustração",
+    "regras": [
+      "Mesmas 3 faixas de luz chapadas e contorno escuro (#16141F) do jogo; contorno mais fino nos planos de fundo.",
+      "Perspectiva de 1 ponto de fuga, com a rua levando o olhar ao abrigo.",
+      "Profundidade por camadas de cor: primeiro plano saturado, fundo em tons azul-acinzentados com névoa chapada.",
+      "Sem personagem principal (ainda não definida). Zumbis só como silhuetas sem detalhe de rosto.",
+      "Sem sangue explícito."
+    ]
+  },
+  "paleta": {
+    "ceu_topo": "#2B2E38",
+    "ceu_horizonte_por_do_sol": "#DB8F5C",
+    "ceu_faixa_media": "#8C5A7A",
+    "vermelho_abrigo": "#D2382F",
+    "luz_porta_ambar": "#F2CC4D",
+    "combustivel_roxo": "#9B5DE5",
+    "sombra_quente": "#55405E",
+    "sombra_fria": "#3A4660",
+    "nevoa_fundo": "#5E6B85",
+    "contorno": "#16141F",
+    "regra": "Luz quente (âmbar/laranja) no abrigo e no céu; tudo que é ameaça em azul-frio e escuro. Vermelho só no abrigo e em detalhes de perigo."
+  },
+  "composicao": {
+    "planos": [
+      {"plano": "primeiro", "conteudo": "Asfalto rachado, loot (caixa de madeira, galão roxo, garrafa), uma barricada de tábuas no canto.", "cor": "saturado, sombras quentes"},
+      {"plano": "meio", "conteudo": "Abrigo vermelho com porta acesa projetando luz na rua; postes, carro abandonado, cones.", "cor": "foco de contraste máximo"},
+      {"plano": "fundo", "conteudo": "Prédios do Centro, caixa d'água, chaminés do Industrial, silhuetas da horda nos becos.", "cor": "azul-acinzentado com névoa"},
+      {"plano": "céu", "conteudo": "Pôr do sol em faixas chapadas, nuvens em formas simples, fumaça ao longe.", "cor": "laranja → roxo → carvão"}
+    ],
+    "ponto_focal": "Porta acesa do abrigo, no terço central, levemente abaixo do centro.",
+    "espaco_para_logo": "Faixa superior livre (~20% da altura) para o logotipo RED SHELTER na versão de divulgação; o wallpaper limpo não leva texto."
+  },
+  "formatos": [
+    {"id": "desktop", "arquivo": "art/wallpaper/wallpaper_3840x2160.png", "tamanho": "3840x2160 (16:9)", "obs": "também exportar 1920x1080"},
+    {"id": "ultrawide", "arquivo": "art/wallpaper/wallpaper_5120x2160.png", "tamanho": "5120x2160 (21:9)", "obs": "opcional; estender laterais da rua"},
+    {"id": "celular", "arquivo": "art/wallpaper/wallpaper_1440x3200.png", "tamanho": "1440x3200 (vertical 9:20)", "obs": "reenquadrar: abrigo no terço inferior, céu ocupa o topo (área do relógio livre)"},
+    {"id": "titulo_jogo", "arquivo": "art/wallpaper/title_background_2304x1296.png", "tamanho": "2304x1296", "obs": "fundo da tela de título, sem logo, área central-esquerda menos detalhada para os botões"},
+    {"id": "fonte", "arquivo": "art/wallpaper/source/wallpaper_master.(psd|kra)", "tamanho": "8000 px no lado maior", "obs": "camadas separadas: céu, fundo, meio, primeiro plano, silhuetas, luz, logo"}
+  ],
+  "regra_de_reenquadramento": "Pintar a cena larga o bastante para que os recortes 16:9, 21:9 e vertical saiam do mesmo arquivo-mestre, com o abrigo sempre inteiro e visível.",
+  "formato_tecnico": "PNG RGB 8 bits por canal, sRGB; versão JPG 90% para envio rápido.",
+  "etapas_de_trabalho": [
+    "1. Três miniaturas de composição em valores (preto e branco) — aprovação.",
+    "2. Estudo de cor da escolhida — aprovação.",
+    "3. Arte final no mestre com camadas; teste dos recortes 16:9 e vertical.",
+    "4. Exportações de todos os formatos."
+  ],
+  "checklist_de_aprovacao": [
+    "O olho vai direto para a porta acesa?",
+    "Lê bem no celular com ícones por cima (centro não poluído)?",
+    "A cena parece Brasil (muros, fios, postes, casas de laje)?",
+    "Estilo combina com o ícone e com o jogo (cel-shading, contorno)?"
+  ],
+  "evitar": ["Realismo pictórico e degradês suaves", "Personagem principal", "Gore", "Texto no wallpaper limpo", "Elementos importantes nas bordas que os recortes cortam"]
+}

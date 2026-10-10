@@ -1,0 +1,94 @@
+{
+  "documento": "Briefing de arte — Ícone do Red Shelter",
+  "versao": "1.0",
+  "data": "2026-10-10",
+  "referencias_internas": ["art/icons/README.md", "docs/assets/asset_list.json (categoria branding)", "docs/GDD.md seção 65"],
+  "objetivo": "Ícone que, num relance na tela do celular ou na barra de tarefas, comunique: abrigo seguro numa cidade perigosa. Deve ser reconhecível a 48 px e legível a 16 px.",
+  "conceito": {
+    "nome": "O abrigo vermelho",
+    "ideia_central": "Um barracão/casa pequena, vermelho, com tábuas pregadas nas janelas e a porta entreaberta derramando luz âmbar quente. É o único ponto de calor no meio da escuridão.",
+    "emocao": "Esperança e refúgio, com tensão ao redor.",
+    "leitura_em_3_camadas": [
+      "1º olhar (16–48 px): silhueta vermelha + retângulo âmbar da porta.",
+      "2º olhar (96–192 px): tábuas em X, telhado inclinado, contorno grosso.",
+      "3º olhar (512+ px): detalhes: pregos, rachaduras, mãos/silhuetas escuras ao fundo, poeira na luz."
+    ]
+  },
+  "estilo": {
+    "nome": "Toon / cel-shading",
+    "regras": [
+      "Luz em 3 faixas chapadas: luz, meio-tom, sombra. Sem degradê suave nos objetos.",
+      "Contorno escuro grosso (#16141F), ~4% da largura do ícone no tamanho 1024; mais fino nos detalhes internos.",
+      "Luz principal vindo da porta (âmbar) + luz fria de recorte (azulada) por trás.",
+      "Formas simples e exageradas: telhado inclinado, porta grande, proporções robustas.",
+      "Sem texto, sem logotipo, sem personagem (ainda não definida), sem zumbi explícito."
+    ],
+    "permitido_no_fundo": "Silhuetas de prédios ou de mãos/braços escuros, em tom quase igual ao fundo, sem rostos."
+  },
+  "paleta": {
+    "vermelho_abrigo_luz": "#E5533F",
+    "vermelho_abrigo_base": "#D2382F",
+    "vermelho_abrigo_sombra": "#8E2224",
+    "luz_porta_ambar": "#F2CC4D",
+    "luz_porta_brilho": "#FFF1B8",
+    "madeira_tabuas": "#8A5A3B",
+    "madeira_sombra": "#5A3826",
+    "contorno": "#16141F",
+    "fundo_carvao": "#16141F",
+    "fundo_cinza_azulado": "#2B2E38",
+    "recorte_frio": "#5E7AA8",
+    "regra": "Vermelho e âmbar são as únicas cores saturadas. O vermelho é a marca do jogo."
+  },
+  "composicao": {
+    "enquadramento": "Abrigo centralizado, ocupando ~60% da zona segura; porta levemente abaixo do centro óptico.",
+    "fundo": "Degradê radial em 2 passos chapados: #2B2E38 no centro atrás do abrigo, #16141F nas bordas (halo da luz).",
+    "zona_segura": "Todo elemento importante dentro do círculo de 264 px no molde de 432 px (61% da largura).",
+    "propostas": [
+      {
+        "id": "A",
+        "nome": "Frente",
+        "descricao": "Abrigo de frente, simétrico, porta acesa ao centro, duas janelas com tábuas em X. Mais forte em tamanhos pequenos.",
+        "prioridade": "principal"
+      },
+      {
+        "id": "B",
+        "nome": "Perspectiva",
+        "descricao": "Abrigo em 3/4, porta acesa projetando um feixe de luz no chão, silhueta da cidade escura atrás.",
+        "prioridade": "alternativa"
+      }
+    ]
+  },
+  "camadas": {
+    "FUNDO": "Fundo opaco preenchendo o quadro inteiro (vira icon_background_432).",
+    "FRENTE": "Abrigo, contorno e luz, fundo transparente (vira icon_foreground_432).",
+    "MONOCROMATICO": "Silhueta branca do abrigo com a porta recortada (vazada), fundo transparente (Android 13 temático)."
+  },
+  "variacoes_por_tamanho": {
+    "16_e_24_px": "Redesenhar: só silhueta vermelha do abrigo + porta âmbar, contorno de 1 px, sem tábuas.",
+    "32_e_48_px": "Silhueta + porta + tábuas simplificadas (um X por janela).",
+    "64_px_ou_mais": "Arte completa."
+  },
+  "entregas": [
+    {"arquivo": "art/icons/source/icon_master.svg", "tamanho": "1024x1024", "obs": "vetor, camadas FUNDO/FRENTE/MONOCROMATICO (ou .kra/.ai)"},
+    {"arquivo": "art/icons/icon_master_1024.png", "tamanho": "1024x1024"},
+    {"arquivo": "art/icons/android/icon_foreground_432.png", "tamanho": "432x432", "obs": "transparente"},
+    {"arquivo": "art/icons/android/icon_background_432.png", "tamanho": "432x432", "obs": "opaco"},
+    {"arquivo": "art/icons/android/icon_monochrome_432.png", "tamanho": "432x432", "obs": "branco sobre transparente"},
+    {"arquivo": "art/icons/android/icon_main_192.png", "tamanho": "192x192", "obs": "cantos arredondados"},
+    {"arquivo": "art/icons/windows/icon.ico", "tamanho": "16,24,32,48,64,128,256"},
+    {"arquivo": "art/icons/windows/icon_512.png", "tamanho": "512x512"}
+  ],
+  "formato_tecnico": "PNG RGBA 8 bits por canal, sRGB.",
+  "etapas_de_trabalho": [
+    "1. Esboços em preto e branco das propostas A e B (3 a 5 miniaturas cada) — aprovação.",
+    "2. Cor chapada da proposta escolhida em 1024 e teste reduzido a 48 e 16 px — aprovação.",
+    "3. Arte final com camadas e exportações de todos os tamanhos."
+  ],
+  "checklist_de_aprovacao": [
+    "Reconhecível a 48 px e a 16 px?",
+    "Nada importante cortado em recorte circular e quadrado arredondado?",
+    "Monocromático legível em fundo claro e escuro?",
+    "Destaca-se entre ícones de outros jogos (teste numa captura de tela de celular)?"
+  ],
+  "evitar": ["Texto ou letras", "Rostos de zumbi, sangue explícito", "Degradês suaves e brilhos realistas", "Detalhes finos que somem em tamanho pequeno", "Fundo branco ou claro"]
+}
