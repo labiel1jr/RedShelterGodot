@@ -7,7 +7,7 @@ Survival runner mobile com abrigo. A sobrevivente corre sozinha por três
 faixas, desvia, pula, desliza, luta contra zumbis que a agarram e saqueia o
 que consegue carregar. De volta ao abrigo, os recursos viram construções,
 armas e moradores, e a cada semana uma horda ataca o portão. É o protótipo
-jogável do **GDD 0.9.3** ([`docs/GDD.md`](docs/GDD.md)), feito com formas primitivas.
+jogável do **GDD 0.9.4** ([`docs/GDD.md`](docs/GDD.md)), feito com formas primitivas.
 Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 
 | | |
@@ -91,7 +91,7 @@ desligadas ou reexibidas em **Configurações**.
 
 ## Status do roadmap
 
-Seção 58 do GDD. As Fases 1 a 14 estão concluídas; a 15 (direção de arte) está planejada.
+Seção 58 do GDD. As Fases 1 a 14 estão concluídas; a 15 (direção de arte) e a 16 (game juice) estão planejadas.
 
 | Fase | Conteúdo |
 | --- | --- |
@@ -110,6 +110,7 @@ Seção 58 do GDD. As Fases 1 a 14 estão concluídas; a 15 (direção de arte) 
 | 13 — Veículos ✅ | patins, skate, bicicleta de jornaleiro, moto, mochila a jato e furgão de destruição, cada um com HP e habilidade (seção 63) |
 | 14 — Power-ups ✅ | 14 power-ups nos papéis dos de Subway Surfers: 5 na pista, 1 consumível, 2 na preparação e 6 raros (seção 64) |
 | 15 — Direção de arte 📋 | estilo toon shading / cel-shading decidido; A1 base técnica (shader toon, contorno, textura-paleta, névoa) até A6 acabamento (seção 65) |
+| 16 — Game juice 📋 | resposta visual e sonora a cada ação: pausas de impacto, squash & stretch, itens voando até o HUD, câmera lenta em momentos-chave (seção 66) |
 
 ## Cenas e fluxo
 

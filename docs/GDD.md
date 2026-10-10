@@ -1,6 +1,6 @@
 # RED SHELTER
 
-## Game Design Document — GDD 0.9.3
+## Game Design Document — GDD 0.9.4
 
 **Gênero:** Survival Runner + Shooter + Scavenging + Shelter Management
 **Plataformas:** Android / iOS
@@ -23,6 +23,7 @@
 
 | Versão | Mudanças |
 | ------ | -------- |
+| 0.9.4 | Seção 66 nova: game juice — princípios, efeitos por momento do jogo (J1–J3), ferramentas `Juice` e plano da Fase 16. Roadmap (58) com a Fase 16. |
 | 0.9.3 | Ícone do jogo planejado (Android adaptativo e Windows) na seção 65; etapa A0 na Fase 15. |
 | 0.9.2 | Combustível roxo aprovado e aplicado no loot do jogo; personagem adiada. Seção 65 atualizada. |
 | 0.9.1 | Estilo decidido: toon shading / cel-shading (luz em 3 faixas, contorno por classe de objeto, cor por região). Seção 65 reescrita a partir da recomendação; análise mantida. |
@@ -2383,6 +2384,11 @@ montada) serve também para os power-ups da Fase 14, por isso vem primeiro.
 * A1 base técnica (shader toon, contorno, textura-paleta, névoa por região);
 * A2 assets P1; A3 personagem; A4 zumbis; A5 assets P2; A6 acabamento (65).
 
+## 📋 Fase 16 — Game juice
+
+* J1 essencial (ferramentas `Juice`, acessibilidade, corrida, combate, coleta, power-up, morte, extração, abrigo);
+* J2 completo; J3 ambiente (66).
+
 ## Depois do roadmap
 
 * balancear jogando de verdade, com o `campaign_log.csv` (economia com uma pessoa jogando, regiões avançadas);
@@ -2763,3 +2769,73 @@ Cada etapa termina com medição no celular (FPS e draw calls) antes da seguinte
 ## Decisões em aberto
 
 * escolher o conceito e o nome da personagem (adiado: por enquanto a personagem não muda).
+
+
+---
+
+# 66. GAME JUICE
+
+**Status:** 🟡 base ✅ (tremor de câmera no dano, flash vermelho, vinheta e batimento com HP crítico, números flutuantes, estouro de partículas, clarão e rastro de tiro, zumbi piscando branco ao levar golpe) · o resto 📋 (Fase 16).
+
+Game juice é a resposta exagerada e imediata a cada ação: o jogo "sente" o que o jogador faz. Em Red Shelter ele tem três funções: deixar a corrida **gostosa de controlar**, deixar o **perigo legível** e fazer cada **recompensa** parecer uma recompensa.
+
+## Princípios
+
+* **Resposta em até 100 ms:** toda ação (troca de faixa, pulo, golpe, coleta) tem som e movimento no mesmo quadro.
+* **Proporcional à importância:** coletar sucata é um "plim"; um crítico, um Bruto morto ou uma extração são grandes. Se tudo treme, nada treme.
+* **Nunca esconder o perigo:** nenhum efeito cobre a pista à frente (partículas e textos acima ou atrás da personagem, flashes curtos e translúcidos).
+* **Coerente com o cel-shading (65):** formas chapadas, contorno escuro, cores da paleta; o vermelho continua reservado a dano e perigo.
+* **Acessível:** nas Configurações, "Tremor de câmera" (já existe), "Flashes de tela" e "Câmera lenta e pausas de impacto" podem ser desligados.
+* **Barato no celular:** partículas do pool do `Fx` (sem criar nós por evento), no máximo ~60 partículas por estouro, câmera lenta só em momentos raros.
+
+## Por momento do jogo
+
+| Momento | Efeitos | Prioridade |
+| ------- | ------- | :--------: |
+| **Correr** | linhas de velocidade nas bordas da tela e FOV que abre um pouco conforme a velocidade sobe; poeira dos passos | J2 |
+| **Trocar de faixa** | inclinação do corpo (já existe), rastro curto, "whoosh" com tom que varia | J1 |
+| **Pular e aterrissar** | esticar ao subir e achatar ao pousar (squash & stretch), anel de poeira e tremidinha na aterrissagem alta | J1 |
+| **Deslizar** | faíscas ou poeira no chão, câmera um pouco mais baixa | J1 |
+| **Passar raspando** | obstáculo ou zumbi a menos de 0,5 m sem acertar: texto "POR POUCO!", clique de som e +XP pequeno | J2 |
+| **Bater num obstáculo** | pausa de impacto (~60 ms), tremor, destroços na cor do obstáculo (já existe), a personagem cambaleia | J1 |
+| **Golpe da arma branca** | pausa de impacto de 40–80 ms ao acertar, zumbi empurrado, faísca branca; o crítico ganha câmera lenta de 0,15 s e texto maior | J1 |
+| **Tiro** | coice da arma (já existe), cápsula ejetada, clarão (já existe); o tiro que mata dá um "tac" final mais grave | J2 |
+| **Zumbi morre** | cai com impulso na direção do golpe, estouro de partículas, "+XP" que voa até a barra de XP | J1 |
+| **Sequência de abates** | contador "×2, ×3…" que cresce e chacoalha; ao quebrar, some com um suspiro de som | J2 |
+| **Agarrão** | tremor contínuo leve, bordas da tela apertando (vinheta), o botão ATACAR pulsando | J1 |
+| **Coletar loot** | o item pula, encolhe e voa até o contador do HUD, que "salta" e muda de número rolando; a sequência de coletas sobe o tom do som | J1 |
+| **Mochila cheia** | o contador da mochila chacoalha e o item recusado quica para fora | J1 |
+| **Power-up** | anel estoura em fagulhas da cor do power-up, flash curto da cor na borda da tela, ícone voa até a barra do HUD; aviso pulsando nos últimos 2 s | J1 |
+| **Montar num veículo** | "pop" de escala, poeira, o nome em letreiro; no furgão, cada atropelo tem tremor e faísca | J2 |
+| **Evento ou bifurcação** | o letreiro entra com pancada (escala + tremor do texto); a placa da bifurcação balança ao passar | J2 |
+| **HP crítico** | vinheta e batimento (já existem), cor do mundo levemente dessaturada | J2 |
+| **Morte** | câmera lenta de 0,5 s, mundo dessaturando, som abafado, depois o escurecimento | J1 |
+| **Extração** | câmera lenta curta ao cruzar o portão, fanfarra, o loot "despejado" em contadores rolando na tela de chegada | J1 |
+| **Defesa** | rachaduras no portão conforme o HP, tremor a cada pancada, armadilha com explosão grande, banner "HORDA!" e "ABRIGO DEFENDIDO!" | J2 |
+| **Abrigo — construir** | a sala surge de baixo com quique de escala, poeira e martelada; os recursos gastos voam da barra para a sala | J1 |
+| **Abrigo — produção do dia** | números "+4 água" sobem de cada construção na virada do dia | J2 |
+| **Subir de nível** | flash dourado, texto "NÍVEL 5!" com quique, partículas e som crescente | J1 |
+| **Interface** | botões afundam ao tocar, painéis entram com deslize e quique leve, números sempre rolando em vez de trocar de vez | J2 |
+| **Ambiente** | papéis voando, piscar de lâmpadas, fumaça ao longe, chuva leve em algumas expedições | J3 |
+
+## Ferramentas a criar
+
+Para todos os efeitos acima usarem as mesmas peças:
+
+* **`Juice.hit_stop(segundos)`** — pausa de impacto (escala de tempo baixa por alguns milissegundos), respeitando a opção de acessibilidade;
+* **`Juice.slow_motion(fator, segundos)`** — câmera lenta curta (crítico, morte, extração);
+* **`Juice.punch(no, escala)`** — quique de escala em qualquer nó (botões, contadores, ícones, salas);
+* **`Juice.fly_to_hud(item, alvo)`** — ícone que voa do mundo até um ponto do HUD;
+* **`Juice.screen_flash(cor, intensidade)`** — flash de borda curto, respeitando "Flashes de tela";
+* **números rolando** nos contadores do HUD e do abrigo;
+* **tremor de câmera** já existe (`camera_follow.shake`); ganha intensidades nomeadas (leve, médio, forte).
+
+O som acompanha cada efeito; os sons novos entram com o áudio definitivo (seção 52).
+
+## Plano de implementação (Fase 16)
+
+* **J1 — Essencial:** ferramentas `Juice`, opções de acessibilidade e os efeitos J1 da tabela (corrida, combate, coleta, power-up, morte, extração, construir e subir de nível).
+* **J2 — Completo:** os efeitos J2 (velocidade, passar raspando, sequência de abates, veículos, eventos, defesa, interface).
+* **J3 — Ambiente:** os efeitos J3.
+
+Cada etapa é medida no celular (FPS e tempo de quadro) e jogada antes da seguinte: juice demais cansa e atrapalha a leitura da pista.
