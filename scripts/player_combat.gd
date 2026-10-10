@@ -118,6 +118,10 @@ func attack() -> void:
 		return
 	target.take_hit(damage, is_crit)
 	AudioManager.play("hit", -2.0, 1.25 if is_crit else 1.0)
+	Juice.hit_stop(0.07 if is_crit else 0.045)
+	if is_crit:
+		Juice.slow_motion(0.35, 0.15)
+		Juice.shake(Juice.SHAKE_LIGHT)
 
 	# Seção 16: cada golpe que acerta gasta durabilidade.
 	if not is_knife_broken():

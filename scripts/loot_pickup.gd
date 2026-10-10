@@ -23,6 +23,10 @@ const NAMES: Array[String] = ["Comida", "Água", "Sucata", "Munição", "Compone
 ## O que gira: o modelo do artista ou a forma provisória.
 var _visual: Node3D
 
+## Sequência de coletas (seção 66): cada uma em menos de 1,5 s sobe o tom.
+static var _streak := 0
+static var _last_pickup_ms := -10000
+
 
 func _ready() -> void:
 	add_to_group("loot")
@@ -64,9 +68,16 @@ func _on_body_entered(body: Node3D) -> void:
 		# Seção 32: mochila cheia — o loot fica na pista.
 		AudioManager.play("empty")
 		Fx.float_text(body, pos + Vector3.UP * 1.2, "MOCHILA CHEIA", Color(1, 0.4, 0.3), 44)
+		if run_manager.get("hud"):
+			Juice.punch(run_manager.hud.backpack_label, 0.3, 0.4)
 		return
 
-	AudioManager.play("pickup", -4.0, 0.8 if rare else 1.0)
+	var now := Time.get_ticks_msec()
+	_streak = mini(_streak + 1, 8) if now - _last_pickup_ms < 1500 else 0
+	_last_pickup_ms = now
+	AudioManager.play("pickup", -4.0, (0.8 if rare else 1.0) + 0.06 * _streak, 0.0)
+	if run_manager.get("hud"):
+		Juice.fly_to_hud(pos, run_manager.hud.loot_label, COLORS[loot_type])
 	Fx.burst(get_parent(), pos, COLORS[loot_type], 10, 3.0, 0.1)
 	Fx.float_text(body, pos + Vector3.UP * 1.2, "+%d %s" % [taken, NAMES[loot_type]], COLORS[loot_type], 48)
 	queue_free()

@@ -649,6 +649,13 @@ func _end_run(survived: bool) -> void:
 		% [("Extração concluída" if survived else "Personagem morreu"), distance_travelled()]
 	)
 
+	if survived:
+		Juice.slow_motion(0.4, 0.35)
+		Juice.screen_flash(Color(1.0, 0.9, 0.6), 0.3, 0.5)
+	else:
+		Juice.slow_motion(0.3, 0.5)
+		Juice.screen_flash(Color(0.8, 0.1, 0.1), 0.35, 0.6)
+		Juice.shake(Juice.SHAKE_STRONG)
 	player.set_physics_process(false)
 	AudioManager.set_heartbeat(false)
 	AudioManager.stop_ambient()

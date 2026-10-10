@@ -28,6 +28,7 @@ Settings="*res://autoload/settings.gd"
 AudioManager="*res://autoload/audio_manager.gd"
 Transition="*res://autoload/transition.gd"
 ToonStyle="*res://autoload/toon_style.gd"
+Juice="*res://autoload/juice.gd"
 
 [gui]
 

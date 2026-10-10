@@ -72,7 +72,12 @@ func _on_body_entered(body: Node3D) -> void:
 		return
 	if powerups:
 		powerups.activate(data)
+		var color: Color = data.color
+		Fx.burst(get_parent(), global_position + Vector3.UP, color, 30, 6.0, 0.12)
+		Juice.screen_flash(color, 0.22, 0.3)
 		var run_manager := get_tree().get_first_node_in_group("run_manager")
+		if run_manager and run_manager.get("hud"):
+			Juice.fly_to_hud(global_position + Vector3.UP, run_manager.hud.powerup_label, color, 22.0)
 		if run_manager and data.hint != "" and Settings.should_show_hint(StringName("powerup_%s" % data.id)):
 			run_manager.hud.show_hint(data.hint)
 		queue_free()

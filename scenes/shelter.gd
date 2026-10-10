@@ -66,6 +66,9 @@ var _crates: Array[Array] = [[], [], []]
 var _crate_materials: Array[StandardMaterial3D] = []
 
 
+## Seção 66: só anima construções novas depois da primeira atualização.
+var _refreshed_once := false
+
 func _ready() -> void:
 	camera.look_at(Vector3(0, 0, 0.5))
 
@@ -104,7 +107,17 @@ func _refresh() -> void:
 	var gm := GameManager
 	_show_resources([gm.food, gm.water, gm.scrap])
 	_sync_crates([gm.food, gm.water, gm.scrap], false)
+	var parts := find_children("Built", "Node3D") + find_children("Level2", "Node3D")
+	var was_visible := parts.map(func(n): return n.is_visible_in_tree())
 	_update_buildings()
+	# Seção 66: o que acabou de ser construído surge de baixo com quique e poeira.
+	if _refreshed_once:
+		for i in parts.size():
+			if not was_visible[i] and parts[i].is_visible_in_tree():
+				Juice.pop_in(parts[i])
+				Fx.burst(self, parts[i].global_position + Vector3.UP * 0.3, Color(0.62, 0.58, 0.52), 20, 4.0, 0.12)
+				AudioManager.play("crash", -8.0, 1.3)
+	_refreshed_once = true
 	_update_survivor_button()
 	_update_residents()
 
@@ -445,6 +458,7 @@ func _show_arrival_panel() -> void:
 
 ## Subida de nível: estouro dourado e "NÍVEL N!" sobre a sobrevivente.
 func _celebrate_level_up() -> void:
+	Juice.screen_flash(Color(1.0, 0.85, 0.3), 0.35, 0.6)
 	var pos := survivor.global_position + Vector3.UP * 1.2
 	for i in 3:
 		Fx.burst(self, pos, Color(1.0, 0.85, 0.3), 18, 5.0, 0.12)

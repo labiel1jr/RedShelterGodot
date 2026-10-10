@@ -27,6 +27,7 @@ func _on_body_entered(body: Node3D) -> void:
 	var health := body.get_node_or_null("Health")
 	if health:
 		health.take_damage(damage)
+	Juice.hit_stop(0.06)
 	AudioManager.play("crash", -2.0)
 
 	# Destroços na cor do obstáculo.

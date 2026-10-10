@@ -391,6 +391,10 @@ func _die() -> void:
 		_run_manager.register_kill(data.xp_reward)
 	if _player:
 		Fx.float_text(_player, global_position + Vector3.UP * 3.2 * data.size, "+%d XP" % data.xp_reward, Color(0.5, 0.8, 1.0), 44)
+	# A defesa tem outro HUD, sem barra de XP.
+	var hud: Node = _run_manager.get("hud") if _run_manager else null
+	if hud and hud.get("xp_label"):
+		Juice.fly_to_hud(global_position + Vector3.UP * data.size, hud.xp_label, Color(0.5, 0.8, 1.0), 14.0)
 
 	Fx.burst(get_parent(), global_position + Vector3.UP * 1.0 * data.size, Fx.BLOOD_COLOR, 24, 5.0, 0.16)
 	AudioManager.play("zombie_death", -5.0, 1.0 / data.size)

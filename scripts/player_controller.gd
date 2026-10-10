@@ -59,6 +59,10 @@ var ramp_gravity_scale := 0.0
 
 var _mesh_base_y := 1.0
 var _run_cycle := 0.0
+## Seção 66: squash & stretch e poeira na aterrissagem.
+var _was_grounded := true
+var _fall_speed := 0.0
+var _squash := 0.0
 
 @onready var collision_shape: CollisionShape3D = $CollisionShape3D
 @onready var mesh_instance: MeshInstance3D = $MeshInstance3D
@@ -83,7 +87,14 @@ func _process(delta: float) -> void:
 	mesh_instance.position.y = _mesh_base_y + bob
 	mesh_instance.rotation.z = clampf(-velocity.x * 0.04, -0.35, 0.35)
 	mesh_instance.rotation.x = -0.5 if is_sliding else -0.12
-	mesh_instance.scale.y = 1.08 if not grounded and vertical_velocity > 0.0 else 1.0
+	if grounded and not _was_grounded:
+		_land(_fall_speed)
+	_was_grounded = grounded
+	if not grounded:
+		_fall_speed = -vertical_velocity
+	_squash = move_toward(_squash, 0.0, 4.0 * delta)
+	var stretch := 0.12 if not grounded and vertical_velocity > 0.0 else 0.0
+	mesh_instance.scale = Vector3(1.0 + _squash - stretch * 0.5, 1.0 - _squash + stretch, 1.0 + _squash - stretch * 0.5)
 
 
 func _physics_process(delta: float) -> void:
@@ -201,10 +212,21 @@ func _change_lane(direction: int) -> void:
 		return
 	current_lane = lane
 	target_x = _lane_x(current_lane)
+	AudioManager.play("swing", -14.0, randf_range(0.8, 1.0), 0.0, 0.08)
 
 
 func _lane_x(lane: int) -> float:
 	return float(lane - 1) * LANE_WIDTH
+
+
+## Aterrissagem: achata e solta poeira; das altas, a câmera treme um pouco.
+func _land(speed: float) -> void:
+	if speed < 4.0:
+		return
+	_squash = clampf(speed / 40.0, 0.12, 0.3)
+	Fx.burst(get_parent(), global_position + Vector3(0, 0.1, 0), Color(0.62, 0.58, 0.52), 10, 3.0, 0.1)
+	if speed > 12.0:
+		Juice.shake(Juice.SHAKE_LIGHT)
 
 
 func _jump() -> void:
@@ -218,6 +240,7 @@ func _slide() -> void:
 		return
 	is_sliding = true
 	slide_timer = slide_duration
+	Fx.burst(get_parent(), global_position + Vector3(0, 0.1, -0.4), Color(0.62, 0.58, 0.52), 8, 2.5, 0.08)
 	_set_height(sliding_height)
 
 

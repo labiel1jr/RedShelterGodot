@@ -12,6 +12,9 @@ var master_volume := 1.0
 var music_volume := 0.7
 var sfx_volume := 1.0
 var camera_shake := true
+## Seção 66: flashes de tela e pausas de impacto / câmera lenta.
+var screen_flashes := true
+var impact_pauses := true
 var tutorial_enabled := true
 ## id da dica → true quando já foi mostrada.
 var tutorial_seen := {}
@@ -24,6 +27,8 @@ func _ready() -> void:
 		music_volume = cfg.get_value("audio", "music", music_volume)
 		sfx_volume = cfg.get_value("audio", "sfx", sfx_volume)
 		camera_shake = cfg.get_value("game", "camera_shake", camera_shake)
+		screen_flashes = cfg.get_value("game", "screen_flashes", screen_flashes)
+		impact_pauses = cfg.get_value("game", "impact_pauses", impact_pauses)
 		tutorial_enabled = cfg.get_value("tutorial", "enabled", tutorial_enabled)
 		tutorial_seen = cfg.get_value("tutorial", "seen", {})
 
@@ -34,6 +39,8 @@ func save() -> void:
 	cfg.set_value("audio", "music", music_volume)
 	cfg.set_value("audio", "sfx", sfx_volume)
 	cfg.set_value("game", "camera_shake", camera_shake)
+	cfg.set_value("game", "screen_flashes", screen_flashes)
+	cfg.set_value("game", "impact_pauses", impact_pauses)
 	cfg.set_value("tutorial", "enabled", tutorial_enabled)
 	cfg.set_value("tutorial", "seen", tutorial_seen)
 	cfg.save(path)
