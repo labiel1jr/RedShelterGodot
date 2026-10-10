@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/main_menu.gd" id="1"]
 [ext_resource type="PackedScene" path="res://scenes/ui/settings_panel.tscn" id="2"]
+[ext_resource type="Texture2D" path="res://art/wallpaper/wallpaper_1024.png" id="3"]
 
 [sub_resource type="Gradient" id="Gradient_bg"]
 offsets = PackedFloat32Array(0, 0.55, 1)
@@ -28,8 +29,19 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("GradientTexture2D_bg")
+texture = ExtResource("3")
 expand_mode = 1
+stretch_mode = 6
+
+[node name="Shade" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.03, 0.03, 0.05, 0.45)
 
 [node name="Title" type="Label" parent="."]
 layout_mode = 1
