@@ -21,3 +21,6 @@ desktop.ini
 
 # Texturas de terceiros sem licença (HL2) — não versionar
 /art/source/street_props/prop_barrels/textures/
+
+# Modelos só locais (sem licença liberada) — não versionar
+/art/models_local/

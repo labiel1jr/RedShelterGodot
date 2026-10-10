@@ -14,6 +14,8 @@ extends RefCounted
 ##   (resolve_slots, chamado pelo MeshMerger antes de mesclar).
 
 const MODELS_DIR := "res://art/models/"
+## Só nesta máquina (fora do Git e do APK): substitui o modelo de mesmo id.
+const LOCAL_DIR := "res://art/models_local/"
 
 ## id → caminho do .glb (montado uma vez, varrendo a pasta).
 static var _index := {}
@@ -101,6 +103,7 @@ static func _scan() -> void:
 		return
 	_scanned = true
 	_scan_dir(MODELS_DIR)
+	_scan_dir(LOCAL_DIR)
 
 
 static func _scan_dir(dir_path: String) -> void:
