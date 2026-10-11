@@ -2385,12 +2385,12 @@ montada) serve também para os power-ups da Fase 14, por isso vem primeiro.
 * ✅ melhorias dos power-ups na Oficina (40);
 * robô de campanha medindo o efeito na economia.
 
-## 📋 Fase 15 — Direção de arte
+## 🟡 Fase 15 — Direção de arte
 
 * A1 base técnica (shader toon, contorno, textura-paleta, névoa por região);
 * A2 assets P1; A3 personagem; A4 zumbis; A5 assets P2; A6 acabamento (65).
 
-## 📋 Fase 16 — Game juice
+## ✅ Fase 16 — Game juice
 
 * J1 essencial (ferramentas `Juice`, acessibilidade, corrida, combate, coleta, power-up, morte, extração, abrigo);
 * J2 completo; J3 ambiente (66).
@@ -2653,7 +2653,7 @@ ajuda a escapar dos zumbis em vez de pular.
 
 # 65. DIREÇÃO DE ARTE
 
-**Status:** ✅ estilo decidido — **toon shading / cel-shading** (GDD 0.9.1) · implementação 📋 (Fase 15). É a regra para os assets de `docs/assets/asset_list.json`.
+**Status:** ✅ estilo decidido — **toon shading / cel-shading** (GDD 0.9.1) · implementação 🟡 (Fase 15: A1 ✅, A0 e A2 parciais). É a regra para os assets de `docs/assets/asset_list.json`.
 
 ## Critérios
 
@@ -2751,7 +2751,7 @@ A névoa esconde o fim do streaming de chunks (120 m) e dá profundidade sem cus
 
 ### Ícone do jogo
 
-**Status:** 📋 planejado (arte em `docs/assets/asset_list.json`, categoria `branding`).
+**Status:** 🟡 arte do artista aplicada no Windows e no Android (adaptativo provisório); faltam as camadas separadas e as versões de 16/24 px (arte em `docs/assets/asset_list.json`, categoria `branding`).
 
 * **Conceito:** o abrigo vermelho — silhueta de casa/barracão com tábuas pregadas e a porta com luz quente — sobre fundo carvão, com contorno grosso e luz em 3 faixas (cel-shading). É a promessa do jogo ("um lugar seguro"), usa a cor reservada do abrigo e não depende da personagem, ainda não definida. Sem texto; reconhecível em 48 px.
 * **Arte-mestra:** 1024 × 1024 px em vetor, com camadas de fundo, frente e uma versão monocromática.
@@ -2781,7 +2781,7 @@ Cada etapa termina com medição no celular (FPS e draw calls) antes da seguinte
 
 # 66. GAME JUICE
 
-**Status:** 🟡 base ✅ (tremor de câmera no dano, flash vermelho, vinheta e batimento com HP crítico, números flutuantes, estouro de partículas, clarão e rastro de tiro, zumbi piscando branco ao levar golpe) · o resto 📋 (Fase 16).
+**Status:** ✅ Fase 16 entregue (J1, J2, J3) — autoloads `Juice` e `AmbientFx`; pendentes só alguns efeitos menores listados no plano abaixo.
 
 Game juice é a resposta exagerada e imediata a cada ação: o jogo "sente" o que o jogador faz. Em Red Shelter ele tem três funções: deixar a corrida **gostosa de controlar**, deixar o **perigo legível** e fazer cada **recompensa** parecer uma recompensa.
 

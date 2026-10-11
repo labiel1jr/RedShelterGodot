@@ -7,15 +7,16 @@ Survival runner mobile com abrigo. A sobrevivente corre sozinha por três
 faixas, desvia, pula, desliza, luta contra zumbis que a agarram e saqueia o
 que consegue carregar. De volta ao abrigo, os recursos viram construções,
 armas e moradores, e a cada semana uma horda ataca o portão. É o protótipo
-jogável do **GDD 0.9.4** ([`docs/GDD.md`](docs/GDD.md)), feito com formas primitivas.
+jogável do **GDD 0.9.10** ([`docs/GDD.md`](docs/GDD.md)), em estilo toon / cel-shading:
+os primeiros modelos dos artistas já estão no jogo e o resto ainda são formas primitivas.
 Cenas e dados são texto puro (`.tscn` / `.tres`) e abrem direto no editor.
 
 | | |
 | --- | --- |
 | **Engine** | Godot 4.7 · GDScript · renderer Mobile |
 | **Plataformas-alvo** | Android / iOS (testado no PC com teclado e mouse) |
-| **Estado** | Fases 1–14 concluídas (roadmap do GDD completo) |
-| **Próximo** | Jogar, balancear, trocar as primitivas por arte e preparar a versão Android ([próximos passos](#próximos-passos)) |
+| **Estado** | Fases 1–14 concluídas · Fase 15 (arte) em andamento · Fase 16 (game juice) entregue |
+| **Próximo** | Testar no celular, balancear e receber os modelos do kit P1 ([próximos passos](#próximos-passos)) |
 
 ## Índice
 
@@ -107,7 +108,7 @@ desligadas ou reexibidas em **Configurações**.
 
 ## Status do roadmap
 
-Seção 58 do GDD. As Fases 1 a 14 estão concluídas; a 15 (direção de arte) e a 16 (game juice) estão planejadas.
+Seção 58 do GDD. As Fases 1 a 14 estão concluídas, a 15 (direção de arte) está em andamento e a 16 (game juice) foi entregue.
 
 | Fase | Conteúdo |
 | --- | --- |
@@ -125,8 +126,8 @@ Seção 58 do GDD. As Fases 1 a 14 estão concluídas; a 15 (direção de arte) 
 | 12 — Defesa | ataques ao abrigo, portão, barricadas, armadilhas, torres |
 | 13 — Veículos ✅ | patins, skate, bicicleta de jornaleiro, moto, mochila a jato e furgão de destruição, cada um com HP e habilidade (seção 63) |
 | 14 — Power-ups ✅ | 14 power-ups nos papéis dos de Subway Surfers: 5 na pista, 1 consumível, 2 na preparação e 6 raros (seção 64) |
-| 15 — Direção de arte 📋 | estilo toon shading / cel-shading decidido; A1 base técnica (shader toon, contorno, textura-paleta, névoa) até A6 acabamento (seção 65) |
-| 16 — Game juice 📋 | resposta visual e sonora a cada ação: pausas de impacto, squash & stretch, itens voando até o HUD, câmera lenta em momentos-chave (seção 66) |
+| 15 — Direção de arte 🟡 | ✅ A1 base técnica (`ToonStyle`, contorno, luz e céu por região) · 🟡 A0 ícone e wallpaper aplicados (faltam as camadas do ícone) · 🟡 A2 kit P1: 33 modelos no jogo (faca, tambores, loot, lixeiras, postes, detritos, placas, cerca, troncos, entulho) · A3–A6 📋 (seção 65) |
+| 16 — Game juice ✅ | J1 essencial, J2 completo e J3 ambiente: pausas de impacto, câmera lenta, squash & stretch, itens voando até o HUD, linhas de velocidade, "POR POUCO!", sequência de abates, papéis, fumaça, lâmpada piscando e chuva (seção 66; alguns efeitos menores pendentes) |
 
 ## Cenas e fluxo
 
@@ -681,12 +682,22 @@ de 50%.
 
 **Interface:**
 - **Tema:** único em `ui/theme.tres` (botões, painéis, campos, barras).
+- **Menu principal:** wallpaper do artista ao fundo.
 - **Configurações** (menu principal e pausa): volume geral, música, efeitos,
-  tremor de câmera, dicas do tutorial e "mostrar todas as dicas de novo".
+  tremor de câmera, flashes de tela, câmera lenta e pausas de impacto, dicas
+  do tutorial e "mostrar todas as dicas de novo".
 - **Pausa** (expedição e defesa): continuar, configurações e abandonar
   (abandonar conta como morte ou como defesa perdida).
 - **Efeitos:** vinheta vermelha e batimento com HP crítico; estouro dourado
   e "NÍVEL N!" ao subir de nível.
+- **Game juice** (autoload `Juice`, seção 66): pausa de impacto, câmera
+  lenta, tremor leve/médio/forte, quique, flash de tela, item voando até o
+  HUD, linhas de velocidade e números rolando. Na corrida: squash & stretch
+  e poeira no pulo, "POR POUCO!" (+2 XP) ao passar raspando, sequência de
+  abates ×N, mundo dessaturado com HP crítico. Ambiente (`AmbientFx`):
+  papéis, fumaça, lâmpada piscando e chuva em 25% das expedições.
+- **Acessibilidade:** "Flashes de tela" e "Câmera lenta e pausas de
+  impacto" podem ser desligados nas Configurações.
 
 **Tutorial:** dicas curtas, uma única vez, na hora certa.
 - **Na corrida:** trocar de faixa, cada tipo de obstáculo, primeiro zumbi,
@@ -804,14 +815,42 @@ Quase tudo é dado (`.tres`) editável no Inspector:
 
 - **Estilo:** toon shading / cel-shading — seção 65 do [GDD](docs/GDD.md):
   luz em 3 faixas chapadas com sombra colorida por região, contorno escuro
-  (grosso em atores e coletáveis, médio em obstáculos, fino ou nenhum no
-  fundo), detalhe desenhado na textura-paleta, sem PBR. O vermelho fica
-  reservado ao abrigo, à personagem e ao perigo; o combustível é roxo.
+  (grosso em atores e coletáveis, médio em obstáculos, fino e sumindo ao
+  longe no cenário). O vermelho fica reservado ao abrigo, à personagem e ao
+  perigo; o combustível é roxo.
+- **Como o estilo é aplicado:** o autoload `ToonStyle` deixa toda malha que
+  entra na cena com difuso e especular toon e põe o contorno
+  (`art/shaders/outline.gdshader`, espessura em metros do mundo) como
+  `material_overlay`. Cada região tem céu, luz ambiente e sol próprios
+  (`RegionData.apply_atmosphere`).
 - **Catálogo para os artistas:** [`docs/assets/asset_list.json`](docs/assets/asset_list.json)
-  — 119 assets: cenário, objetos e o ícone do jogo (personagens e zumbis ficam para
-  depois) com medidas, prioridades P1–P3, regras de formato (.glb, metros,
-  pivô) e um modelo para pedir assets novos.
-- **Hoje:** o jogo ainda usa formas primitivas; os modelos entram pela Fase 15.
+  (123 assets, versão 1.3) e a lista só com os nomes em
+  [`docs/assets/lista_assets.md`](docs/assets/lista_assets.md).
+- **Modelos no jogo:** `art/models/<categoria>/<id>.glb`. A `AssetLibrary`
+  troca a forma provisória pelo modelo assim que o arquivo existe:
+  obstáculos por `asset_id`, loot pelo tipo (com uma base na cor do
+  recurso), armas por `WeaponData.asset_id` e cenário por um metadado
+  `asset_id` no nó (variantes como `prop_barrels_rust`; `asset_fit = false`
+  mantém o tamanho real). O `ChunkDressing` espalha enfeites nas calçadas
+  pela seed de cada chunk.
+- **Entregues:** faca improvisada; 5 tambores; loot de comida, água,
+  medicamentos e sucata; lixeiras e caçambas; postes; caixote enferrujado;
+  detritos (tijolos, balde, garrafa, lata, laje, botijão); placas; cerca;
+  troncos; entulho e forno em ruínas. Estão "em revisão" no catálogo; vários
+  ainda passam do limite de triângulos.
+- **Para os artistas:**
+  [`art/models/README.md`](art/models/README.md) (formato e entrega),
+  textura-paleta em [`art/palette/`](art/palette/), validador
+  `godot --headless --path . -s res://tools/validate_models.gd`, briefings do
+  [ícone](art/icons/icon_art_brief.json) e do
+  [wallpaper](art/wallpaper/wallpaper_art_brief.json) e o projeto dos ícones
+  em [`art/icons/`](art/icons/README.md).
+- **Fontes:** `art/source/` (fora da importação do Godot). Texturas 4K, os
+  carros com marca registrada e materiais sem licença ficam fora do Git.
+- **Só nesta máquina:** `art/models_local/` substitui um modelo de mesmo id
+  sem ir para o Git nem para o APK (para testar material sem licença).
+- **Ícone e wallpaper:** o ícone do artista está no Windows e no Android
+  (adaptativo provisório); o wallpaper é o fundo do menu principal.
 
 ## Arquitetura e dados
 
@@ -821,9 +860,11 @@ Quase tudo é dado (`.tres`) editável no Inspector:
 | --- | --- |
 | `GameManager` | estado do jogo (recursos, dia, construções, armas, progressão, moradores, mochila da morte, agenda de ataques) e os fechamentos: `commit_run` (expedição) e `commit_defense` (defesa) |
 | `SaveManager` | save em disco |
-| `Settings` | volumes, tremor de câmera, tutorial |
+| `Settings` | volumes, tremor de câmera, flashes, pausas de impacto, tutorial |
 | `AudioManager` | canais, pool de players, música e ambiente |
 | `Transition` | fade entre cenas |
+| `ToonStyle` | estilo toon e contorno em toda malha que entra na cena (seção 65) |
+| `Juice` | ferramentas de game juice e opções de acessibilidade (seção 66) |
 
 **Resources** (seção 50 do GDD), em `scripts/data/`, editáveis no Inspector:
 
@@ -844,8 +885,13 @@ para ficarem à frente.
 RedShelterGodot/
 ├── project.godot
 ├── autoload/                 game_manager, save_manager, settings,
-│                             audio_manager, transition
-├── art/materials/            materiais compartilhados pelos chunks
+│                             audio_manager, transition, toon_style, juice
+├── art/
+│   ├── materials/            materiais compartilhados pelos chunks
+│   ├── models/               modelos .glb por categoria (AssetLibrary)
+│   ├── palette/ shaders/     textura-paleta e contorno do cel-shading
+│   ├── icons/ wallpaper/     ícone, wallpaper e briefings para os artistas
+│   └── source/               fontes dos artistas (fora da importação)
 ├── audio/                    sons e trilhas (.wav)
 ├── data/
 │   ├── branches/             mercado, farmacia, garagens, delegacia, atalho, saida
@@ -881,7 +927,9 @@ RedShelterGodot/
 │   │   campaign_log.gd, user_paths.gd
 │   ├── expedition/           route_generator, chunk_populator, chunk_streamer,
 │   │                         expedition_events, expedition_director,
-│   │                         mesh_merger, tutorial
+│   │                         mesh_merger, tutorial, ambient_fx,
+│   │                         chunk_dressing
+│   ├── art/                  asset_library (troca primitivas por modelos)
 │   ├── shelter/              construction, production, workshop, infirmary,
 │   │                         residents e os painéis
 │   ├── progression/          progression.gd (XP, níveis, stat())
@@ -895,7 +943,7 @@ RedShelterGodot/
 | Arquivo | Conteúdo |
 | --- | --- |
 | `user://save.json` | o jogo: recursos, dia, construções, armas e durabilidades, progressão, moral, moradores (traço, afinidade, pedido), mochila da morte, próximo ataque, escudos guardados, níveis dos power-ups e os da preparação escolhidos. Salvo ao fim de cada expedição e defesa, e a cada ação no abrigo. |
-| `user://settings.cfg` | volumes, tremor de câmera e dicas já vistas. Fica separado do save: um Novo Jogo não apaga as configurações. |
+| `user://settings.cfg` | volumes, tremor de câmera, flashes de tela, pausas de impacto e dicas já vistas. Fica separado do save: um Novo Jogo não apaga as configurações. |
 | `user://campaign_log.csv` | registro da campanha para balanceamento: uma linha por expedição e por defesa (loot, gastos do dia, estoque, moral, horda prevista), separado por `;`. Começa de novo a cada Novo Jogo. |
 | `user://sandbox/` | save, configurações e registros dos robôs de `tests/` (rodam com `-- --sandbox` e não tocam no save de verdade). |
 
@@ -909,17 +957,19 @@ RedShelterGodot/
 
 ## Próximos passos
 
-O roadmap do GDD está completo (Fases 1 a 14). O que vem agora:
+O roadmap original (Fases 1 a 14) e o game juice (Fase 16) estão prontos. O
+que vem agora (lista completa em [`docs/tarefas_pendentes.md`](docs/tarefas_pendentes.md)):
 
 | Item | GDD |
 | --- | --- |
-| Jogar de verdade e ajustar os valores (economia da campanha, regiões avançadas, defesa) | — |
-| **Fase 15 — Direção de arte**: estilo toon shading / cel-shading (luz em 3 faixas, contorno por classe de objeto, cor por região, vermelho reservado). Primeiro a base técnica (A1), depois os modelos do catálogo de assets | 65 |
+| Testar no celular (FPS, intensidade dos efeitos, ícone na tela inicial) e balancear a campanha | — |
+| **Fase 15 / A2:** receber o kit P1 (obstáculos, carros genéricos, fachadas, kit de rua, abrigo) e reduzir os triângulos das entregas atuais | 65 |
+| Ícone: camadas FRENTE/FUNDO/MONOCROMATICO e versões de 16/24 px; wallpaper em alta resolução | 65 |
+| A3 personagem, A4 zumbis, A5 regiões/POIs/veículos/defesa, A6 acabamento | 65 |
+| Efeitos menores pendentes da Fase 16 (agarrão, rachaduras no portão, produção do abrigo, painéis deslizando) | 66 |
 | Trocar o áudio sintetizado pelo definitivo; nada na lógica depende disso | 52 |
-| Tratar moradores feridos na Enfermaria | 41 |
-| Espada e colete | 11, 40 |
-| Tipo de dano (perfurante) contra a armadura do Blindado | 13 |
-| Pooling de zumbis e pickups, se o profiler pedir | 51 |
+| Espada e colete; dano perfurante contra o Blindado; moradores feridos na Enfermaria | 11, 13, 40, 41 |
+| APK de release assinado e imagens de loja | — |
 
 **Jogos de referência** (seção 61 do GDD):
 
@@ -943,3 +993,11 @@ O roadmap do GDD está completo (Fases 1 a 14). O que vem agora:
   das bifurcações, uma seed antiga gera outra expedição. A estrutura continua
   reproduzível; os extras do Director dependem de como se joga.
 - **Placa da bifurcação:** o texto é legível, mas pequeno à distância.
+- **"Parent node is busy adding/removing children"** aparece no console ao
+  começar a corrida; não afeta o jogo e ainda não foi investigado.
+- **Modelos acima do limite de triângulos:** faca (1.756), comida (2.532),
+  sucata (1.320), água (868), botijão (732) e postes (892) funcionam, mas
+  devem ser reduzidos pelos artistas antes da versão final.
+- **Licenças:** a origem dos pacotes de modelos entregues ainda não foi
+  confirmada; as texturas originais dos tambores (Half-Life 2) ficam só
+  locais.
